@@ -1,20 +1,27 @@
 package com.test.controller;
 
+import com.test.model.User;
+import com.test.repository.UserRepository;
+import com.test.request.AuthRequest;
+import com.test.response.AuthResponse;
 import com.test.response.Greeting;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 public class AuthController {
 
-    private static final String template = "Hello, %s!";
-    private final AtomicLong counter = new AtomicLong();
+    @Autowired
+    private UserRepository userRepository;
 
-    @RequestMapping("/api/authenticate")
-    public Greeting greeting(@RequestParam(value="name", defaultValue="World") String name) {
-        return new Greeting(counter.incrementAndGet(), String.format(template, name));
+    @RequestMapping(value="/api/authenticate", method= RequestMethod.POST)
+    public AuthResponse greeting( @RequestBody AuthRequest request) {
+        System.out.println(request.name+ ": " + request.password);
+
+        User u = userRepository.findByUsername(request.name);
+
+        return new AuthResponse("success", "jwttoken goes here");
     }
 }
