@@ -1,0 +1,15 @@
+<div class="jumbotron text-center">
+
+	<p>{{ message }}</p>
+	
+	<p>Chars: </p>
+	
+	<div ng-repeat="c in chars">
+		<span>Char Name {{c.charname}} </span>
+		<span>Char Type {{c.chartype}} </span>
+		
+		<a href="#editchar/{{c._id}}" >Edit</a>
+	</div>
+	
+	<a href="#newchar" >New</a>
+</div>

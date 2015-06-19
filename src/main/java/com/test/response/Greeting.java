@@ -1,4 +1,4 @@
-package com.test;
+package com.test.response;
 
 public class Greeting {
 
