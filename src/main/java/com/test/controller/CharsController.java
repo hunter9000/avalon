@@ -15,4 +15,13 @@ public class CharsController {
 
         return null;
     }
+
+    @RestController(name="/api/chars/{userId}", GET)
+    // get all chars belonging to user
+    @RestController(name="/api/chars/{charId}", GET)
+    // get the char w/ equipment, inv, etc. add charId to jwt for reuse throughout angular app
+    @RestController(name="/api/chars", POST)
+    // create new char
+    @RestController(name="/api/chars/{charId}", DELETE)
+    // delete char
 }

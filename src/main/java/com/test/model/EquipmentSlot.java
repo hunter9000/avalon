@@ -4,5 +4,14 @@ package com.test.model;
  * Created by hdavis on 6/23/2015.
  */
 public enum EquipmentSlot {
-    HEAD,BODY;
+    CONSUMABLE,
+    HEAD,
+    BODY,
+    LEGS,
+    FEET,
+    HANDS,
+    RING,
+    LEFT_HAND,
+    RIGHT_HAND
+    ;
 }
