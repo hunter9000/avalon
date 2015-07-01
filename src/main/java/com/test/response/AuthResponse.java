@@ -1,19 +1,19 @@
 package com.test.response;
 
 public class AuthResponse {
-    private String success;
+    private boolean success;
     private String token;
 
-    public AuthResponse(String success, String token) {
+    public AuthResponse(boolean success, String token) {
         this.success = success;
         this.token = token;
     }
 
-    public String getSuccess() {
+    public boolean getSuccess() {
         return success;
     }
 
-    public void setSuccess(String success) {
+    public void setSuccess(boolean success) {
         this.success = success;
     }
 
