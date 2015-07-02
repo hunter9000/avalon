@@ -6,6 +6,10 @@ public class MaterialResponse {
 
     public MaterialModel mat;
 
+    public MaterialResponse(MaterialModel mat) {
+        this.mat = mat;
+    }
+
     public MaterialModel getMat() {
         return mat;
     }
