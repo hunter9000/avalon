@@ -16,30 +16,12 @@ public class MaterialsController     {
     @Autowired
     private MaterialRepository materialRepository;
 
-
     @RequestMapping(value = "/api/materials", method = RequestMethod.GET)
     public List<MaterialModel>  material() {
         List<MaterialModel> mats = materialRepository.findAll();
 
         return mats;
-
-//        return "hello";
     }
 
-//    @RequestMapping(value="/api/materials", method = RequestMethod.GET)
-//    public MaterialResponse material() {
-//
-//        MaterialModel mat =  materialRepository.findById(1);
-//        MaterialResponse response = new MaterialResponse();
-//        response.mat = mat;
-//        return response;
-//    }
-
-//    @RequestMapping(value="/api/materials", method = RequestMethod.GET)
-//    public String material() {
-//
-//
-//        return "poop lol";
-//    }
 
 }

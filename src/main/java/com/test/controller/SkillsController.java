@@ -1,11 +1,29 @@
 package com.test.controller;
 
+import com.test.model.SkillModel;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.List;
+
 public class SkillsController {
 
-    @RestController(name="/api/skills" GET)
+    @RequestMapping(value="/api/skills", method=RequestMethod.GET)
     // get all the skills
-    @RestController(name="/api/skills/{charId}", GET)
+    public List<SkillModel> getAllSkills() {
+        return null;
+    }
+
+    @RequestMapping(value="/api/skills/{charId}", method=RequestMethod.GET)
     // get this char's owned skills
-    @RestController(name="/api/skills", POST)
+    public List<SkillModel> getCharSkills() {
+        return null;
+    }
+
+    @RequestMapping(value="/api/skills", method=RequestMethod.POST)
     // purchase the given skill
+    public void purchaseSkill() {
+
+    }
+
 }
