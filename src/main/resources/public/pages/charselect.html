@@ -5,11 +5,11 @@
 	<p>Chars: </p>
 	
 	<div ng-repeat="c in chars">
-		<span>Char Name {{c.charname}} </span>
-		<span>Char Type {{c.chartype}} </span>
+		<span>Char Id ({{c.id}})</span>
+		<span>Char Name {{c.name}} </span>
 		
-		<a href="#editchar/{{c._id}}" >Edit</a>
+		<a href="#hq" >Play!</a>
 	</div>
 	
-	<a href="#newchar" >New</a>
+	<button ng-click="newChar()">New Character</button>
 </div>

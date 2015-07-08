@@ -1,9 +1,12 @@
 package com.test.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "user_roles")
+@JsonIgnoreProperties(value = "user")
 public class UserRole {
 
     @Id

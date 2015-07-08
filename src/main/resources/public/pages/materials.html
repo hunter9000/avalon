@@ -1,20 +1,22 @@
 
 <div class="container" ng-repeat="mat in mats">
     <div class="row" >
+        <div class="col-sm-1"><img src="/img/resources/{{mat.icon}}.png" /></div>
         <div class="col-sm-1">{{mat.name}}</div>
-        <div class="col-sm-1">{{mat.icon}}</div>
+        <!--<div class="col-sm-1">{{mat.icon}}</div>-->
         <div class="col-sm-1">({{mat.id}})</div>
         <div class="col-sm-1"><button ng-click="deleteMat(mat.id)" />Delete</div>
     </div>
 
-    <div class="row" ng-repeat="eff in mats.effectList">
-        <div class="col-sm-1">{{eff.type}}</div>
+    <div class="row" ng-repeat="eff in mat.effectList">
+        <div class="col-sm-1">{{eff.effectType}}</div>
         <div class="col-sm-1">{{eff.value}}</div>
-        <div class="col-sm-1">{{eff.bodySlot}}</div>
-        <div class="col-sm-1"><button ng-click="deleteEffect(eff.id)" />Delete</div>
+        <div class="col-sm-1">{{eff.slot}}</div>
+        <div class="col-sm-1">({{eff.id}})</div>
+        <div class="col-sm-1"><button ng-click="deleteEffect(mat.id, eff.id)" />Delete</div>
     </div>
     <div class="row">
-        <button ng-click="addEffect()">Add Effect</button>
+        <button ng-click="addEffect(mat.id)">Add Effect</button>
     </div>
 </div>
 <button ng-click="addMat()">Add Mat</button>

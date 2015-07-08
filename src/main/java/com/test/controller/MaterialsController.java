@@ -1,11 +1,13 @@
 package com.test.controller;
 
-import com.sun.net.httpserver.Authenticator;
+import com.test.model.EffectType;
 import com.test.model.MaterialEffectModel;
 import com.test.model.MaterialModel;
+import com.test.repository.MaterialEffectRepository;
 import com.test.repository.MaterialRepository;
 import com.test.response.MaterialResponse;
 import com.test.response.SuccessResponse;
+import io.jsonwebtoken.lang.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +18,9 @@ public class MaterialsController     {
 
     @Autowired
     private MaterialRepository materialRepository;
+
+    @Autowired
+    private MaterialEffectRepository materialEffectRepository;
 
     @RequestMapping(value = "/api/materials", method = RequestMethod.GET)
     public List<MaterialModel>  material() {
@@ -34,6 +39,11 @@ public class MaterialsController     {
     @RequestMapping(value="/api/materials/{matId}", method=RequestMethod.DELETE)
     public SuccessResponse deleteMaterial(@PathVariable long matId) {
         System.out.println("deleteing mat " + matId);
+        MaterialModel mat = materialRepository.findById(matId);
+        for (MaterialEffectModel eff : mat.getEffectList()) {
+            materialEffectRepository.delete(eff);
+        }
+
         materialRepository.delete(matId);
         return new SuccessResponse(true, "Material deleted");
     }
@@ -41,12 +51,30 @@ public class MaterialsController     {
     @RequestMapping(value="/api/materials/{matId}/effect", method=RequestMethod.POST)
     public SuccessResponse createEffect(@PathVariable long matId, @RequestBody MaterialEffectModel effect) {
         MaterialModel mat = materialRepository.findById(matId);
-        mat.getEffectList().add(effect);
+//        mat.getEffectList().add(effect);
 
-        materialRepository.save(mat);
+        effect.setMaterialModel(mat);
+
+        materialEffectRepository.save(effect);
+
+        MaterialModel newMat = materialRepository.save(mat);
 
         return new SuccessResponse(true, "Effect added");
     }
 
+    @RequestMapping(value="/api/materials/{matId}/effect/{effId}", method=RequestMethod.DELETE)
+    public SuccessResponse deleteEffect(@PathVariable long matId, @PathVariable long effId) {
+        // TODO: check that the effect belongs to this mat
+
+        materialEffectRepository.delete(effId);
+
+        return new SuccessResponse(true, "Effect deleted");
+    }
+
+
+    @RequestMapping(value="/api/effectTypes", method=RequestMethod.GET)
+    public List<EffectType> getEffectTypes() {
+        return Collections.arrayToList(EffectType.values());
+    }
 
 }

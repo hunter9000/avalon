@@ -1,85 +1,65 @@
-<!DOCTYPE html>
 
-<!-- define angular app -->
-<html ng-app="scotchApp">
+<div class="jumbotron text-center">
+    <div class="text-center">
+        <form ng-submit="login()">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div>Recipes</div>
+                                <select size="10" ng-model="item" ng-options="recipe for recipe in recipes" ng-change="recipeSelect()"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
 
-<head>
-    <!-- SCROLLS -->
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div>Info</div>
 
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
-    <script src="script.js"></script>
+                                <div>
+                                    <span>Recipe Name: </span>
+                                    <span>{{selectedRecipe}}</span>
+                                </div>
+                                <div>
+                                    <span>Item Type: </span>
+                                    <span>{{selectedRecipe}}</span>
+                                </div>
+                            </div>
+                        </div>
 
-</head>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div>Base</div>
+                                <div>
+                                    <select size="10" ng-model="item" ng-options="mat for mat in baseMats" ng-change="matSelect()"></select>
+                                </div>
+                            </div>
+                        </div>
 
-<!-- define angular controller -->
-<body ng-controller="craftingController">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div>Extra</div>
+                                <div>
+                                    <select size="10" ng-model="item" ng-options="mat for mat in extraMats" ng-change="matSelect()"></select>
+                                </div>
+                            </div>
+                        </div>
 
-
-<div class="text-center">
-    <form ng-submit="login()">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div>Rec</div>
-                            <select size="10" ng-model="item" ng-options="recipe for recipe in recipes" ng-change="recipeSelect()"></select>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                            <div>Mat</div>
+                            <select size="10" ng-model="item" ng-options="mat for mat in mats" ng-change="matSelect()" ng-dblclick="matDblclick()"></select>
+                            {{selectedMat}}
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div>Info</div>
-
-                            <div>
-                                <span>Recipe Name: </span>
-                                <span>{{selectedRecipe}}</span>
-                            </div>
-                            <div>
-                                <span>Item Type: </span>
-                                <span>{{selectedRecipe}}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div>Base</div>
-                            <div>
-                                <select size="10" ng-model="item" ng-options="mat for mat in baseMats" ng-change="matSelect()"></select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div>Extra</div>
-                            <div>
-                                <select size="10" ng-model="item" ng-options="mat for mat in extraMats" ng-change="matSelect()"></select>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-md-4">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                        <div>Mat</div>
-                        <select size="10" ng-model="item" ng-options="mat for mat in mats" ng-change="matSelect()" ng-dblclick="matDblclick()"></select>
-                        {{selectedMat}}
-                    </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
+
 </div>
-
-
-</body>
-
-</html>

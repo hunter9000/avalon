@@ -1,22 +1,18 @@
-<!DOCTYPE html>
-<html ng-app="scotchApp">
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
 
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+<div class="jumbotron text-center">
 
-    <script src="https://code.createjs.com/easeljs-0.8.1.min.js"></script>
-    <script src="https://code.createjs.com/tweenjs-0.6.1.min.js"></script>
-    <script src="https://code.createjs.com/preloadjs-0.6.1.min.js"></script>
-    <script src="script.js"></script>
-</head>
-<body ng-controller="hqCtrl">
+    <p>{{ message }}</p>
 
-    <canvas id="demoCanvas" width="500" height="300"></canvas>
+    <p>HQ: </p>
 
-    <button ng-click="move()">move</button>
+    <a href="#inventory" >Inventory</a>
+    <a href="#dungeon" >Dungeon</a>
+    <a href="#crafting" >Crafting</a>
 
-</body>
-</html>
+    <!--<button ng-click="inventory()">Inventory</button>-->
+    <!--<button ng-click="dungeon()">Dungeon</button>-->
+    <!--<button ng-click="crafting()">Crafting</button>-->
+
+</div>
+
+

@@ -1,0 +1,4 @@
+
+function getEffectIcon(effectType) {
+
+}

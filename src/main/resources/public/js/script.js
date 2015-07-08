@@ -15,21 +15,20 @@
 				controller  : 'loginController'
 			})
 			// route for the about page
-			.when('/about', {
-				templateUrl : 'pages/about.html',
-				controller  : 'aboutController'
-			})
-
+//			.when('/about', {
+//				templateUrl : 'pages/about.html',
+//				controller  : 'aboutController'
+//			})
 			// route for the char select page
 			.when('/charselect', {
 				templateUrl : 'pages/charselect.html',
 				controller  : 'charSelectController'
 			})
 			// route for the new char page
-			.when('/newchar', {
-				templateUrl : 'pages/newchar.html',
-				controller  : 'newCharController'
-			})
+//			.when('/newchar', {
+//				templateUrl : 'pages/newchar.html',
+//				controller  : 'newCharController'
+//			})
 			.when('/editchar/:charId', {
 				templateUrl: 'pages/editchar.html',
 				controller: 'editCharController'
@@ -37,6 +36,22 @@
 			.when('/materials', {
 				templateUrl: 'pages/materials.html',
 				controller: 'materialsController'
+			})
+			.when('/hq', {
+				templateUrl: 'pages/hq.html',
+				controller: 'hqController'
+			})
+			.when('/crafting', {
+				templateUrl: 'pages/crafting.html',
+				controller: 'craftingController'
+			})
+			.when('/inventory', {
+				templateUrl: 'pages/inventory.html',
+				controller: 'inventoryController'
+			})
+			.when('/dungeon', {
+				templateUrl: 'pages/dungeon.html',
+				controller: 'dungeonController'
 			})
 			;
 	});
@@ -98,189 +113,9 @@
 	});
 
 
-	scotchApp.controller('charSelectController', function($scope, $window, $http) {
-		$scope.message = 'token: ' + $window.localStorage['jwtToken'];
-		
-		$scope.chars = [];
-		
-		$http({
-		  method: 'GET',
-		  url: '/api/chars',
-		  headers: {'x-access-token': $window.localStorage['jwtToken']}  })
-			.success(function(data) {
-				$scope.chars = data;
-				console.log('got these chars back: ');
-				console.log(data);
-			})
-			.error(function(data) {
-				console.log('Error: ' + data);
-			});
-		
-		
-	});
-	
-	scotchApp.controller('newCharController', function($scope, $window, $http) {
-		$scope.message = 'token: ' + $window.localStorage['jwtToken'];
-		
-		$scope.formData = {};
-		
-		$scope.save = function() {
-			$http({
-				method:'POST',
-				url:'api/chars',
-				headers: {'x-access-token': $window.localStorage['jwtToken']},  
-				data: $scope.formData  })
-					.success(function(data) {
-						$scope.formData = data;
-						console.log(data);
-					})
-					.error(function(data) {
-						console.log('Error: ' + data);
-					});
-			
-		};
-		
-	});
-	
-	scotchApp.controller('editCharController', function($scope, $http, $window, $routeParams) {
-		
-		$scope.message = '';
-		
-		$scope.char = null;
-		
-		$http({method:'GET', 
-			   url: 'api/chars/' + $routeParams.charId,
-			   headers: {'x-access-token': $window.localStorage['jwtToken']}  
-		})
-		.success(function (data) {
-			$scope.char = data;
-			console.log('get api/chars/id ');
-			console.log(data);
-		})
-		.error(function(data) {
-			console.log('Error:' + data);
-		});
-			
-		$scope.save = function() {
-			$http({
-				method: 'PATCH',
-				url: 'api/chars/' + $scope.char._id,
-				headers: {'x-access-token': $window.localStorage['jwtToken']},
-				data: $scope.char
-			})
-			.success(function(data) {
-				$scope.message = 'saved';
-			})
-			.error(function(data) {
-				$scope.message = 'error ' + data;
-			});
-			
-		};
-	});
-
-    scotchApp.controller('craftingController', function($scope, $http, $window, $routeParams) {
-        $scope.recipes = ['Volvo', 'Saab', 'Mercedes', 'Audi'];
-
-        $scope.mats = ['one', 'two', 'three'];
-        $scope.selectedMat = null;
-
-        $scope.baseMats = [];
-        $scope.extraMats = [];
-
-        $scope.selectedRecipe = null;
-
-        $scope.recipeSelect = function() {
-            console.log($scope.item);
-            $scope.selectedRecipe = $scope.item;
-        }
-
-        $scope.matSelect = function() {
-            console.log($scope.item);
-            $scope.selectedMat = $scope.item;
-        }
-        $scope.matDblclick = function() {
-            console.log($scope.item);
-            $scope.extraMats.push($scope.item);
-        }
-
-        $scope.listContains = function(list, name, quantity) {
-            list.forEach(function(mat) {
-                if (mat.name == name) {
-                    // check if quantity <= mat.quantity
-                    if (true) {
-                        return true;
-                    }
-                }
-            });
-        }
-
-        $scope.removeFromList = function(list, material) {
-            list.forEach(function(mat) {
-                if (mat.name == material.name) {
-                    // check if quantity <= mat.quantity
-                    mat.quantity -= material.quantity;
-                    if (mat.quantity == 0) {
-                        // remove from list
-                    }
-                }
-            });
-        }
-
-    });
 
 
-    scotchApp.controller('hqCtrl', function($scope) {
 
-    	$scope.stage = new createjs.Stage("demoCanvas");
 
-		// begin preloading assets when page loads
-		$scope.preload = function() {
-			var preload = new createjs.LoadQueue();
-              preload.addEventListener("fileload", function() {
-				console.log('load complete');
-				$scope.fetchMapData();		// load server data now
-			  });
-              preload.loadFile("assets/preloadjs-bg-center.png");
-		}
-		$scope.preload();
 
-		$scope.fetchMapData = function() {
-//			$http.get(etc) {
-//				$scope.populate(data);		// get the map data from server here, pass it to populate
-//			}
-		}
 
-		// creates all the scene objects based on the mapdata
-    	$scope.populate = function(mapData) {
-    		// create the scene objects here
-    		var circle = new createjs.Shape();
-			circle.graphics.beginFill("DeepSkyBlue").drawCircle(0, 0, 50);
-			circle.x = 100;
-			circle.y = 100;
-			$scope.stage.addChild(circle);
-			circle.addEventListener("click", function (event) {
-				console.log('circle click');
-			});
-			$scope.circle = circle;
-
-			// create map tiles, attach click listeners
-
-			// create
-
-			createjs.Ticker.setFPS(60);
-			createjs.Ticker.addEventListener("tick", $scope.stage);
-    	}
-
-		$scope.move = function() {
-			if (!createjs.Tween.hasActiveTweens($scope.circle)) {
-				var tween = createjs.Tween.get($scope.circle, { loop: false })
-					.to({ x: 400 }, 1000, createjs.Ease.getPowInOut(4))
-					.to({ alpha: 0, y: 175 }, 500, createjs.Ease.getPowInOut(2))
-					.to({ alpha: 0, y: 225 }, 100)
-					.to({ alpha: 1, y: 200 }, 500, createjs.Ease.getPowInOut(2))
-					.to({ x: 100 }, 800, createjs.Ease.getPowInOut(2));
-				$scope.tween = tween;
-			}
-		}
-
-    });

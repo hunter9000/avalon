@@ -1,9 +1,12 @@
 package com.test.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "material_effect")
+@JsonIgnoreProperties(value = { "materialModel" })
 public class MaterialEffectModel {
 
     @Id
