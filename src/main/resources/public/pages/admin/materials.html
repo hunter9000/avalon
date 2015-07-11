@@ -1,6 +1,7 @@
 
 <div class="container" ng-repeat="mat in mats">
-    <material material="mat"></material>
+    <material material="mat" refresh="fetchMats()"></material>
 </div>
 
-<button ng-click="addMat()">Add Mat</button>
+<!--<button ng-click="addMat()">Add Mat</button>-->
+<materialadd refresh="fetchMats()"></materialadd>

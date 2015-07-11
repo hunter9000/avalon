@@ -114,6 +114,41 @@
 
 
 
+	scotchApp.factory('StaticData', ['$http', '$window', function($http, $window) {
+		var serviceData = {
+			effectTypes: [],
+			equipmentSlots: []
+		};
+
+		$http({method:'GET',
+			   url: '/api/effectTypes',
+			   headers: {'x-access-token': $window.localStorage['jwtToken']}
+			})
+			.success(function (data) {
+				serviceData.effectTypes = data;
+				console.log(data);
+			})
+			.error(function(data) {
+				console.log('Error:' + data);
+			}
+		);
+
+		$http({method:'GET',
+			   url: '/api/equipmentSlots',
+			   headers: {'x-access-token': $window.localStorage['jwtToken']}
+			})
+			.success(function (data) {
+				serviceData.equipmentSlots = data;
+				console.log(data);
+			})
+			.error(function(data) {
+				console.log('Error:' + data);
+			}
+		);
+
+		return serviceData;
+	}]);
+
 
 
 

@@ -1,0 +1,26 @@
+<div class="container" >
+
+    <div class="row" >
+        <span><img src="/img/resources/{{material.icon}}.png" /></span>
+        <span>{{material.name}}</span>
+        <span>({{material.id}})</span>
+        <span>
+            <button ng-click="deleteMat(material.id)" >Delete mat</button>
+        </span>
+    </div>
+
+    <div class="row" ng-repeat="eff in material.effectList">
+        <span>{{eff.effectType}}</span>
+        <span>{{eff.value}}</span>
+        <span>{{eff.slot}}</span>
+        <span>({{eff.id}})</span>
+        <span>
+            <button ng-click="deleteEffect(material.id, eff.id)" >Delete eff</button>
+        </span>
+    </div>
+    <div class="row">
+        <!--<button ng-click="addEffect(material.id)">Add Effect</button>-->
+        <effectadd mat="material"></effectadd>
+    </div>
+
+</div>
