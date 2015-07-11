@@ -1,4 +1,5 @@
 
+
 	angular.module('scotchApp').controller('materialsController', function($scope, $http, $window, $routeParams, $modal) {
 
 		$scope.mats = null;
@@ -154,6 +155,17 @@
 
 	});
 
+
+    angular.module('scotchApp').directive('material', function() {
+        return {
+            restrict: 'E',
+            templateUrl: 'pages/templates/material-directive.html',  //'<div>hello world {{material.name}}</div>',
+            replace: true,
+            scope: {
+                material: '=material'
+            }
+        };
+    });
 
     angular.module('scotchApp').controller('NewMaterialCtrl', function ($scope, $modalInstance) {
 		  $scope.submitForm = function () {

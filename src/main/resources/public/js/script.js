@@ -34,7 +34,7 @@
 				controller: 'editCharController'
 			})
 			.when('/materials', {
-				templateUrl: 'pages/materials.html',
+				templateUrl: 'pages/admin/materials.html',
 				controller: 'materialsController'
 			})
 			.when('/hq', {
