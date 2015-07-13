@@ -1,17 +1,3 @@
 <div>
-    <button ng-click="clickMe()" ng-show="!showForm">add new</button>
-    <div ng-show="showForm" class="form-content">
-        <form ng-submit="createNew()">
-            <label>Effect</label>
-            <select class="" name="effectType" ng-model="eff.effectType" ng-options="effectType for effectType in effectTypes"></select>
 
-            <label>Value</label>
-            <input class="" name="value" ng-model="eff.value" type="text" />
-
-            <label>Slot</label>
-            <select class="" name="slot" ng-model="eff.slot" ng-options="slot for slot in equipmentSlots"></select>
-
-            <button type="submit" >Submit</button>
-        </form>
-    </div>
 </div>

@@ -46,4 +46,29 @@ public class MapsController {
     public void endTurn() {
 
     }
+
+
+//    enterDng() {
+//        // all maps should already be cleared, check again?
+//        // create graph of maps, with edges.
+//        // pick random v as head map
+//        // for each vertex in g,
+//        // create new Map(v)
+//        // for each edge in g,
+//        // create new MapEdge(e.1, e.2)
+//        // store those objects
+//
+//        // enter head map
+//    }
+//    enterMap(map) {
+//        // query all cells
+//        // if empty,
+//        // create cells
+//        // create random entities
+//        // create portals based on map.mapEdges
+//        // store those objects
+//        // requery all cells
+//        // place char randomly
+//    }
+
 }

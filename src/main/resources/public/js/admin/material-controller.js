@@ -3,42 +3,6 @@
 	angular.module('scotchApp').controller('materialsController', function($scope, $http, $window, $routeParams, $modal) {
 
 		$scope.mats = null;
-//		$scope.effectTypes = [];
-//		$scope.equipmentSlots = [];
-//
-//        $scope.fetchEffectTypes = function() {
-//            // Get the effect types
-//            $http({method:'GET',
-//                   url: '/api/effectTypes',
-//                   headers: {'x-access-token': $window.localStorage['jwtToken']}
-//                })
-//                .success(function (data) {
-//                    $scope.effectTypes = data;
-//                    $scope.fetchEquipmentSlots();
-//                    console.log(data);
-//                })
-//                .error(function(data) {
-//                    console.log('Error:' + data);
-//                }
-//            );
-//        }
-//
-//        $scope.fetchEquipmentSlots = function() {
-//            // get the equipment slot
-//            $http({method:'GET',
-//                   url: '/api/equipmentSlots',
-//                   headers: {'x-access-token': $window.localStorage['jwtToken']}
-//                })
-//                .success(function (data) {
-//                    $scope.equipmentSlots = data;
-//                    $scope.fetchMats();
-//                    console.log(data);
-//                })
-//                .error(function(data) {
-//                    console.log('Error:' + data);
-//                }
-//            );
-//        }
 
         $scope.fetchMats = function() {
             $http({method:'GET',
@@ -59,18 +23,44 @@
 
 	});
 
-    angular.module('scotchApp').directive('material', ['$http', '$window', function ($http, $window) {
+    angular.module('scotchApp').directive('material', ['$http', '$window', 'StaticData', function ($http, $window, StaticData) {
         return {
             restrict: 'E',
             templateUrl: 'pages/templates/material-template.html',
             replace: true,
             scope: {
                 material: '=material',
-                refreshCallback: '&refresh',
-                effectTypes: '=effectTypes',
-                equipmentSlots: '=equipmentSlots'
+                refreshCallback: '&refresh'
             },
             link: function (scope, element, attrs) {
+                scope.showForm = false;         // show the new effect form
+                scope.effectTypes = StaticData.effectTypes;
+                scope.equipmentSlots = StaticData.equipmentSlots;
+                scope.eff = {effectType: '', value: '', slot: '', matId: scope.material.id};
+
+                scope.showEffectForm = function () {
+                    scope.showForm = !scope.showForm;
+                };
+
+                scope.createEffect = function() {
+                    scope.showForm = !scope.showForm;
+
+                    $http({method:'POST',
+                           url: 'api/materials/'+scope.material.id+'/effect',
+                           data: scope.eff,
+                           headers: {'x-access-token': $window.localStorage['jwtToken']}
+                        })
+                        .success(function (data, status, headers, config) {
+                            scope.refreshCallback();
+                            console.log(data);
+                        })
+                        .error(function(data, status, headers, config) {
+                            console.log('Error:' + data);
+                        }
+                    );
+                    scope.eff = {effectType: '', value: '', slot: '', matId: scope.material.id};      // reset the eff
+                };
+
                 scope.deleteMat = function(matId) {
                     console.log('jwt ' + $window.localStorage['jwtToken']);
                     $http({method:'DELETE',
@@ -79,7 +69,6 @@
                         })
                         .success(function (data, status, headers, config) {
                             console.log(data);
-//                            $scope.fetchMats();
                             element[0].remove();
                         })
                         .error(function(data, status, headers, config) {
@@ -95,7 +84,7 @@
                         })
                         .success(function (data, status, headers, config) {
                             console.log(data);
-//                            $scope.fetchMats();
+//                            element[0].remove();
                             scope.refreshCallback();
                         })
                         .error(function(data, status, headers, config) {
@@ -146,44 +135,44 @@
         };
     }]);
 
-    angular.module('scotchApp').directive('effectadd', ['$http', '$window', 'StaticData', function ($http, $window, StaticData) {
-        return {
-            restrict: 'E',
-            templateUrl: 'pages/templates/effect-add-template.html',
-            replace: true,
-            scope: {
-                refreshCallback: '&refresh'
-                mat: '='
-            },
-            link: function(scope, element, attrs) {
-                scope.showForm = false;
-                scope.effectTypes = StaticData.effectTypes;
-                scope.equipmentSlots = StaticData.equipmentSlots;
-                scope.eff = {effectType: '', value: '', slot: '', matId: scope.mat.id};
-
-                scope.clickMe = function () {
-                    scope.showForm = !scope.showForm;
-                };
-
-                scope.createNew = function() {
-                    scope.showForm = !scope.showForm;
-
-                    $http({method:'POST',
-                           url: 'api/materials/'+scope.mat.id+'/effect',
-                           data: scope.eff,
-                           headers: {'x-access-token': $window.localStorage['jwtToken']}
-                        })
-                        .success(function (data, status, headers, config) {
-
-                            console.log(data);
-                        })
-                        .error(function(data, status, headers, config) {
-                            console.log('Error:' + data);
-                        }
-                    );
-                    scope.eff = {effectType: '', value: '', slot: '', matId: scope.mat.id};      // reset the eff
-                };
-            }
-        }
-    }]);
+//    angular.module('scotchApp').directive('effectadd', ['$http', '$window', 'StaticData', function ($http, $window, StaticData) {
+//        return {
+//            restrict: 'E',
+//            templateUrl: 'pages/templates/effect-add-template.html',
+//            replace: true,
+//            scope: {
+//                refreshCallback: '&refresh'
+//                mat: '='
+//            },
+//            link: function(scope, element, attrs) {
+////                scope.showForm = false;
+////                scope.effectTypes = StaticData.effectTypes;
+////                scope.equipmentSlots = StaticData.equipmentSlots;
+////                scope.eff = {effectType: '', value: '', slot: '', matId: scope.mat.id};
+////
+////                scope.clickMe = function () {
+////                    scope.showForm = !scope.showForm;
+////                };
+////
+////                scope.createNew = function() {
+////                    scope.showForm = !scope.showForm;
+////
+////                    $http({method:'POST',
+////                           url: 'api/materials/'+scope.mat.id+'/effect',
+////                           data: scope.eff,
+////                           headers: {'x-access-token': $window.localStorage['jwtToken']}
+////                        })
+////                        .success(function (data, status, headers, config) {
+////
+////                            console.log(data);
+////                        })
+////                        .error(function(data, status, headers, config) {
+////                            console.log('Error:' + data);
+////                        }
+////                    );
+////                    scope.eff = {effectType: '', value: '', slot: '', matId: scope.mat.id};      // reset the eff
+////                };
+//            }
+//        }
+//    }]);
 

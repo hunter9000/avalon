@@ -28,6 +28,8 @@ public class CharModel {
             inverseJoinColumns={@JoinColumn(name="recipe_id", referencedColumnName="id")})
     private List<RecipeModel> recipes;
 
+    @OneToMany(mappedBy = "charModel")
+    private List<MapModel> maps;
 
     public Long getId() {
         return id;
