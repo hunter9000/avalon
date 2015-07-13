@@ -9,8 +9,17 @@
 		$scope.images = {};
 		$scope.preload = null;
 		$scope.manifest = [
-			{src: 'x.png', id: 'x', x: 5, y: 5}
-		]
+		   {src: 'x.png', id: 'x', x: 5, y: 5},
+		   {src: 'blank.png', id: 'blank', x: 5, y: 5},
+		   {src: 'backing.png', id: 'backing', x: 5, y: 5},
+		   {src: 'icon.png', id: 'icon', x: 5, y: 5}
+		];
+
+        $scope.offset = {x:null, y:null};     // vector from mouse point to corner of container
+        $scope.allowHorizontalMove;
+        $scope.allowVerticalMove;
+
+        $scope.movingIcon;
 
         // sets up canvas, and starts image preload
         $scope.init = function() {
@@ -22,10 +31,27 @@
 
             $scope.container = new createjs.Container();
             $scope.stage.addChild($scope.container);
+			$scope.container.addEventListener('mousedown', function(event) {
+				if (event.nativeEvent.button != 2) {        // restrict to right button
+					return;
+				}
+
+				$scope.offset = {x: event.target.parent.x - event.rawX,
+						  y: event.target.parent.y - event.rawY };
+				console.log(offset);
+			});
             $scope.container.addEventListener('pressmove', function(event) {
-                //console.log('container pressmove');
-                $scope.container.x = event.rawX;
-                $scope.container.y = event.rawY;
+				if (event.nativeEvent.button != 2) {        // restrict to right button
+					return;
+				}
+
+				//console.log('container pressmove');
+				if (allowHorizontalMove) {
+					container.x = event.rawX + offset.x;
+				}
+				if (allowVerticalMove) {
+					container.y = event.rawY + offset.y;
+				}
 
                 var stageRectangle = $scope.stage.getTransformedBounds();
                 var contRectangle = $scope.container.getTransformedBounds();
@@ -33,17 +59,22 @@
                 if (!contRectangle.contains(stageRectangle.x, stageRectangle.y, stageRectangle.width, stageRectangle.height)) {
                     //console.log('OUT ' + 'stageRect ' + stageRectangle + ' containerRect ' + contRectangle);
                     // adjust
-                    if (contRectangle.x > stageRectangle.x) {
-                        $scope.container.x = stageRectangle.x;
+                    if (allowHorizontalMove) {
+                        if (contRectangle.x > stageRectangle.x) {
+                            container.x = stageRectangle.x;
+                        }
+                        if (contRectangle.x + contRectangle.width < stageRectangle.width) {
+                            container.x = stageRectangle.width - contRectangle.width;
+                        }
                     }
-                    if (contRectangle.x + contRectangle.width < stageRectangle.width) {
-                        $scope.container.x = stageRectangle.width - contRectangle.width;
-                    }
-                    if (contRectangle.y > stageRectangle.y) {
-                        $scope.container.y = stageRectangle.y;
-                    }
-                    if (contRectangle.y + contRectangle.height < stageRectangle.height) {
-                        $scope.container.y = stageRectangle.height - contRectangle.height;
+
+                    if (allowVerticalMove) {
+                        if (contRectangle.y > stageRectangle.y) {
+                            container.y = stageRectangle.y;
+                        }
+                        if (contRectangle.y + contRectangle.height < stageRectangle.height) {
+                            container.y = stageRectangle.height - contRectangle.height;
+                        }
                     }
                 }
             });
@@ -51,13 +82,13 @@
             createjs.Ticker.setFPS(60);
             createjs.Ticker.addEventListener("tick", $scope.stage);
 
-            $scope.preload();
-
+//            $scope.preload();
+			$scope.loadImage();
         }
         $scope.init();
 
 		// begin preloading assets when page loads
-		$scope.preload = function() {
+		$scope.loadImage = function() {
             $scope.preload = new createjs.LoadQueue();
             $scope.preload.addEventListener("fileload", $scope.handleFileComplete);
             $scope.preload.addEventListener("complete", $scope.handleComplete);
@@ -85,48 +116,87 @@
 //			$http.get(etc) {
 //				$scope.populate(data);		// get the map data from server here, pass it to populate
 //			}
+
 			// build test map
 			map = [];
 			for (i=0; i<5; i++) {
 				inner = [];
 				for (j=0; j<5; j++) {
-					inner.push(1);
+					if (j%2 == 0) {
+						inner.push(1);
+					}
+					else {
+						inner.push(0);
+					}
 				}
 				map.push(inner);
 			}
 
             // create bitmaps for each tile, adding blank placeholders for empty spaces
-			x = 0;
-			y = 0;
-			for (col=0; col<map.length; col++) {
-				for (row=0; row<map[col].length; row++) {
-					var bitmap = instantiateImage('x');
-					bitmap.x = x;
-					bitmap.y = y;
-					container.addChild(bitmap);
+            x = 0;
+            y = 0;
+            for (col=0; col<map.length; col++) {
+                for (row=0; row<map[col].length; row++) {
+                    var bitmap;
+                    var backing;
+                    if (map[col][row] == 1) {
+                        bitmap = instantiateImage('x');
+                    }
+                    else {
+                        bitmap = instantiateImage('blank');
+                    }
+                    bitmap.x = x;
+                    bitmap.y = y;
+                    bitmap.data = {coordCol: col, coordRow: row}
+                    bitmap.addEventListener('click', function(event) {
+                        if (event.nativeEvent.button != 0) {        // only left click
+                            return;
+                        }
+                        console.log('bitmap click');
+                        x = event.target.data.coordCol;
+                        y = event.target.data.coordRow;
 
-					y += 10;
-				}
-				x+= 10;
-				y = 0;
-			}
+                        createjs.Tween.get(event.target).to({x:1, y:1}, 1000).call(function() {
+                            //Tween complete
+                        });
+
+                    });
+                    container.addChild(bitmap);
+
+                    if (col == 2 && row == 2) {
+                        iconBitmap = instantiateImage('icon');
+                        iconBitmap.x = x;
+                        iconBitmap.y = y;
+                        container.addChild(iconBitmap);
+
+                        movingIcon = iconBitmap;
+                    }
+
+                    backing = instantiateImage('backing');
+                    bitmap.hitArea = backing;
+
+                    y += 10;
+                }
+                x+= 10;
+                y = 0;
+            }
+
+            console.log('container bounds ' + container.getBounds());
+
+            var stageRectangle = stage.getTransformedBounds();
+            var contRectangle = container.getTransformedBounds();
+            allowHorizontalMove = contRectangle.width > stageRectangle.width;
+            allowVerticalMove = contRectangle.height > stageRectangle.height;
+
+            // center the grid
+            if (!allowHorizontalMove) {     // need to center horizontally
+                container.x = (stageRectangle.width - contRectangle.width) / 2;
+            }
+            if (!allowVerticalMove) {       // // need to center vertically
+                container.y = (stageRectangle.height - contRectangle.height) / 2;
+            }
 		}
-
-
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 		// creates all the scene objects based on the mapdata
