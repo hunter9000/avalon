@@ -1,18 +1,20 @@
 
-    scotchApp.controller('dungeonCtrl', function($scope) {
+    scotchApp.controller('dungeonController', function($scope) {
 
     	$scope.stage = null;
 		$scope.container = null;
 
 		$scope.map = [];
 
+		$scope.tileSize = 40;
+
 		$scope.images = {};
 		$scope.preload = null;
 		$scope.manifest = [
-		   {src: 'x.png', id: 'x', x: 5, y: 5},
-		   {src: 'blank.png', id: 'blank', x: 5, y: 5},
-		   {src: 'backing.png', id: 'backing', x: 5, y: 5},
-		   {src: 'icon.png', id: 'icon', x: 5, y: 5}
+		   {src: 'grass-tile.png', id: 'x', x: $scope.tileSize, y: $scope.tileSize},
+		   {src: 'blank.png', id: 'blank', x: $scope.tileSize, y: $scope.tileSize},
+		   {src: 'backing.png', id: 'backing', x: $scope.tileSize, y: $scope.tileSize},
+		   {src: 'icon.png', id: 'icon', x: $scope.tileSize, y: $scope.tileSize}
 		];
 
         $scope.offset = {x:null, y:null};     // vector from mouse point to corner of container
@@ -38,7 +40,7 @@
 
 				$scope.offset = {x: event.target.parent.x - event.rawX,
 						  y: event.target.parent.y - event.rawY };
-				console.log(offset);
+				console.log($scope.offset);
 			});
             $scope.container.addEventListener('pressmove', function(event) {
 				if (event.nativeEvent.button != 2) {        // restrict to right button
@@ -47,10 +49,10 @@
 
 				//console.log('container pressmove');
 				if (allowHorizontalMove) {
-					container.x = event.rawX + offset.x;
+					$scope.container.x = event.rawX + $scope.offset.x;
 				}
 				if (allowVerticalMove) {
-					container.y = event.rawY + offset.y;
+					$scope.container.y = event.rawY + $scope.offset.y;
 				}
 
                 var stageRectangle = $scope.stage.getTransformedBounds();
@@ -61,19 +63,19 @@
                     // adjust
                     if (allowHorizontalMove) {
                         if (contRectangle.x > stageRectangle.x) {
-                            container.x = stageRectangle.x;
+                            $scope.container.x = stageRectangle.x;
                         }
                         if (contRectangle.x + contRectangle.width < stageRectangle.width) {
-                            container.x = stageRectangle.width - contRectangle.width;
+                            $scope.container.x = stageRectangle.width - contRectangle.width;
                         }
                     }
 
                     if (allowVerticalMove) {
                         if (contRectangle.y > stageRectangle.y) {
-                            container.y = stageRectangle.y;
+                            $scope.container.y = stageRectangle.y;
                         }
                         if (contRectangle.y + contRectangle.height < stageRectangle.height) {
-                            container.y = stageRectangle.height - contRectangle.height;
+                            $scope.container.y = stageRectangle.height - contRectangle.height;
                         }
                     }
                 }
@@ -85,11 +87,10 @@
 //            $scope.preload();
 			$scope.loadImage();
         }
-        $scope.init();
 
 		// begin preloading assets when page loads
 		$scope.loadImage = function() {
-            $scope.preload = new createjs.LoadQueue();
+            $scope.preload = new createjs.LoadQueue(true, 'img/tiles/');
             $scope.preload.addEventListener("fileload", $scope.handleFileComplete);
             $scope.preload.addEventListener("complete", $scope.handleComplete);
             $scope.preload.loadManifest($scope.manifest);
@@ -100,11 +101,11 @@
 		}
 
 		$scope.handleComplete = function() {
-			loadMap();
+			$scope.loadMap();
 		}
 
 		$scope.instantiateImage = function(imgId) {
-			var image = preload.getResult(imgId);
+			var image = $scope.preload.getResult(imgId);
 
 			// instantiate a bitmap based on this image
 			var bitmap = new createjs.Bitmap(image);
@@ -112,38 +113,42 @@
 			return bitmap;
 		}
 
+        $scope.gridCoordsToWorldCoords = function(x, y) {
+            return {'x':x*$scope.tileSize, 'y':y*$scope.tileSize};
+        }
+
 		$scope.loadMap = function() {
 //			$http.get(etc) {
 //				$scope.populate(data);		// get the map data from server here, pass it to populate
 //			}
 
 			// build test map
-			map = [];
+			$scope.map = [];
 			for (i=0; i<5; i++) {
-				inner = [];
+				var inner = [];
 				for (j=0; j<5; j++) {
-					if (j%2 == 0) {
+//					if (j%2 == 0) {
 						inner.push(1);
-					}
-					else {
-						inner.push(0);
-					}
+//					}
+//					else {
+//						inner.push(0);
+//					}
 				}
-				map.push(inner);
+				$scope.map.push(inner);
 			}
 
             // create bitmaps for each tile, adding blank placeholders for empty spaces
             x = 0;
             y = 0;
-            for (col=0; col<map.length; col++) {
-                for (row=0; row<map[col].length; row++) {
+            for (col=0; col<$scope.map.length; col++) {
+                for (row=0; row<$scope.map[col].length; row++) {
                     var bitmap;
                     var backing;
-                    if (map[col][row] == 1) {
-                        bitmap = instantiateImage('x');
+                    if ($scope.map[col][row] == 1) {
+                        bitmap = $scope.instantiateImage('x');
                     }
                     else {
-                        bitmap = instantiateImage('blank');
+                        bitmap = $scope.instantiateImage('blank');
                     }
                     bitmap.x = x;
                     bitmap.y = y;
@@ -156,48 +161,52 @@
                         x = event.target.data.coordCol;
                         y = event.target.data.coordRow;
 
-                        createjs.Tween.get(event.target).to({x:1, y:1}, 1000).call(function() {
+                        createjs.Tween.get($scope.movingIcon).to($scope.gridCoordsToWorldCoords(x, y), 1000).call(function() {
                             //Tween complete
+
                         });
 
                     });
-                    container.addChild(bitmap);
+                    $scope.container.addChild(bitmap);
 
                     if (col == 2 && row == 2) {
-                        iconBitmap = instantiateImage('icon');
+                        var iconBitmap = $scope.instantiateImage('icon');
                         iconBitmap.x = x;
                         iconBitmap.y = y;
-                        container.addChild(iconBitmap);
+                        $scope.container.addChild(iconBitmap);
 
-                        movingIcon = iconBitmap;
+                        $scope.movingIcon = iconBitmap;
                     }
 
-                    backing = instantiateImage('backing');
+                    backing = $scope.instantiateImage('backing');
                     bitmap.hitArea = backing;
 
-                    y += 10;
+                    y += $scope.tileSize;
                 }
-                x+= 10;
+                x+= $scope.tileSize;
                 y = 0;
             }
 
-            console.log('container bounds ' + container.getBounds());
+            $scope.container.setChildIndex( $scope.movingIcon, $scope.container.getNumChildren()-1);
 
-            var stageRectangle = stage.getTransformedBounds();
-            var contRectangle = container.getTransformedBounds();
+            console.log('container bounds ' + $scope.container.getBounds());
+
+            var stageRectangle = $scope.stage.getTransformedBounds();
+            var contRectangle = $scope.container.getTransformedBounds();
             allowHorizontalMove = contRectangle.width > stageRectangle.width;
             allowVerticalMove = contRectangle.height > stageRectangle.height;
 
             // center the grid
-            if (!allowHorizontalMove) {     // need to center horizontally
-                container.x = (stageRectangle.width - contRectangle.width) / 2;
+            if (!$scope.allowHorizontalMove) {     // need to center horizontally
+                $scope.container.x = (stageRectangle.width - contRectangle.width) / 2;
             }
-            if (!allowVerticalMove) {       // // need to center vertically
-                container.y = (stageRectangle.height - contRectangle.height) / 2;
+            if (!$scope.allowVerticalMove) {       // // need to center vertically
+                $scope.container.y = (stageRectangle.height - contRectangle.height) / 2;
             }
 		}
-    });
 
+        $scope.init();
+    });
 
 		// creates all the scene objects based on the mapdata
 //    	$scope.populate = function(mapData) {
