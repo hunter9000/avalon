@@ -240,3 +240,18 @@
 //				$scope.tween = tween;
 //			}
 //		}
+
+
+/////// MOVE A SHAPE ALONG A PATH
+//            steps = [
+//                {x:10, y:10},
+//                {x:20, y:10},
+//                {x:20, y:30},
+//                {x:40, y:30},
+//                {x:10, y:10}
+//            ];
+//
+//            var tween = createjs.Tween.get(circle, { loop: false });
+//            for (i=0; i<steps.length; i++) {
+//                tween.to({ x: steps[i].x, y: steps[i].y }, 1000, createjs.Ease.getPowInOut(4));
+//            }
