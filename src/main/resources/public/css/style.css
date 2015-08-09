@@ -1,0 +1,12 @@
+/** list box directive */
+div.scroll-list {
+    overflow-y:scroll;
+    border: 1px solid #333
+}
+div.scroll-list-inner {
+    border-right: 1px solid #333;
+}
+div.scroll-item {
+    width:100%;
+    border-bottom: 1px solid #333;
+}

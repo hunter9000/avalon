@@ -5,6 +5,7 @@
     <title></title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script src="js/list-directive.js"></script>
 
     <script>
         angular.module('module', [])
@@ -14,54 +15,11 @@
                 $scope.contents = ['gone'];
             }
         })
-        .directive('list', function() {
-            return {
-                restrict: 'E',
-                scope: {contents: '='},
-                template: '<div class="scroll-list equipment-list"> \
-                                <div class="scroll-list-inner"> \
-                                    <element ng-repeat="ele in contents track by $index" ele="ele" click="click(element)"></element> \
-                                </div> \
-                            </div>',
-                link: function(scope, element, attrs) {
-                    //scope.contents = ['hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi'];
-                    scope.click = function(element) {
-                        console.log('click ' + element);
-                    }
-                }
-            }
-        })
-        .directive('element', function() {
-            return {
-                restrict: 'E',
-                scope: {
-                    ele: '=ele',
-                    clickCallback: '&click'
-                },
-                template: '<div class="scroll-item equipment-item" ng-click="click()"> \
-                                hello {{ele}}\
-                            </div>',
-                link: function(scope, element, attrs) {
-                    scope.click = function() {
-                        scope.clickCallback({element: scope.ele});
-                    }
-                }
-            };
-        });
+
     </script>
 
     <style>
-        div.scroll-list {
-            overflow-y:scroll;
-            border: 1px solid #333
-        }
-        div.scroll-list-inner {
-            border-right: 1px solid #333;
-        }
-        div.scroll-item {
-            width:100%;
-            border-bottom: 1px solid #333;
-        }
+
 
         .equipment-list {
             width:200px;
