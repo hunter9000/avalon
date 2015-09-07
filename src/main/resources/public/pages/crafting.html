@@ -7,7 +7,7 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div>Recipes</div>
-                                <select size="10" ng-model="item" ng-options="recipe for recipe in recipes" ng-change="recipeSelect()"></select>
+                                <list contents="recipes" template-contents="recipe-list-item-template.html" click="recipeSelect(recipe)"></list>
                             </div>
                         </div>
                     </div>
@@ -19,12 +19,13 @@
 
                                 <div>
                                     <span>Recipe Name: </span>
-                                    <span>{{selectedRecipe}}</span>
+                                    <span>{{selectedRecipe.item.name}}</span>
                                 </div>
                                 <div>
-                                    <span>Item Type: </span>
-                                    <span>{{selectedRecipe}}</span>
+                                    <span>Slot: </span>
+                                    <span>{{selectedRecipe.item.bodySlot}}</span>
                                 </div>
+                                debug {{selectedRecipe}}
                             </div>
                         </div>
 
@@ -40,6 +41,7 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div>Extra</div>
+                                <div>remaining capacity: {{selectedRecipe.extraCapacity}}</div>
                                 <div>
                                     <select size="10" ng-model="item" ng-options="mat for mat in extraMats" ng-change="matSelect()"></select>
                                 </div>
@@ -64,7 +66,7 @@
 
 <style>
     .equipment-list {
-        width:400px;
+        width:300px;
         height:300px;
     }
     .equipment-item {
@@ -74,4 +76,4 @@
     }
 </style>
 
-<list contents="recipes" template-contents="recipe-list-item-template.html"></list>
+

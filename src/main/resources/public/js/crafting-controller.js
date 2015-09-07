@@ -28,9 +28,10 @@
         }
         $scope.fetchRecipes();
 
-        $scope.recipeSelect = function() {
-            console.log($scope.item);
-            $scope.selectedRecipe = $scope.item;
+        $scope.recipeSelect = function(recipe) {
+//            console.log($scope.item);
+            console.log('controller says this recipe selected ' + recipe);
+            $scope.selectedRecipe = recipe;
         }
 
         $scope.matSelect = function() {

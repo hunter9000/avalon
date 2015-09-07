@@ -4,6 +4,7 @@ scotchApp.directive('list', function($compile, $interpolate) {
         restrict: 'E',
         scope: {
             contents: '=',
+            clickCallback: '&click',
             templateContents: '@'
         },
         template: '<div class="scroll-list equipment-list"> \
@@ -13,9 +14,13 @@ scotchApp.directive('list', function($compile, $interpolate) {
                     </div>',
         link: function(scope, element, attrs) {
             //scope.contents = ['hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi'];
-            scope.click = function(element) {
-                console.log('click ' + element);
+            scope.click = function(ele) {
+                console.log('click ' + ele);
+                scope.clickCallback({recipe: ele});
             }
+//            scope.click = function() {
+//                scope.clickCallback({element: scope.ele});
+//            }
 
 //            var myAttrFn = $interpolate(attrs.templatecontents)(scope);
 //            $compile(myAttrFn)(scope);
