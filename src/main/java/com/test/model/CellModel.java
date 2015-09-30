@@ -1,11 +1,14 @@
 package com.test.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 // has fk to the map it's in
 @Entity
 @Table(name="cell")
-class CellModel {
+@JsonIgnoreProperties(value="map")
+public class CellModel {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
@@ -26,7 +29,15 @@ class CellModel {
     @Transient
     private CellEntityModel cellEntity; // set when building the map by "placing" each entity on it's cell
 
-    CellModel() {
+    public CellModel() {
+
+    }
+
+    public CellModel(MapModel map, int x, int y, GroundType groundType) {
+        this.map = map;
+        this.x = x;
+        this.y = y;
+        this.groundType = groundType;
     }
 
     public long getId() {

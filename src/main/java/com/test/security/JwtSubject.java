@@ -7,17 +7,9 @@ import com.test.model.User;
 
 public class JwtSubject {
 
-//    private User user;
     private long userId;
 
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
-
+    private long charId;
 
     public long getUserId() {
         return userId;
@@ -25,6 +17,14 @@ public class JwtSubject {
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public long getCharId() {
+        return charId;
+    }
+
+    public void setCharId(long charId) {
+        this.charId = charId;
     }
 
     @JsonIgnore

@@ -1,5 +1,5 @@
 
-    scotchApp.controller('dungeonController', function($scope) {
+    scotchApp.controller('dungeonController', function($scope, $http, $window) {
 
     	$scope.stage = null;
 		$scope.container = null;
@@ -118,91 +118,111 @@
         }
 
 		$scope.loadMap = function() {
-//			$http.get(etc) {
-//				$scope.populate(data);		// get the map data from server here, pass it to populate
-//			}
+            $http({method:'GET',
+                   url: 'api/char/map/',
+                   headers: {'x-access-token': $window.localStorage['jwtToken']}
+            })
+            .success(function (data) {
+                $scope.map = data;
 
-			// build test map
-			$scope.map = [];
-			for (i=0; i<5; i++) {
-				var inner = [];
-				for (j=0; j<5; j++) {
-//					if (j%2 == 0) {
-						inner.push(1);
-//					}
-//					else {
-//						inner.push(0);
-//					}
-				}
-				$scope.map.push(inner);
-			}
+                // create 2d array of cells
+                // find dimensions of cell array
+                var array = [];         // col, row
+                var maxRow = 0;
+                var maxCol = 0;
+                for (i=0; i<$scope.map.cells.length; i++) {
+                    if ($scope.map.cells[i].x > maxCol) {
+                        maxCol = $scope.map.cells[i].x;
+                    }
+                    if ($scope.map.cells[i].y > maxRow) {
+                        maxRow = $scope.map.cells[i].y;
+                    }
+                }
 
-            // create bitmaps for each tile, adding blank placeholders for empty spaces
-            x = 0;
-            y = 0;
-            for (col=0; col<$scope.map.length; col++) {
-                for (row=0; row<$scope.map[col].length; row++) {
-                    var bitmap;
-                    var backing;
-                    if ($scope.map[col][row] == 1) {
-                        bitmap = $scope.instantiateImage('x');
-                    }
-                    else {
-                        bitmap = $scope.instantiateImage('blank');
-                    }
-                    bitmap.x = x;
-                    bitmap.y = y;
-                    bitmap.data = {coordCol: col, coordRow: row}
-                    bitmap.addEventListener('click', function(event) {
-                        if (event.nativeEvent.button != 0) {        // only left click
-                            return;
+                // create array with correct dimensions
+                for (i=0; i<=maxRow; i++) {
+                    array.push(new Array(maxCol+1));
+                }
+
+                // populate array
+                for (i=0; i<$scope.map.cells.length; i++) {
+                    array[$scope.map.cells[i].x][$scope.map.cells[i].y] = $scope.map.cells[i];
+                }
+
+                // replace the 1d array of cells with the 2d array of cells
+                $scope.map.cells = array;
+
+                // create bitmaps for each tile, adding blank placeholders for empty spaces
+                x = 0;
+                y = 0;
+                for (col=0; col<$scope.map.cells.length; col++) {
+                    for (row=0; row<$scope.map.cells[col].length; row++) {
+                        var bitmap;
+                        var backing;
+                        if ($scope.map.cells[col][row] == 1) {
+                            bitmap = $scope.instantiateImage('x');
                         }
-                        console.log('bitmap click');
-                        x = event.target.data.coordCol;
-                        y = event.target.data.coordRow;
+                        else {
+                            bitmap = $scope.instantiateImage('blank');
+                        }
+                        bitmap.x = x;
+                        bitmap.y = y;
+                        bitmap.data = {coordCol: col, coordRow: row}
+                        bitmap.addEventListener('click', function(event) {
+                            if (event.nativeEvent.button != 0) {        // only left click
+                                return;
+                            }
+                            console.log('bitmap click');
+                            x = event.target.data.coordCol;
+                            y = event.target.data.coordRow;
 
-                        createjs.Tween.get($scope.movingIcon).to($scope.gridCoordsToWorldCoords(x, y), 1000).call(function() {
-                            //Tween complete
+                            createjs.Tween.get($scope.movingIcon).to($scope.gridCoordsToWorldCoords(x, y), 1000).call(function() {
+                                //Tween complete
+
+                            });
 
                         });
+                        $scope.container.addChild(bitmap);
 
-                    });
-                    $scope.container.addChild(bitmap);
+                        if (col == 2 && row == 2) {
+                            var iconBitmap = $scope.instantiateImage('icon');
+                            iconBitmap.x = x;
+                            iconBitmap.y = y;
+                            $scope.container.addChild(iconBitmap);
 
-                    if (col == 2 && row == 2) {
-                        var iconBitmap = $scope.instantiateImage('icon');
-                        iconBitmap.x = x;
-                        iconBitmap.y = y;
-                        $scope.container.addChild(iconBitmap);
+                            $scope.movingIcon = iconBitmap;
+                            console.log('set movingIcon at 2,2');
+                        }
 
-                        $scope.movingIcon = iconBitmap;
+                        backing = $scope.instantiateImage('backing');
+                        bitmap.hitArea = backing;
+
+                        y += $scope.tileSize;
                     }
-
-                    backing = $scope.instantiateImage('backing');
-                    bitmap.hitArea = backing;
-
-                    y += $scope.tileSize;
+                    x+= $scope.tileSize;
+                    y = 0;
                 }
-                x+= $scope.tileSize;
-                y = 0;
-            }
+                $scope.container.setChildIndex( $scope.movingIcon, $scope.container.getNumChildren()-1);
 
-            $scope.container.setChildIndex( $scope.movingIcon, $scope.container.getNumChildren()-1);
+                console.log('container bounds ' + $scope.container.getBounds());
 
-            console.log('container bounds ' + $scope.container.getBounds());
+                var stageRectangle = $scope.stage.getTransformedBounds();
+                var contRectangle = $scope.container.getTransformedBounds();
+                allowHorizontalMove = contRectangle.width > stageRectangle.width;
+                allowVerticalMove = contRectangle.height > stageRectangle.height;
 
-            var stageRectangle = $scope.stage.getTransformedBounds();
-            var contRectangle = $scope.container.getTransformedBounds();
-            allowHorizontalMove = contRectangle.width > stageRectangle.width;
-            allowVerticalMove = contRectangle.height > stageRectangle.height;
+                // center the grid
+                if (!$scope.allowHorizontalMove) {     // need to center horizontally
+                    $scope.container.x = (stageRectangle.width - contRectangle.width) / 2;
+                }
+                if (!$scope.allowVerticalMove) {       // // need to center vertically
+                    $scope.container.y = (stageRectangle.height - contRectangle.height) / 2;
+                }
 
-            // center the grid
-            if (!$scope.allowHorizontalMove) {     // need to center horizontally
-                $scope.container.x = (stageRectangle.width - contRectangle.width) / 2;
-            }
-            if (!$scope.allowVerticalMove) {       // // need to center vertically
-                $scope.container.y = (stageRectangle.height - contRectangle.height) / 2;
-            }
+            })
+            .error(function(data) {
+                console.log('Error:' + data);
+            });
 		}
 
         $scope.init();

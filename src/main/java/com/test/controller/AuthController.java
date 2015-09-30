@@ -12,13 +12,12 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.crypto.MacProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
 
 @RestController
@@ -29,6 +28,9 @@ public class AuthController {
 
     @Autowired
     private SecurityManager securityManager;
+
+    @Autowired
+    private HttpServletRequest request;
 
     @RequestMapping(value="/api/authenticate", method= RequestMethod.POST)
     public ResponseEntity<?>/*AuthResponse*/ greeting( @RequestBody AuthRequest request) {
@@ -62,5 +64,30 @@ public class AuthController {
         return new ResponseEntity<>(new AuthResponse(false, null), HttpStatus.UNAUTHORIZED);
 //        return new AuthResponse(false, null);
     }
+
+    @RequestMapping(value="/api/charselect/{charId}", method = RequestMethod.POST)
+    public ResponseEntity selectCharacter(@PathVariable long charId) {
+
+        JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
+
+        // TODO verify charId belongs to this user
+        token.setCharId(charId);
+
+        String s = null;
+        try {
+            s = token.getAsJSON();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(new SuccessResponse(false, "Error processing user"), HttpStatus.BAD_REQUEST);
+        }
+
+        // generate jwt
+        String jwtToken = Jwts.builder().setSubject(s).signWith(SignatureAlgorithm.HS512, securityManager.getSecurityKey()).compact();
+
+        System.out.println(jwtToken);
+
+        return new ResponseEntity<>(new AuthResponse(true, jwtToken), HttpStatus.OK);
+    }
+
 
 }

@@ -37,7 +37,7 @@
 				templateUrl: 'pages/admin/materials.html',
 				controller: 'materialsController'
 			})
-			.when('/hq', {
+			.when('/hq/:charId', {
 				templateUrl: 'pages/hq.html',
 				controller: 'hqController'
 			})
@@ -53,6 +53,11 @@
 				templateUrl: 'pages/dungeon.html',
 				controller: 'dungeonController'
 			})
+			.when('/portals', {
+				templateUrl: 'pages/portals.html',
+				controller: 'portalsController'
+			})
+			.otherwise({redirectTo:'/'});
 			;
 	});
 

@@ -31,6 +31,10 @@ public class CharModel {
     @OneToMany(mappedBy = "charModel")
     private List<MapModel> maps;
 
+    @OneToOne
+    @JoinColumn(name="curr_map_id")     // current map this char is in, or null
+    private MapModel currentMap;
+
     public Long getId() {
         return id;
     }
@@ -57,5 +61,19 @@ public class CharModel {
     }
     public void setRecipes(List<RecipeModel> recipes) {
         this.recipes = recipes;
+    }
+
+    public MapModel getCurrentMap() {
+        return currentMap;
+    }
+    public void setCurrentMap(MapModel currentMap) {
+        this.currentMap = currentMap;
+    }
+
+    public List<MapModel> getMaps() {
+        return maps;
+    }
+    public void setMaps(List<MapModel> maps) {
+        this.maps = maps;
     }
 }

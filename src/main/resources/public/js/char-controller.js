@@ -1,6 +1,6 @@
 
 
-	scotchApp.controller('charSelectController', function($scope, $window, $http, $modal) {
+	scotchApp.controller('charSelectController', function($scope, $window, $http, $modal, $location) {
 		$scope.message = 'token: ' + $window.localStorage['jwtToken'];
 
 		$scope.chars = [];
@@ -52,6 +52,21 @@
 
                 }
             );
+        }
+
+        $scope.selectChar = function(charId) {
+            $http({
+                method:'POST',
+                url:'/api/charselect/' + charId,
+                headers: {'x-access-token': $window.localStorage['jwtToken']}
+            })
+            .success(function(data) {
+                $window.localStorage['jwtToken'] = data.token;
+                $location.path("/hq/" + charId);
+            })
+            .error(function(data) {
+                console.log('Error: ' + data);
+            });
         }
 
 	});

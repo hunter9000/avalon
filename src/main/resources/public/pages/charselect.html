@@ -8,7 +8,8 @@
 		<span>Char Id ({{c.id}})</span>
 		<span>Char Name {{c.name}} </span>
 		
-		<a href="#hq" >Play!</a>
+		<!--<a href="#hq/{{c.id}}" >Play!</a>-->
+		<a ng-click="selectChar(c.id)">Play</a>
 	</div>
 	
 	<button ng-click="newChar()">New Character</button>

@@ -1,11 +1,15 @@
 package com.test.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.List;
 
 // container for a single map. linked to cells
 @Entity
 @Table(name="map")
+@JsonIgnoreProperties(value = "charModel")
 public class MapModel {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

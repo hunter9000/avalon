@@ -3,16 +3,11 @@
 
     <p>{{ message }}</p>
 
-    <p>HQ: </p>
+    <p>World Map: </p>
 
     {{char}}
 
-    <a href="#inventory" >Inventory</a>
-    <br/>
-    <a href="#crafting" >Crafting</a>
-    <br/>
-    <a href="#dungeon" ng-show="char.currentMap != null">Dungeon</a>
-    <a href="#portals" ng-show="char.currentMap == null">Portals</a>
+    <a ng-click="enterPortal(1)" >Waypoint 1</a>
 
     <!--<button ng-click="inventory()">Inventory</button>-->
     <!--<button ng-click="dungeon()">Dungeon</button>-->
