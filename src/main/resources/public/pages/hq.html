@@ -5,18 +5,18 @@
 
     <p>HQ: </p>
 
-    {{char}}
-
     <a href="#inventory" >Inventory</a>
     <br/>
     <a href="#crafting" >Crafting</a>
     <br/>
-    <a href="#dungeon" ng-show="char.currentMap != null">Dungeon</a>
-    <a href="#portals" ng-show="char.currentMap == null">Portals</a>
+    <a href="#dungeon" ng-show="char.currentMap">Dungeon</a>
+    <a href="#portals" ng-hide="char.currentMap">Portals</a>
 
     <!--<button ng-click="inventory()">Inventory</button>-->
     <!--<button ng-click="dungeon()">Dungeon</button>-->
     <!--<button ng-click="crafting()">Crafting</button>-->
+
+    {{char}}
 
 </div>
 

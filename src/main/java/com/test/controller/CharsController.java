@@ -43,9 +43,12 @@ public class CharsController {
         return new SuccessResponse(true, "created character");
     }
 
-    @RequestMapping(value="/api/char/{charId}", method=RequestMethod.GET)
+    @RequestMapping(value="/api/char/", method=RequestMethod.GET)
     // get the char w/ equipment, inv, etc. add charId to jwt for reuse throughout angular app
-    public CharModel getChar(@PathVariable long charId) {
+    public CharModel getChar() {
+        JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
+        long charId = token.getCharId();
+
         CharModel charModel = charRepository.findById(charId);
         return charModel;
     }

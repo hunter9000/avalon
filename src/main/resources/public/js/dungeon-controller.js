@@ -1,5 +1,5 @@
 
-    scotchApp.controller('dungeonController', function($scope, $http, $window) {
+    scotchApp.controller('dungeonController', function($scope, $http, $window, $location) {
 
     	$scope.stage = null;
 		$scope.container = null;
@@ -235,7 +235,8 @@
             .success(function (data) {
                 $location.path("/hq/");
             })
-            .error(function () {
+            .error(function (data) {
+                console.log(data);
             });
         }
 

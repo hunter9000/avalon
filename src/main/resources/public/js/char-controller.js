@@ -62,7 +62,7 @@
             })
             .success(function(data) {
                 $window.localStorage['jwtToken'] = data.token;
-                $location.path("/hq/" + charId);
+                $location.path("/hq/");
             })
             .error(function(data) {
                 console.log('Error: ' + data);

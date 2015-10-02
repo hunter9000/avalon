@@ -37,7 +37,7 @@
 				templateUrl: 'pages/admin/materials.html',
 				controller: 'materialsController'
 			})
-			.when('/hq/:charId', {
+			.when('/hq/', {
 				templateUrl: 'pages/hq.html',
 				controller: 'hqController'
 			})

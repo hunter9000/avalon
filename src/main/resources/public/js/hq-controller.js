@@ -3,7 +3,7 @@
     scotchApp.controller('hqController', function($scope, $http, $routeParams, $window) {
         // get the character from the provided id
         $http({method:'GET',
-               url: 'api/char/' + $routeParams.charId,
+               url: 'api/char/',
                headers: {'x-access-token': $window.localStorage['jwtToken']}
         })
         .success(function (data) {

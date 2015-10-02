@@ -8,6 +8,7 @@ import com.test.model.MapModel;
 import com.test.repository.CellRepository;
 import com.test.repository.CharRepository;
 import com.test.repository.MapRepository;
+import com.test.response.SuccessResponse;
 import com.test.security.JwtSubject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -76,7 +77,7 @@ public class MapsController {
     // delete the map, reset player back home
     // check if standing on the door
     @RequestMapping(value="/api/map/leave", method=RequestMethod.POST)
-    public String leaveMap() {
+    public SuccessResponse leaveMap() {
         JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
         long charId = token.getCharId();
 
@@ -85,7 +86,7 @@ public class MapsController {
 
         charRepository.save(charModel);
 
-        return "success";
+        return new SuccessResponse(true, "success");
     }
 
     @RequestMapping(value="/api/map/moveto", method=RequestMethod.POST)
