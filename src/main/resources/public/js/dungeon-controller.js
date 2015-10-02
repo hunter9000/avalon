@@ -11,7 +11,7 @@
 		$scope.images = {};
 		$scope.preload = null;
 		$scope.manifest = [
-		   {src: 'grass-tile.png', id: 'x', x: $scope.tileSize, y: $scope.tileSize},
+		   {src: 'grass-tile.png', id: 'GRASS', x: $scope.tileSize, y: $scope.tileSize},
 		   {src: 'blank.png', id: 'blank', x: $scope.tileSize, y: $scope.tileSize},
 		   {src: 'backing.png', id: 'backing', x: $scope.tileSize, y: $scope.tileSize},
 		   {src: 'icon.png', id: 'icon', x: $scope.tileSize, y: $scope.tileSize}
@@ -159,12 +159,12 @@
                     for (row=0; row<$scope.map.cells[col].length; row++) {
                         var bitmap;
                         var backing;
-                        if ($scope.map.cells[col][row] == 1) {
-                            bitmap = $scope.instantiateImage('x');
-                        }
-                        else {
-                            bitmap = $scope.instantiateImage('blank');
-                        }
+//                        if ($scope.map.cells[col][row].groundType == 1) {
+                            bitmap = $scope.instantiateImage($scope.map.cells[col][row].groundType);
+//                        }
+//                        else {
+//                            bitmap = $scope.instantiateImage('blank');
+//                        }
                         bitmap.x = x;
                         bitmap.y = y;
                         bitmap.data = {coordCol: col, coordRow: row}
@@ -226,6 +226,19 @@
 		}
 
         $scope.init();
+
+        $scope.leaveDungeon = function() {
+            $http({method:'POST',
+                url: 'api/map/leave/',
+                headers: {'x-access-token': $window.localStorage['jwtToken']}
+            })
+            .success(function (data) {
+                $location.path("/hq/");
+            })
+            .error(function () {
+            });
+        }
+
     });
 
 		// creates all the scene objects based on the mapdata

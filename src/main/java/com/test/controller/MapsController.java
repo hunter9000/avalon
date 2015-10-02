@@ -73,10 +73,18 @@ public class MapsController {
         return null;
     }
 
-    @RequestMapping(value="/api/map/leave", method=RequestMethod.POST)
     // delete the map, reset player back home
     // check if standing on the door
-    public String leaveMap(long id) {
+    @RequestMapping(value="/api/map/leave", method=RequestMethod.POST)
+    public String leaveMap() {
+        JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
+        long charId = token.getCharId();
+
+        CharModel charModel = charRepository.findById(charId);
+        charModel.setCurrentMap(null);
+
+        charRepository.save(charModel);
+
         return "success";
     }
 
