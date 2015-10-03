@@ -1,6 +1,7 @@
 package com.test.controller;
 
 
+import com.sun.net.httpserver.Authenticator;
 import com.test.model.CellModel;
 import com.test.model.CharModel;
 import com.test.model.GroundType;
@@ -89,10 +90,19 @@ public class MapsController {
         return new SuccessResponse(true, "success");
     }
 
-    @RequestMapping(value="/api/map/moveto", method=RequestMethod.POST)
+    @RequestMapping(value="/api/map/moveto/x/{x}/y/{y}", method=RequestMethod.POST)
     // move player
-    public String moveOnMap() {
-        return "success";
+    public SuccessResponse moveOnMap(@PathVariable int x, @PathVariable int y) {
+        JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
+        long charId = token.getCharId();
+        // make sure the char is not in a map already
+        CharModel charModel = charRepository.findById(charId);
+        if (charModel.getCurrentMap() != null) {
+            // check if char can move
+            return new SuccessResponse(true, "success");
+        }
+
+        return new SuccessResponse(false, "error");
     }
 
     @RequestMapping(value="/api/map/attack", method=RequestMethod.POST)

@@ -1,4 +1,6 @@
 
+var GameStateEnum = Object.freeze({WAITING: 'waiting', MOVING: 'moving'});
+
     scotchApp.controller('dungeonController', function($scope, $http, $window, $location) {
 
     	$scope.stage = null;
@@ -22,6 +24,8 @@
         $scope.allowVerticalMove;
 
         $scope.movingIcon;
+
+        $scope.gameState = GameStateEnum.WAITING;
 
         // sets up canvas, and starts image preload
         $scope.init = function() {
@@ -159,29 +163,13 @@
                     for (row=0; row<$scope.map.cells[col].length; row++) {
                         var bitmap;
                         var backing;
-//                        if ($scope.map.cells[col][row].groundType == 1) {
-                            bitmap = $scope.instantiateImage($scope.map.cells[col][row].groundType);
-//                        }
-//                        else {
-//                            bitmap = $scope.instantiateImage('blank');
-//                        }
+
+                        bitmap = $scope.instantiateImage($scope.map.cells[col][row].groundType);
+
                         bitmap.x = x;
                         bitmap.y = y;
                         bitmap.data = {coordCol: col, coordRow: row}
-                        bitmap.addEventListener('click', function(event) {
-                            if (event.nativeEvent.button != 0) {        // only left click
-                                return;
-                            }
-                            console.log('bitmap click');
-                            x = event.target.data.coordCol;
-                            y = event.target.data.coordRow;
-
-                            createjs.Tween.get($scope.movingIcon).to($scope.gridCoordsToWorldCoords(x, y), 1000).call(function() {
-                                //Tween complete
-
-                            });
-
-                        });
+                        bitmap.addEventListener('click', $scope.tileClick);
                         $scope.container.addChild(bitmap);
 
                         if (col == 2 && row == 2) {
@@ -236,6 +224,34 @@
                 $location.path("/hq/");
             })
             .error(function (data) {
+                console.log(data);
+            });
+        }
+
+        $scope.tileClick = function(event) {
+            if (event.nativeEvent.button != 0 || $scope.gameState != GameStateEnum.WAITING) {        // only left click
+                return;
+            }
+            $scope.gameState = GameStateEnum.MOVING;
+
+            console.log('bitmap click');
+
+            x = event.target.data.coordCol;
+            y = event.target.data.coordRow;
+            $http({
+                method: 'POST',
+                url: '/api/map/moveto/x/' + x + '/y/' + y,
+                headers: {'x-access-token': $window.localStorage['jwtToken']}
+            })
+            .success(function(data) {
+                if (data.success) {
+                    createjs.Tween.get($scope.movingIcon).to($scope.gridCoordsToWorldCoords(x, y), 1000).call(function() {
+                        //Tween complete
+                        $scope.gameState = GameStateEnum.WAITING;
+                    });
+                }
+            })
+            .error(function(data) {
                 console.log(data);
             });
         }
