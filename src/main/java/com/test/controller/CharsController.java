@@ -25,16 +25,16 @@ public class CharsController {
     @Autowired
     private HttpServletRequest request;
 
-    // get all chars
+    /** get all chars for the user */
     @RequestMapping(value="/api/user/{userId}/chars", method=RequestMethod.GET)
     public List<CharModel> getChars(@PathVariable long userId) {
         List<CharModel> r = charRepository.findByUserId(userId);
         return r;
     }
 
+    /** Create a character */
     @RequestMapping(value="/api/chars", method=RequestMethod.POST)
     public SuccessResponse createChar(@RequestBody CharModel character) {
-//        long userId = 1;        // todo get the jwt token here
         JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
 
         User user = userRepository.findOne(token.getUserId());
@@ -43,8 +43,8 @@ public class CharsController {
         return new SuccessResponse(true, "created character");
     }
 
+    /** get the char w/ equipment, inv, etc. add charId to jwt for reuse throughout angular app */
     @RequestMapping(value="/api/char/", method=RequestMethod.GET)
-    // get the char w/ equipment, inv, etc. add charId to jwt for reuse throughout angular app
     public CharModel getChar() {
         JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
         long charId = token.getCharId();
@@ -53,17 +53,10 @@ public class CharsController {
         return charModel;
     }
 
-//    @RequestMapping(value="/api/chars/", method=RequestMethod.GET)
-//    // get all chars belonging to user
-//    public List<CharModel> getAllChars(@PathVariable long charId) {
-//        return null;
-//    }
-
-
-
+    /** delete char */
     @RequestMapping(value="/api/chars/{charId}", method=RequestMethod.DELETE)
-    // delete char
-    public String deleteChar(@PathVariable long charId) {
-        return "error";
+    public SuccessResponse deleteChar(@PathVariable long charId) {
+        return new SuccessResponse(false, "not implemented");
     }
+
 }

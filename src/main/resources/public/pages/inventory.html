@@ -1,17 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
     <style>
-        div {
-        border: 1px solid #ccc
-        }
+        /*div {
+            border: 1px solid #ccc
+        }*/
         .paper-doll {height:400px;}
         .stats-pane {height:400px;}
 
@@ -26,7 +17,7 @@
             position:relative;
         }
         .paper-doll-img {}
-        .floated {
+        /*.floated {
             position:absolute;
             top:20px;
             left:20px;
@@ -35,46 +26,71 @@
             position:absolute;
             top:40px;
             left:60px;
-        }
+        }*/
     </style>
-</head>
-<body>
+
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-6">
-            <div class="paper-doll">
-                <div class="paper-doll-wrapper">
-                    <img src="Untitled.png" class="paper-doll-img" />
-                    <span class="floated">f</span>
-                    <span class="floated-2">f2</span>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="paper-doll">
+                        <div class="paper-doll-wrapper">
+                            <img src="Untitled.png" class="paper-doll-img" />
+                            <!--<span class="floated">f</span>-->
+                            <!--<span class="floated-2">f2</span>-->
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="stats-pane">
-                hello
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="stats-pane">
+                        hello
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-lg-3">
-            <div class="comparison">
-                compare
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="comparison">
+                        compare
+                    </div>
+                </div>
             </div>
-            <div class="trash">
-                trash
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="trash">
+                        trash
+                    </div>
+                </div>
             </div>
-            <div class="consumable">
-                cons
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="consumable">
+                        cons
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-lg-3">
-            <div class="equip">
-                e
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="equip">
+                        e
+                    </div>
+                </div>
             </div>
-            <div class="mats">
-                m
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="mats">
+                        <!-- MATERIALS -->
+                        <list contents="char.inventoryMaterialModels" template-contents="inventory-materials-template.html" click="inventoryMaterialSelect(recipe)"></list>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-</body>
-</html>

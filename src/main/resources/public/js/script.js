@@ -70,7 +70,12 @@
 			$window.localStorage['jwtToken'] = undefined;
 			$location.path('/');
 		};
-		
+
+		$scope.home = function() {
+			$location.path('/');
+		};
+
+
 		var init = function() {
 			var token = $window.localStorage['jwtToken']
 			console.log('checking '+ token);

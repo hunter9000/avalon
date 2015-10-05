@@ -35,6 +35,15 @@ public class CharModel {
     @JoinColumn(name="curr_map_id")     // current map this char is in, or null
     private MapModel currentMap;
 
+    @Column(name = "map_x")
+    private Integer mapX;
+
+    @Column(name = "map_y")
+    private Integer mapY;
+
+    @OneToMany(mappedBy = "charModel")
+    private List<InventoryMaterialModel> inventoryMaterialModels;
+
     public Long getId() {
         return id;
     }
@@ -75,5 +84,26 @@ public class CharModel {
     }
     public void setMaps(List<MapModel> maps) {
         this.maps = maps;
+    }
+
+    public Integer getMapX() {
+        return mapX;
+    }
+    public void setMapX(Integer mapX) {
+        this.mapX = mapX;
+    }
+
+    public Integer getMapY() {
+        return mapY;
+    }
+    public void setMapY(Integer mapY) {
+        this.mapY = mapY;
+    }
+
+    public List<InventoryMaterialModel> getInventoryMaterialModels() {
+        return inventoryMaterialModels;
+    }
+    public void setInventoryMaterialModels(List<InventoryMaterialModel> inventoryMaterialModels) {
+        this.inventoryMaterialModels = inventoryMaterialModels;
     }
 }
