@@ -10,8 +10,6 @@
                                 <list contents="recipes" template-contents="recipe-list-item-template.html" click="recipeSelect(recipe)"></list>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
 
                         <div class="panel panel-default">
                             <div class="panel-body">
@@ -30,6 +28,9 @@
                             </div>
                         </div>
 
+                    </div>
+                    <div class="col-md-4">
+
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div>Base</div>
@@ -44,7 +45,7 @@
                                 <div>Extra</div>
                                 <div>remaining capacity: {{selectedRecipe.extraCapacity}}</div>
                                 <div>
-                                    <select size="10" ng-model="item" ng-options="mat for mat in extraMats" ng-change="matSelect()"></select>
+                                    <list contents="extraMats" template-contents="recipe-requirements-template.html" click=""></list>
                                 </div>
                             </div>
                         </div>
@@ -54,9 +55,10 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
                             <div>Materials</div>
-                            <list contents="mats" template-contents="inventory-materials-template.html" click="matSelect(recipe)"></list>
+                                pass the selected mat to the list directive so it can be compared inthe template and highlighted
+                                <list contents="mats" template-contents="inventory-materials-template.html" click="matSelect(recipe)"></list>
                             <div>
-                                <input type="text" value="1" />
+                                <!--<input type="text" value="1" />-->
                                 <a href="" ng-click="addMatToRecipe()" >Add to Recipe</a>
                             </div>
                             <div ng-show="selectedRecipe && selectedMat" >

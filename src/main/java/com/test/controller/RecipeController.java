@@ -28,10 +28,11 @@ public class RecipeController {
     @Autowired
     private HttpServletRequest request;
 
-    @RequestMapping(value="/api/recipes/{charId}", method=RequestMethod.GET)
-    public List<RecipeModel> getRecipes(@PathVariable long charId) {
+    @RequestMapping(value="/api/recipes/", method=RequestMethod.GET)
+    public List<RecipeModel> getRecipes() {
         // return all recipes this user has unlocked
         JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
+        long charId = token.getCharId();
         // todo validate that charId belongs to user
 
         CharModel charModel = charRepository.findById(charId);

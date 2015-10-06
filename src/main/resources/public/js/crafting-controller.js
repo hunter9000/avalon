@@ -13,21 +13,19 @@
 
         $scope.selectedRecipe = null;
 
-        $scope.fetchRecipes = function() {
-            $http({
-              method: 'GET',
-              url: '/api/recipes/'+1,
-              headers: {'x-access-token': $window.localStorage['jwtToken']}  })
-                .success(function(data) {
-                    $scope.recipes = data;
-                    console.log(data);
-                })
-                .error(function(data) {
-                    console.log('Error: ' + data);
-                }
-            );
-        }
-        $scope.fetchRecipes();
+        $http({
+          method: 'GET',
+          url: '/api/recipes/',
+          headers: {'x-access-token': $window.localStorage['jwtToken']}  })
+            .success(function(data) {
+                $scope.recipes = data;
+                console.log(data);
+            })
+            .error(function(data) {
+                console.log('Error: ' + data);
+            }
+        );
+
         $http({
             method: 'GET',
             url: '/api/char/',
@@ -73,11 +71,14 @@
 
         $scope.addMatToRecipe = function() {
             console.log('add to recipe');
+
+            $scope.addToList($scope.extraMats, $scope.selectedMat, 1);
+            $scope.removeFromList($scope.mats, $scope.selectedMat.materialModel.name, 1);
         }
 
         $scope.filterEffects = function(effectList) {
             var array = [];
-            if ($scope.selectedRecipe != null) {
+            if ($scope.selectedRecipe != null && effectList) {
                 for (i=0; i<effectList.length; i++) {
                     if (effectList[i].slot == $scope.selectedRecipe.item.bodySlot) {
                         array.push(effectList[i]);
@@ -112,6 +113,20 @@
             return false;
         }
 
+        $scope.addToList = function(list, mat, quantity) {
+            for (var i = 0; i < list.length; i++) {
+                var match = list[i];
+                if (match.materialModel.name == mat.materialModel.name) {
+                    match.quantity += quantity;
+                    return;
+                }
+            }
+            // not found, add to list
+            var newMat = JSON.parse(JSON.stringify(mat));
+            newMat.quantity = quantity;
+            list.push(newMat);
+        }
+
         /** check the given recipe to see if the player's inventory of materials has. returns boolean */
         $scope.recipeCraftable = function(recipe) {
             for (i=0; i<recipe.recipeReqs.length; i++) {
@@ -124,7 +139,9 @@
         }
 
         $scope.resetMats = function() {
-            $scope.mats = JSON.parse(JSON.stringify($scope.char.inventoryMaterialModels))
+            $scope.mats = JSON.parse(JSON.stringify($scope.char.inventoryMaterialModels));
+            $scope.extraMats = [];
+            $scope.baseMats = [];
         }
 
     });

@@ -13,5 +13,4 @@ public enum EquipmentSlot {
     RING,
     LEFT_HAND,
     RIGHT_HAND
-    ;
 }
