@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "characters")
@@ -43,6 +42,9 @@ public class CharModel {
 
     @OneToMany(mappedBy = "charModel")
     private List<InventoryMaterialModel> inventoryMaterialModels;
+
+    @OneToMany(mappedBy = "charModel")
+    private List<EquipmentModel> inventoryEquipment;
 
     public Long getId() {
         return id;
@@ -105,5 +107,12 @@ public class CharModel {
     }
     public void setInventoryMaterialModels(List<InventoryMaterialModel> inventoryMaterialModels) {
         this.inventoryMaterialModels = inventoryMaterialModels;
+    }
+
+    public List<EquipmentModel> getInventoryEquipment() {
+        return inventoryEquipment;
+    }
+    public void setInventoryEquipment(List<EquipmentModel> inventoryEquipment) {
+        this.inventoryEquipment = inventoryEquipment;
     }
 }

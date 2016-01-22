@@ -14,17 +14,17 @@
         $scope.selectedRecipe = null;
 
         $http({
-          method: 'GET',
-          url: '/api/recipes/',
-          headers: {'x-access-token': $window.localStorage['jwtToken']}  })
-            .success(function(data) {
-                $scope.recipes = data;
-                console.log(data);
-            })
-            .error(function(data) {
-                console.log('Error: ' + data);
-            }
-        );
+            method: 'GET',
+            url: '/api/recipes/',
+            headers: {'x-access-token': $window.localStorage['jwtToken']}
+        })
+        .success(function(data) {
+            $scope.recipes = data;
+            console.log(data);
+        })
+        .error(function(data) {
+            console.log('Error: ' + data);
+        });
 
         $http({
             method: 'GET',
@@ -40,7 +40,6 @@
         });
 
         $scope.recipeSelect = function(recipe) {
-//            console.log($scope.item);
             console.log('controller says this recipe selected ' + recipe);
             $scope.resetMats();      // reset the working list of mats
 
@@ -75,6 +74,27 @@
             $scope.addToList($scope.extraMats, $scope.selectedMat, 1);
             $scope.removeFromList($scope.mats, $scope.selectedMat.materialModel.name, 1);
         }
+
+        $scope.submitRecipe = function() {
+            var payload = {
+                'id': $scope.selectedRecipe.id,
+                'extraMats': $scope.extraMats
+            };
+            $http({
+                method: 'POST',
+                url: '/api/recipes/',
+                headers: {'x-access-token': $window.localStorage['jwtToken']},
+                data: payload
+            })
+            .success(function (data) {
+                console.log(data);
+            })
+            .error(function (data) {
+                console.log(data);
+            });
+        }
+
+        // utility methods
 
         $scope.filterEffects = function(effectList) {
             var array = [];

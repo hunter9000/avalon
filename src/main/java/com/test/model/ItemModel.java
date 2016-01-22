@@ -2,7 +2,7 @@ package com.test.model;
 
 import javax.persistence.*;
 
-// a crafted item. can be equipment, consumable
+// the base definition of a craftable item. can be equipment, consumable
 @Entity
 @Table(name="item")
 public class ItemModel {

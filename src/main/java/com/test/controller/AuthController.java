@@ -33,7 +33,7 @@ public class AuthController {
     private HttpServletRequest request;
 
     @RequestMapping(value="/api/authenticate", method= RequestMethod.POST)
-    public ResponseEntity<?>/*AuthResponse*/ greeting( @RequestBody AuthRequest request) {
+    public ResponseEntity<?> greeting( @RequestBody AuthRequest request) {
         System.out.println(request.name+ ": " + request.password);
 
         User u = userRepository.findByUsername(request.name);
