@@ -1,6 +1,7 @@
 package com.test.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.test.model.pathing.node.Travelable;
 
 import javax.persistence.*;
 
@@ -8,7 +9,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="cell")
 @JsonIgnoreProperties(value="map")
-public class CellModel {
+public class CellModel implements Travelable {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
@@ -79,4 +80,16 @@ public class CellModel {
     public void setGroundType(GroundType groundType) {
         this.groundType = groundType;
     }
+
+    /** Travelable interface */
+	@Override
+	public double getEnterWeight() {
+		return groundType.enterWeight;
+	}
+
+	@Override
+	public boolean isPassable() {
+		return true;
+	}
+
 }
