@@ -1,6 +1,6 @@
 package com.test.response;
 
-import com.test.model.MaterialModel;
+import com.test.model.items.MaterialModel;
 
 public class MaterialResponse {
 

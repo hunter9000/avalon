@@ -1,7 +1,7 @@
-package com.test.model;
+package com.test.model.dungeons;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.test.model.CharModel;
 
 import javax.persistence.*;
 import java.util.List;

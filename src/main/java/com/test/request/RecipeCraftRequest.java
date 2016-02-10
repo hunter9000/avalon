@@ -1,6 +1,6 @@
 package com.test.request;
 
-import com.test.model.InventoryMaterialModel;
+import com.test.model.items.InventoryMaterialModel;
 
 import java.util.List;
 

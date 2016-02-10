@@ -1,11 +1,10 @@
 package com.test.controller;
 
-import com.test.model.EffectType;
-import com.test.model.MaterialEffectModel;
-import com.test.model.MaterialModel;
+import com.test.model.items.EffectType;
+import com.test.model.items.MaterialEffectModel;
+import com.test.model.items.MaterialModel;
 import com.test.repository.MaterialEffectRepository;
 import com.test.repository.MaterialRepository;
-import com.test.response.MaterialResponse;
 import com.test.response.SuccessResponse;
 import io.jsonwebtoken.lang.Collections;
 import org.springframework.beans.factory.annotation.Autowired;

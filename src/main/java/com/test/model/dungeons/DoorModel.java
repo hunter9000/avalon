@@ -1,4 +1,6 @@
-package com.test.model;
+package com.test.model.dungeons;
+
+import com.test.model.CellEntityModel;
 
 public class DoorModel extends CellEntityModel {
 

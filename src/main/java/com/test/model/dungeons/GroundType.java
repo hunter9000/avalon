@@ -1,4 +1,4 @@
-package com.test.model;
+package com.test.model.dungeons;
 
 public enum GroundType {
     DIRT(1.0),

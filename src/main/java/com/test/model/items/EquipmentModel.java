@@ -1,6 +1,7 @@
-package com.test.model;
+package com.test.model.items;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.test.model.CharModel;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,19 +13,23 @@ public class EquipmentModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private long id;
 
-    @Column(name = "item_id")
+    @OneToOne
+    @JoinColumn(name = "item_id")
     private ItemModel itemModel;        // the base item definition
 
-    @Column(name = "char_id")
+    @OneToOne
+    @JoinColumn(name = "char_id")
     private CharModel charModel;        // char this belongs to
 
-    @OneToMany()
+    @OneToMany(mappedBy = "equipmentModel")
 //    @JoinTable(name="item_effect",
 //            joinColumns={@JoinColumn(name="item_id", referencedColumnName="id")},
 //            inverseJoinColumns={@JoinColumn(name="item_effect_id", referencedColumnName="id")})
     private List<ItemEffectModel> itemEffects;
+
 
     public long getId() {
         return id;

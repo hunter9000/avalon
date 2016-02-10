@@ -1,6 +1,7 @@
-package com.test.model;
+package com.test.model.items;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.test.model.CharModel;
 
 import javax.persistence.*;
 

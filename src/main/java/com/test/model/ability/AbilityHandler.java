@@ -2,7 +2,7 @@ package com.test.model.ability;
 
 
 import com.test.model.CellEntityModel;
-import com.test.model.CellModel;
+import com.test.model.dungeons.CellModel;
 
 //
 public abstract class AbilityHandler {

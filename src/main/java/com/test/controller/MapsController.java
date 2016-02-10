@@ -1,11 +1,10 @@
 package com.test.controller;
 
 
-import com.sun.net.httpserver.Authenticator;
-import com.test.model.CellModel;
+import com.test.model.dungeons.CellModel;
 import com.test.model.CharModel;
-import com.test.model.GroundType;
-import com.test.model.MapModel;
+import com.test.model.dungeons.GroundType;
+import com.test.model.dungeons.MapModel;
 import com.test.repository.CellRepository;
 import com.test.repository.CharRepository;
 import com.test.repository.MapRepository;
@@ -37,10 +36,7 @@ public class MapsController {
     private HttpServletRequest request;
 
 
-     /** if this map exists, return it, otherwise build and return
-      * query all cells, and all entities
-      * build transient helper lists by putting all enemies, nodes, etc in lists
-      * tell each cell what entity is on it */
+     /** if this map exists, return it or return null. Use the portal method to enter a map if null. */
     @RequestMapping(value="/api/char/map/", method=RequestMethod.GET)
     public MapModel getMap() {
         JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
@@ -54,7 +50,9 @@ public class MapsController {
     }
 
     /** Enter the portal given. If user is not in a map already, create the appropriate map and return it, saving that the char is in it.
-     */
+     *  query all cells, and all entities
+     *  build transient helper lists by putting all enemies, nodes, etc in lists
+     *  tell each cell what entity is on it */
     @RequestMapping(value="/api/portal/{portalId}", method=RequestMethod.POST)
     public MapModel enterPortal(@PathVariable long portalId) {
         JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");

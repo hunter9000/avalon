@@ -1,4 +1,4 @@
-package com.test.model;
+package com.test.model.items;
 
 import javax.persistence.*;
 
@@ -11,10 +11,12 @@ public class ItemEffectModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "equipment_id")
+    @ManyToOne()
+    @JoinColumn(name = "equipment_id")
     private EquipmentModel equipmentModel;
 
-    @Column(name = "material_effect_id")
+    @OneToOne()
+    @JoinColumn(name = "material_effect_id")
     private MaterialEffectModel materialEffect;
 
     public long getId() {

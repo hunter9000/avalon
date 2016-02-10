@@ -1,6 +1,7 @@
-package com.test.model;
+package com.test.model.dungeons;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.test.model.CellEntityModel;
 import com.test.model.pathing.node.Travelable;
 
 import javax.persistence.*;

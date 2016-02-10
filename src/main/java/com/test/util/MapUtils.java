@@ -1,6 +1,6 @@
 package com.test.util;
 
-import com.test.model.MapModel;
+import com.test.model.dungeons.MapModel;
 
 import java.util.ArrayList;
 import java.util.List;

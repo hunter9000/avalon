@@ -1,7 +1,7 @@
 package com.test.controller;
 
-import com.test.model.EquipmentModel;
-import com.test.model.EquipmentSlot;
+import com.test.model.items.EquipmentModel;
+import com.test.model.items.EquipmentSlot;
 import io.jsonwebtoken.lang.Collections;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

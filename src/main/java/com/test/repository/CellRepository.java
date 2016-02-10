@@ -1,6 +1,6 @@
 package com.test.repository;
 
-import com.test.model.CellModel;
+import com.test.model.dungeons.CellModel;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

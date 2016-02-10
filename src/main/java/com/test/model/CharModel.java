@@ -1,6 +1,10 @@
 package com.test.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.test.model.dungeons.MapModel;
+import com.test.model.items.EquipmentModel;
+import com.test.model.items.InventoryMaterialModel;
+import com.test.model.items.RecipeModel;
 
 import javax.persistence.*;
 import java.util.List;

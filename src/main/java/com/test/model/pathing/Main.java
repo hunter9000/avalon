@@ -1,8 +1,8 @@
 package com.test.model.pathing;
 
 
-import com.test.model.CellModel;
-import com.test.model.GroundType;
+import com.test.model.dungeons.CellModel;
+import com.test.model.dungeons.GroundType;
 import com.test.model.pathing.graph.GridGraph;
 import com.test.model.pathing.node.GridNode;
 import com.test.model.pathing.node.Node;
