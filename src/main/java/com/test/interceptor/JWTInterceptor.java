@@ -2,13 +2,15 @@ package com.test.interceptor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.test.security.JwtSubject;
-import com.test.security.SecurityManager;
-import io.jsonwebtoken.Jws;
+import com.test.util.AuthUtils;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import com.test.security.SecurityManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,25 +21,38 @@ public class JWTInterceptor implements HandlerInterceptor {
     @Autowired
     private SecurityManager securityManager;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    /** Validates that the jwt token passed in matches  */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String jwtToken = request.getHeader("x-access-token");
 
-//        System.out.println(securityManager);
         System.out.println(jwtToken);
-
         System.out.println("pre handle Request URL::" + request.getRequestURL().toString() + " | token: " + jwtToken);
 
         // validate the token here
-        System.out.println("subject: " + Jwts.parser().setSigningKey(securityManager.getSecurityKey()).parseClaimsJws(jwtToken).getBody().getSubject());//.equals("Joe");
-
-        String jwsSubject = Jwts.parser().setSigningKey(securityManager.getSecurityKey()).parseClaimsJws(jwtToken).getBody().getSubject();
+        if (jwtToken == null || jwtToken.isEmpty()) {
+            throw new IllegalAccessException();
+        }
+        String jwsSubject = null;
+        try {
+            jwsSubject = Jwts.parser().setSigningKey(securityManager.getSecurityKey()).parseClaimsJws(jwtToken).getBody().getSubject();
+        }
+        catch (MalformedJwtException mje) {
+            throw new IllegalAccessException();
+        }
+        System.out.println("subject: " + jwsSubject);
 
         ObjectMapper objectMapper = new ObjectMapper();
         JwtSubject subject = objectMapper.readValue(jwsSubject, JwtSubject.class);
 
-        request.setAttribute("jwtToken", subject);
+        if (!subject.isValid()) {
+            throw new IllegalAccessException();
+        }
 
+        request.setAttribute(AuthUtils.JWT_TOKEN_NAME, subject);
         return true;
     }
 

@@ -19,12 +19,14 @@ public class MaterialEffectModel {
     private MaterialModel materialModel;
 
     @Column(name = "type")
+    @Enumerated(value = EnumType.STRING)
     private EffectType effectType;
 
     @Column(name = "val")
     private int value;
 
     @Column(name = "slot")
+    @Enumerated(value = EnumType.STRING)
     private EquipmentSlot slot;
 
     public long getId() {

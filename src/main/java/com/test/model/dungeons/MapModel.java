@@ -9,7 +9,7 @@ import java.util.List;
 // container for a single map. linked to cells
 @Entity
 @Table(name="map")
-@JsonIgnoreProperties(value = "charModel")
+@JsonIgnoreProperties(value = {"charModel"})
 public class MapModel {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -22,14 +22,13 @@ public class MapModel {
     @Column(name="boss_level")
     private boolean isBoss;
 
-    //        @JoinColumn(mappedBy="enterMap")
-    @OneToMany(cascade=CascadeType.ALL)
-    @JoinTable(name="map_edge",
-            joinColumns={@JoinColumn(name="enter_map_id", referencedColumnName="id")},
-            inverseJoinColumns={@JoinColumn(name="exit_map_id", referencedColumnName="id")})
-    private List<MapModel> linkedMaps;
+//    @OneToMany(cascade=CascadeType.ALL)
+//    @JoinTable(name="map_edge",
+//            joinColumns={@JoinColumn(name="enter_map_id", referencedColumnName="id")},
+//            inverseJoinColumns={@JoinColumn(name="exit_map_id", referencedColumnName="id")})
+//    private List<MapModel> linkedMaps;
 
-    @OneToMany(mappedBy = "map")
+    @OneToMany(mappedBy = "map", cascade = CascadeType.ALL)
     private List<CellModel> cells;
 
     public long getId() {
@@ -56,13 +55,13 @@ public class MapModel {
         this.isBoss = isBoss;
     }
 
-    public List<MapModel> getLinkedMaps() {
-        return linkedMaps;
-    }
-
-    public void setLinkedMaps(List<MapModel> linkedMaps) {
-        this.linkedMaps = linkedMaps;
-    }
+//    public List<MapModel> getLinkedMaps() {
+//        return linkedMaps;
+//    }
+//
+//    public void setLinkedMaps(List<MapModel> linkedMaps) {
+//        this.linkedMaps = linkedMaps;
+//    }
 
     public List<CellModel> getCells() {
         return cells;

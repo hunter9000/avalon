@@ -1,6 +1,6 @@
 
 
-scotchApp.factory('TemplateService', function ($http, TEMPLATE_FRAGMENT_URL) {
+avalonApp.factory('TemplateService', function ($http, TEMPLATE_FRAGMENT_URL) {
 //    var getTemplate = function (content) {
 //        return $http.get('templates/' + content + '.html');
 //    };

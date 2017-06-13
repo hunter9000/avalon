@@ -1,2 +1,2 @@
 
-scotchApp.constant('TEMPLATE_FRAGMENT_URL', 'pages/templates/');
+avalonApp.constant('TEMPLATE_FRAGMENT_URL', 'pages/templates/');

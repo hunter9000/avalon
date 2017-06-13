@@ -1,13 +1,13 @@
 
 
 
-    scotchApp.controller('inventoryController', function($scope, $http, $location, $window) {
+    avalonApp.controller('inventoryController', function($scope, $http, $routeParams, $location, $window) {
 
         $scope.char;
 
         $http({
             method: 'GET',
-            url: '/api/char/',
+            url: '/api/char/' + $routeParams.charId + '/',
             headers: {'x-access-token': $window.localStorage['jwtToken']}
         })
         .success(function (data) {

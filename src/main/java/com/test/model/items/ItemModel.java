@@ -16,6 +16,7 @@ public class ItemModel {
     private String name;
 
     @Column(name="body_slot")
+    @Enumerated(value = EnumType.STRING)
     private EquipmentSlot bodySlot;
 
     public long getId() {

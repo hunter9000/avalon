@@ -5,6 +5,7 @@ import com.test.model.dungeons.MapModel;
 import com.test.model.items.EquipmentModel;
 import com.test.model.items.InventoryMaterialModel;
 import com.test.model.items.RecipeModel;
+import com.test.model.user.User;
 
 import javax.persistence.*;
 import java.util.List;

@@ -18,8 +18,7 @@ public class MaterialModel {
     @Column(name = "icon")
     private String icon;
 
-    @OneToMany(mappedBy = "materialModel")
-//    @JoinColumn(name = "material_id", referencedColumnName = "id")      // tells it the name of this column, and what column it references on material table
+    @OneToMany(mappedBy = "materialModel", cascade = CascadeType.ALL)
     private List<MaterialEffectModel> effectList;
 
     public long getId() {

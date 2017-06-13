@@ -2,7 +2,7 @@ package com.test.util;
 
 
 import com.test.model.CharModel;
-import com.test.model.User;
+import com.test.model.user.User;
 
 public class Util {
 

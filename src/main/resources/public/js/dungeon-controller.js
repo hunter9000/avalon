@@ -1,7 +1,10 @@
 
 var GameStateEnum = Object.freeze({WAITING: 'waiting', MOVING: 'moving'});
 
-    scotchApp.controller('dungeonController', function($scope, $http, $window, $location) {
+    avalonApp.controller('dungeonController', function($scope, $http, $window, $location, $routeParams) {
+
+        $scope.char;
+        $scope.map;
 
     	$scope.stage = null;
 		$scope.container = null;
@@ -123,11 +126,12 @@ var GameStateEnum = Object.freeze({WAITING: 'waiting', MOVING: 'moving'});
 
 		$scope.loadMap = function() {
             $http({method:'GET',
-                   url: 'api/char/map/',
+                   url: '/api/char/'+ $routeParams.charId +'/',
                    headers: {'x-access-token': $window.localStorage['jwtToken']}
             })
-            .success(function (data) {
-                $scope.map = data;
+            .then(function successCallback(response) {
+                $scope.char = response.data;
+                $scope.map = $scope.char.currentMap;
 
                 // create 2d array of cells
                 // find dimensions of cell array
@@ -206,9 +210,7 @@ var GameStateEnum = Object.freeze({WAITING: 'waiting', MOVING: 'moving'});
                 if (!$scope.allowVerticalMove) {       // // need to center vertically
                     $scope.container.y = (stageRectangle.height - contRectangle.height) / 2;
                 }
-
-            })
-            .error(function(data) {
+            }, function errorCallback() {
                 console.log('Error:' + data);
             });
 		}

@@ -3,12 +3,12 @@
 
     <p>HQ: </p>
 
-    <a href="#inventory" >Inventory</a>
+    <a ng-click="goToInventory()" >Inventory</a>
     <br/>
     <a href="#crafting" >Crafting</a>
     <br/>
-    <a href="#dungeon" ng-show="char.currentMap">Dungeon</a>
-    <a href="#portals" ng-hide="char.currentMap">Portals</a>
+    <a ng-click="goToDungeon()" ng-show="char.currentMap">Dungeon</a>
+    <a ng-click="goToPortals()" ng-hide="char.currentMap">Portals</a>
 
     <!--<button ng-click="inventory()">Inventory</button>-->
     <!--<button ng-click="dungeon()">Dungeon</button>-->

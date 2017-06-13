@@ -1,6 +1,6 @@
 
 
-	angular.module('scotchApp').controller('materialsController', function($scope, $http, $window, $routeParams, $modal) {
+	angular.module('avalonApp').controller('materialsController', function($scope, $http, $window, $routeParams, $uibModal, $location) {
 
 		$scope.mats = null;
 
@@ -18,161 +18,66 @@
                 }
             );
         }
-
         $scope.fetchMats();      // kick off the chain of loading all the data. Load the effect types, then equip slots, then mats. this is so when we populate the mats, the other two are already loaded.
+
+        $scope.addNewMat = function() {
+                            var modalInstance = $uibModal.open({
+                                animation: false,
+                                templateUrl: 'pages/templates/material-edit-template.html',
+                                controller: 'editMaterialController',
+                                size: 'md',
+                                resolve: {
+                                    mat: function () {
+                                        return null;    // pass the character to delete
+                                    }
+                                }
+                            });
+
+                            modalInstance.result.then(function (mat) {
+                                $http.post('/api/materials/',
+                                   mat,
+                                   { headers: {'x-access-token': $window.localStorage['jwtToken']} }
+                                ).then(function successCallback(response) {
+                                        console.log(response);
+                                        $scope.fetchMats();
+                                    }, function errorCallback(response) {
+                                        console.log('Error: ' + response);
+                                        $location.path('/error');
+                                    }
+                                );
+                            }, function () {
+                                console.log('Modal dismissed at: ' + new Date());
+                            });
+        }
 
 	});
 
-    angular.module('scotchApp').directive('material', ['$http', '$window', 'StaticData', function ($http, $window, StaticData) {
-        return {
-            restrict: 'E',
-            templateUrl: 'pages/templates/material-template.html',
-            replace: true,
-            scope: {
-                material: '=material',
-                refreshCallback: '&refresh'
-            },
-            link: function (scope, element, attrs) {
-                scope.showForm = false;         // show the new effect form
-                scope.effectTypes = StaticData.effectTypes;
-                scope.equipmentSlots = StaticData.equipmentSlots;
-                scope.eff = {effectType: '', value: '', slot: '', matId: scope.material.id};
+    // controller for the modal window
+    avalonApp.controller('editMaterialController', function ($scope, $uibModalInstance, mat) {
+        $scope.mat = mat;
 
-                scope.showEffectForm = function () {
-                    scope.showForm = !scope.showForm;
-                };
+        if ($scope.mat == null) {
+            $scope.mat = {effectList: []};      // initialize the array of effects so it can be added to
+        }
 
-                scope.createEffect = function() {
-                    scope.showForm = !scope.showForm;
+        $scope.newType;
+        $scope.newValue;
+        $scope.newSlot;
 
-                    $http({method:'POST',
-                           url: 'api/materials/'+scope.material.id+'/effect',
-                           data: scope.eff,
-                           headers: {'x-access-token': $window.localStorage['jwtToken']}
-                        })
-                        .success(function (data, status, headers, config) {
-                            scope.refreshCallback();
-                            console.log(data);
-                        })
-                        .error(function(data, status, headers, config) {
-                            console.log('Error:' + data);
-                        }
-                    );
-                    scope.eff = {effectType: '', value: '', slot: '', matId: scope.material.id};      // reset the eff
-                };
+        $scope.addEffect = function() {
+            var newEff = {'effectType': $scope.newType, 'value': $scope.newValue, 'slot': $scope.newSlot};
+            $scope.mat.effectList.push(newEff);
+            $scope.newType = null;
+            $scope.newValue = null;
+            $scope.newSlot = null;
+            return false;
+        }
 
-                scope.deleteMat = function(matId) {
-                    console.log('jwt ' + $window.localStorage['jwtToken']);
-                    $http({method:'DELETE',
-                           url: 'api/materials/'+matId,
-                           headers: {'x-access-token': $window.localStorage['jwtToken']}
-                        })
-                        .success(function (data, status, headers, config) {
-                            console.log(data);
-                            element[0].remove();
-                        })
-                        .error(function(data, status, headers, config) {
-                            console.log('Error:' + data);
-                        }
-                    );
-                };
-
-                scope.deleteEffect = function(matId, effectId) {
-                    $http({method:'DELETE',
-                           url: 'api/materials/'+matId+'/effect/'+effectId,
-                           headers: {'x-access-token': $window.localStorage['jwtToken']}
-                        })
-                        .success(function (data, status, headers, config) {
-                            console.log(data);
-//                            element[0].remove();
-                            scope.refreshCallback();
-                        })
-                        .error(function(data, status, headers, config) {
-                            console.log('Error:' + data);
-                        }
-                    );
-                }
-            }
+        $scope.submitForm = function () {
+            $uibModalInstance.close($scope.mat);
         };
-    }]);
 
-    angular.module('scotchApp').directive('materialadd', ['$http', '$window', function ($http, $window) {
-        return {
-            restrict: 'E',
-            templateUrl: 'pages/templates/material-add-template.html',
-            replace: true,
-            scope: {
-                refreshCallback: '&refresh'
-            },
-            link: function (scope, element, attrs) {
-                scope.showForm = false;
-                scope.mat = {name: '', icon: ''};
-
-                scope.clickMe = function () {
-                    scope.showForm = !scope.showForm;
-                };
-
-                scope.createNew = function() {
-                    scope.showForm = !scope.showForm;
-                    console.log(scope.mat);
-                    // post scope.mat to the server
-                    $http({method:'POST',
-                           url: 'api/materials/',
-                           data: scope.mat,
-                           headers: {'x-access-token': $window.localStorage['jwtToken']}
-                        })
-                        .success(function (data, status, headers, config) {
-//                            scope.fetchMats();
-                            scope.refreshCallback();
-                            console.log(data);
-                        })
-                        .error(function(data, status, headers, config) {
-                            console.log('Error:' + data);
-                        }
-                    );
-                }
-            }
+        $scope.cancel = function () {
+            $uibModalInstance.dismiss('cancel');
         };
-    }]);
-
-//    angular.module('scotchApp').directive('effectadd', ['$http', '$window', 'StaticData', function ($http, $window, StaticData) {
-//        return {
-//            restrict: 'E',
-//            templateUrl: 'pages/templates/effect-add-template.html',
-//            replace: true,
-//            scope: {
-//                refreshCallback: '&refresh'
-//                mat: '='
-//            },
-//            link: function(scope, element, attrs) {
-////                scope.showForm = false;
-////                scope.effectTypes = StaticData.effectTypes;
-////                scope.equipmentSlots = StaticData.equipmentSlots;
-////                scope.eff = {effectType: '', value: '', slot: '', matId: scope.mat.id};
-////
-////                scope.clickMe = function () {
-////                    scope.showForm = !scope.showForm;
-////                };
-////
-////                scope.createNew = function() {
-////                    scope.showForm = !scope.showForm;
-////
-////                    $http({method:'POST',
-////                           url: 'api/materials/'+scope.mat.id+'/effect',
-////                           data: scope.eff,
-////                           headers: {'x-access-token': $window.localStorage['jwtToken']}
-////                        })
-////                        .success(function (data, status, headers, config) {
-////
-////                            console.log(data);
-////                        })
-////                        .error(function(data, status, headers, config) {
-////                            console.log('Error:' + data);
-////                        }
-////                    );
-////                    scope.eff = {effectType: '', value: '', slot: '', matId: scope.mat.id};      // reset the eff
-////                };
-//            }
-//        }
-//    }]);
-
+    });

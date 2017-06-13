@@ -1,6 +1,7 @@
 package com.test.controller;
 
 
+import com.test.interceptor.CharacterSheetOwnerRequired;
 import com.test.model.dungeons.CellModel;
 import com.test.model.CharModel;
 import com.test.model.dungeons.GroundType;
@@ -10,6 +11,7 @@ import com.test.repository.CharRepository;
 import com.test.repository.MapRepository;
 import com.test.response.SuccessResponse;
 import com.test.security.JwtSubject;
+import com.test.util.AuthUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,28 +39,30 @@ public class MapsController {
 
 
      /** if this map exists, return it or return null. Use the portal method to enter a map if null. */
-    @RequestMapping(value="/api/char/map/", method=RequestMethod.GET)
-    public MapModel getMap() {
-        JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
-        long charId = token.getCharId();
-        CharModel charModel = charRepository.findById(charId);
-        if (charModel.getCurrentMap() != null) {
-            return charModel.getCurrentMap();
-        }
-
-        return null;
-    }
+//    @RequestMapping(value="/api/char/{charId}/map/", method=RequestMethod.GET)
+//    public MapModel getMap(@PathVariable long charId) {
+//        JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
+////        long charId = token.getCharId();
+//        CharModel charModel = charRepository.findById(charId);
+//        if (charModel.getCurrentMap() != null) {
+//            return charModel.getCurrentMap();
+//        }
+//
+//        return null;
+//    }
 
     /** Enter the portal given. If user is not in a map already, create the appropriate map and return it, saving that the char is in it.
      *  query all cells, and all entities
      *  build transient helper lists by putting all enemies, nodes, etc in lists
      *  tell each cell what entity is on it */
-    @RequestMapping(value="/api/portal/{portalId}", method=RequestMethod.POST)
-    public MapModel enterPortal(@PathVariable long portalId) {
-        JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
-        long charId = token.getCharId();
+    @RequestMapping(value="/api/char/{charId}/portal/{portalId}/", method=RequestMethod.POST)
+    @CharacterSheetOwnerRequired
+    public MapModel enterPortal(@PathVariable long charId, @PathVariable long portalId) {
+//        JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
+        CharModel charModel = (CharModel)request.getAttribute(AuthUtils.CHARACTER_NAME);
+//        long charId = token.getCharId();
         // make sure the char is not in a map already
-        CharModel charModel = charRepository.findById(charId);
+//        CharModel charModel = charRepository.findById(charId);
         if (charModel.getCurrentMap() == null) {
             MapModel newMap = constructMapModelByPortalId(portalId, charId);
             mapRepository.save(newMap);
@@ -75,10 +79,10 @@ public class MapsController {
 
     // delete the map, reset player back home
     // check if standing on the door
-    @RequestMapping(value="/api/map/leave", method=RequestMethod.POST)
-    public SuccessResponse leaveMap() {
+    @RequestMapping(value="/api/char/{charId}/map/leave", method=RequestMethod.POST)
+    public SuccessResponse leaveMap(@PathVariable long charId) {
         JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
-        long charId = token.getCharId();
+//        long charId = token.getCharId();
 
         CharModel charModel = charRepository.findById(charId);
         charModel.setCurrentMap(null);
@@ -88,11 +92,11 @@ public class MapsController {
         return new SuccessResponse(true, "success");
     }
 
-    @RequestMapping(value="/api/map/moveto/x/{x}/y/{y}", method=RequestMethod.POST)
+    @RequestMapping(value="/api/char/{charId}/map/moveto/x/{x}/y/{y}", method=RequestMethod.POST)
     // move player
-    public SuccessResponse moveOnMap(@PathVariable int x, @PathVariable int y) {
+    public SuccessResponse moveOnMap(@PathVariable long charId, @PathVariable int x, @PathVariable int y) {
         JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
-        long charId = token.getCharId();
+//        long charId = token.getCharId();
         // make sure the char is not in a map already
         CharModel charModel = charRepository.findById(charId);
         if (charModel.getCurrentMap() != null) {

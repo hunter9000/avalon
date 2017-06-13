@@ -1,7 +1,7 @@
 
 
 
-    scotchApp.controller('craftingController', function($scope, $http, $window, $routeParams) {
+    avalonApp.controller('craftingController', function($scope, $http, $window, $routeParams) {
         $scope.recipes;
         $scope.char;
 
