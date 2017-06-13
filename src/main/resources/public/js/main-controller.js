@@ -1,6 +1,6 @@
 
 // create the controller and inject Angular's $scope
-avalonApp.controller('mainController', function($scope, $location, $window, JwtData) {
+avalonApp.controller('mainController', function($scope, $location, $window, JwtService) {
     // create a message to display in our view
     $scope.message = 'main';
 
@@ -9,32 +9,26 @@ avalonApp.controller('mainController', function($scope, $location, $window, JwtD
         $location.path('/');
     };
 
-  /*  $scope.home = function() {
-
-
-        $location.path('/');
-    };*/
-
     $scope.isAdmin = function() {
-        return JwtData.isAdmin();
+        return JwtService.isAdmin();
     }
     $scope.isDm = function() {
-        return JwtData.isDm();
+        return JwtService.isDm();
     }
     $scope.isPlayer = function() {
-        return JwtData.isPlayer();
+        return JwtService.isPlayer();
     }
     $scope.getUserName = function() {
-        return JwtData.getUserName();
+        return JwtService.getUserName();
     }
 
     var init = function() {
         var token = $window.localStorage['jwtToken']
-        console.log('checking '+ token);
+        $log.debug('checking '+ token);
 
-        if (token === 'undefined' || token === null || token == null) {
+        if (token === 'undefined' || token === null || token == null || token == 'null') {
             $location.path('/login');
-            console.log('redirecting');
+            $log.debug('redirecting');
         }
         else {
             $location.path('/charselect');

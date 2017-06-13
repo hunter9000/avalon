@@ -1,3 +1,12 @@
+USE avalon;
+
+CREATE TABLE `sql_files` (
+	`id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+	`sql_file_name` VARCHAR(255) NOT NULL,
+	`run_date` DATETIME NOT NULL,
+	PRIMARY KEY (`id`)
+) COLLATE='utf8_general_ci' ENGINE=InnoDB;
+
 
 CREATE TABLE `role` (
 	`id` BIGINT(20) NOT NULL AUTO_INCREMENT,
@@ -36,3 +45,6 @@ INSERT INTO user (username, password, email) VALUES ('hunter', '$2a$10$YBd.jCtCn
 
 INSERT INTO user_role (user_id, role_id) VALUES (1, 1);
 INSERT INTO user_role (user_id, role_id) VALUES (1, 2);
+
+INSERT INTO `sql_files` (`sql_file_name`, `run_date`) VALUES ('1.sql', NOW());
+INSERT INTO `sql_files` (`sql_file_name`, `run_date`) VALUES ('2.sql', NOW());

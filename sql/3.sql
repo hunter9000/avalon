@@ -1,3 +1,5 @@
+USE avalon;
+
 CREATE TABLE `item` (
 	`id` BIGINT(20) NOT NULL AUTO_INCREMENT,
 	`body_slot` VARCHAR(255) NULL DEFAULT NULL,
@@ -69,3 +71,5 @@ COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
 
 ALTER TABLE `map` ADD CONSTRAINT `FK_hv7rnaxnoy9w6kx77u0onx7bi` FOREIGN KEY (`char_id`) REFERENCES `characters` (`id`);
+
+INSERT INTO `sql_files` (`sql_file_name`, `run_date`) VALUES ('3.sql', NOW());

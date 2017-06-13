@@ -1,4 +1,4 @@
-
-function getEffectIcon(effectType) {
-
-}
+//
+//function getEffectIcon(effectType) {
+//
+//}

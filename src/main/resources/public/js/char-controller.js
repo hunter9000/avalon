@@ -1,25 +1,30 @@
 
 
-	avalonApp.controller('charController', function($scope, $window, $http, $uibModal, $location) {
+	avalonApp.controller('charController', function(APIService, $scope, $window, $http, $uibModal, $location) {
 		$scope.message;// = 'token: ' + $window.localStorage['jwtToken'];
 
 		$scope.chars = [];
 
         $scope.fetchChars = function() {
-            $http({
-              method: 'GET',
-              url: '/api/char/',
-              headers: {'x-access-token': $window.localStorage['jwtToken']}  })
-                .success(function(data) {
-                    $scope.chars = data;
-                    console.log('got these chars back: ');
-                    console.log(data);
-                })
-                .error(function(data) {
-                    console.log('Error:');
-                    console.log(data);
-                }
-            );
+            APIService.getChars(function(response) {
+                $scope.chars = response.data;
+                console.log('got these chars back: ');
+                console.log(response.data);
+            });
+//            $http({
+//              method: 'GET',
+//              url: '/api/char/',
+//              headers: {'x-access-token': $window.localStorage['jwtToken']}  })
+//                .success(function(data) {
+//                    $scope.chars = data;
+//                    console.log('got these chars back: ');
+//                    console.log(data);
+//                })
+//                .error(function(data) {
+//                    console.log('Error:');
+//                    console.log(data);
+//                }
+//            );
         }
 
         $scope.fetchChars();
@@ -35,19 +40,24 @@
 
             modalInstance.result.then(
                 function (newChar) {		// ok selected
-                    $http({
-                        method:'POST',
-                        url:'/api/char/',
-                        headers: {'x-access-token': $window.localStorage['jwtToken']},
-                        data: newChar  })
-                    .success(function(data) {
-//                        $scope.formData = data;
+                    APIService.createChar(newChar, function(response) {
                         $scope.fetchChars();
-                        console.log(data);
-                    })
-                    .error(function(data) {
-                        console.log('Error: ' + data);
+                        console.log(response.data);
                     });
+
+//                    $http({
+//                        method:'POST',
+//                        url:'/api/char/',
+//                        headers: {'x-access-token': $window.localStorage['jwtToken']},
+//                        data: newChar  })
+//                    .success(function(data) {
+////                        $scope.formData = data;
+//                        $scope.fetchChars();
+//                        console.log(data);
+//                    })
+//                    .error(function(data) {
+//                        console.log('Error: ' + data);
+//                    });
                 },
                 function () {					// closed
 

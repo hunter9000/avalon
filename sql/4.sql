@@ -1,3 +1,5 @@
+USE avalon;
+
 CREATE TABLE `character_recipe` (
 	`id` BIGINT(20) NOT NULL AUTO_INCREMENT,
 	`char_id` BIGINT(20) NULL DEFAULT NULL,
@@ -74,3 +76,5 @@ CREATE TABLE `item_effect` (
 	CONSTRAINT `FK_4hydy8fpfc1ja4j83j5iero7x` FOREIGN KEY (`material_effect_id`) REFERENCES `material_effect` (`id`)
 )
 COLLATE='utf8_general_ci' ENGINE=InnoDB;
+
+INSERT INTO `sql_files` (`sql_file_name`, `run_date`) VALUES ('4.sql', NOW());
