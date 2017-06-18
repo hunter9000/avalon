@@ -1,11 +1,15 @@
 package avalon.interceptor;
 
+import avalon.model.user.User;
+import avalon.repository.UserRepository;
+import avalon.security.ForbiddenAccessException;
 import avalon.security.JwtSubject;
 import avalon.security.SecurityManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import avalon.util.AuthUtils;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -19,40 +23,51 @@ import javax.servlet.http.HttpServletResponse;
 public class JWTInterceptor implements HandlerInterceptor {
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private SecurityManager securityManager;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    private Logger logger = Logger.getLogger(JWTInterceptor.class);
 
     /** Validates that the jwt token passed in matches  */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String jwtToken = request.getHeader("x-access-token");
 
-        System.out.println(jwtToken);
-        System.out.println("pre handle Request URL::" + request.getRequestURL().toString() + " | token: " + jwtToken);
+        logger.info(jwtToken);
+        logger.info("pre handle Request URL::" + request.getRequestURL().toString() + " | token: " + jwtToken);
 
         // validate the token here
         if (jwtToken == null || jwtToken.isEmpty()) {
-            throw new IllegalAccessException();
+            throw new ForbiddenAccessException();
         }
         String jwsSubject = null;
         try {
             jwsSubject = Jwts.parser().setSigningKey(securityManager.getSecurityKey()).parseClaimsJws(jwtToken).getBody().getSubject();
         }
         catch (MalformedJwtException mje) {
-            throw new IllegalAccessException();
+            throw new ForbiddenAccessException();
         }
-        System.out.println("subject: " + jwsSubject);
+        logger.info("subject: " + jwsSubject);
 
         ObjectMapper objectMapper = new ObjectMapper();
         JwtSubject subject = objectMapper.readValue(jwsSubject, JwtSubject.class);
 
         if (!subject.isValid()) {
-            throw new IllegalAccessException();
+            throw new ForbiddenAccessException();
+        }
+
+        User user = userRepository.findOne(subject.getUserId());
+        if (user == null) {
+            throw new ForbiddenAccessException();
         }
 
         request.setAttribute(AuthUtils.JWT_TOKEN_NAME, subject);
+        request.setAttribute(AuthUtils.LOGGED_IN_USER, user);
         return true;
     }
 

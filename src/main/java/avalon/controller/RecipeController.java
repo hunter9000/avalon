@@ -26,7 +26,7 @@ public class RecipeController {
     @Autowired
     private HttpServletRequest request;
 
-    @RequestMapping(value="/api/char/{charId}/recipes/", method=RequestMethod.GET)
+/*    @RequestMapping(value="/api/char/{charId}/recipes/", method=RequestMethod.GET)
     public List<RecipeModel> getRecipes(@PathVariable long charId) {
         // return all recipes this user has unlocked
         JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
@@ -38,7 +38,7 @@ public class RecipeController {
         List<RecipeModel> recipes = charModel.getRecipes();
 
         return recipes;
-    }
+    }*/
 
     @RequestMapping(value="/api/char/{charId}/recipes", method=RequestMethod.POST)
     public SuccessResponse craftRecipe(@PathVariable long charId, @RequestBody RecipeCraftRequest recipeRequest) {

@@ -32,7 +32,7 @@ avalonApp.factory('JwtService', function($window, $location, $log) {
         // parses the token and returns the subject object (userName:'', roles:['','']}
         parseJwt: function() {
             var token = $window.localStorage['jwtToken'];
-            if (!token || token == null || token == 'null') {
+            if (!token || token == null || token == 'null' || token === 'undefined') {
                 $log.debug('error, no token');
                 return null;
             }

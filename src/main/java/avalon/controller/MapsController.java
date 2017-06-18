@@ -59,7 +59,8 @@ public class MapsController {
     @CharacterSheetOwnerRequired
     public MapModel enterPortal(@PathVariable long charId, @PathVariable long portalId) {
 //        JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
-        CharModel charModel = (CharModel)request.getAttribute(AuthUtils.CHARACTER_NAME);
+//        CharModel charModel = (CharModel)request.getAttribute(AuthUtils.CHARACTER_NAME);
+        CharModel charModel = AuthUtils.getCharacter(request);
 //        long charId = token.getCharId();
         // make sure the char is not in a map already
 //        CharModel charModel = charRepository.findById(charId);
@@ -79,7 +80,7 @@ public class MapsController {
 
     // delete the map, reset player back home
     // check if standing on the door
-    @RequestMapping(value="/api/char/{charId}/map/leave", method=RequestMethod.POST)
+    @RequestMapping(value="/api/char/{charId}/map/leave/", method=RequestMethod.POST)
     public SuccessResponse leaveMap(@PathVariable long charId) {
         JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
 //        long charId = token.getCharId();
@@ -92,7 +93,7 @@ public class MapsController {
         return new SuccessResponse(true, "success");
     }
 
-    @RequestMapping(value="/api/char/{charId}/map/moveto/x/{x}/y/{y}", method=RequestMethod.POST)
+    @RequestMapping(value="/api/char/{charId}/map/moveto/x/{x}/y/{y}/", method=RequestMethod.POST)
     // move player
     public SuccessResponse moveOnMap(@PathVariable long charId, @PathVariable int x, @PathVariable int y) {
         JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");

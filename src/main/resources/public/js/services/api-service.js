@@ -82,12 +82,47 @@ avalonApp.factory('APIService', function($window, $location, $http, $log) {
             get('/api/roles/', successCallback);
         },
 
+        // Characters
         getChars: function(successCallback) {
             get('/api/char/', successCallback);
         },
-
+        getChar: function(charId, successCallback) {
+            get('/api/char/'+charId+'/', successCallback);
+        },
         createChar: function(newChar, successCallback) {
             post('/api/char/', newChar, successCallback);
+        },
+        editChar: function(charId, data, successCallback) {
+            patch('api/char/'+charId+'/', data, successCallback);
+        },
+
+        // Materials
+        getMaterials: function(successCallback) {
+            get('api/materials/', successCallback);
+        },
+        createMaterial: function(data, successCallback) {
+            post('/api/materials/', data, successCallback);
+        },
+
+        // Recipes
+//        getRecipes: function(successCallback) {
+//            get('/api/recipes/', successCallback);
+//        },
+        // Crating
+        craftRecipe: function(charId, data, successCallback) {
+            post('/api/char/'+charId+'/recipes', data, successCallback);
+        },
+
+
+        // Dungeon
+        leaveDungeon: function(charId, successCallback) {
+            post('/api/char/'+charId+'/map/leave/', null, successCallback);
+        },
+        moveTo: function(charId, x, y, successCallback) {
+            post('/api/char/'+charId+'/map/moveto/x/'+x+'/y/'+y+'/', null, successCallback);
+        },
+        takePortal: function(charId, portalId, successCallback) {
+            post('/api/char/'+charId+'/portal/'+portalId+'/', null, successCallback);
         },
 
 //        createSheet: function(data, successCallback) {

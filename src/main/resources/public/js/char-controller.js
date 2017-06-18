@@ -1,6 +1,6 @@
 
 
-	avalonApp.controller('charController', function(APIService, $scope, $window, $http, $uibModal, $location) {
+	avalonApp.controller('charController', function(APIService, $scope, $window, $uibModal, $location) {
 		$scope.message;// = 'token: ' + $window.localStorage['jwtToken'];
 
 		$scope.chars = [];
