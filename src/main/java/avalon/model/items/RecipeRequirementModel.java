@@ -1,21 +1,22 @@
 package avalon.model.items;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
 // links a material to a recipe as a required mat, and gives the quant
 @Entity
 @Table(name="recipe_requirement")
-@JsonIgnoreProperties(value = "recipe")
 public class RecipeRequirementModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private Long id;
 
     @ManyToOne      // many mateffects reference one material
     @JoinColumn(name="recipe_id")     // material_id is the fk column pointing to material table
+    @JsonIgnore
     private RecipeModel recipe;
 
     @OneToOne
@@ -25,6 +26,12 @@ public class RecipeRequirementModel {
     @Column(name="quantity")
     private int quantity;
 
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public RecipeModel getRecipe() {
         return recipe;
@@ -47,11 +54,4 @@ public class RecipeRequirementModel {
         this.quantity = quantity;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 }

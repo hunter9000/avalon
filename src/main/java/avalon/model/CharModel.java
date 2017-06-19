@@ -3,12 +3,12 @@ package avalon.model;
 import avalon.model.dungeons.MapModel;
 import avalon.model.items.EquipmentModel;
 import avalon.model.items.InventoryMaterialModel;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import avalon.model.items.RecipeModel;
 import avalon.model.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "characters")
@@ -16,24 +16,25 @@ import java.util.List;
 public class CharModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
     @ManyToOne      // many chars reference one user
-    @JoinColumn(name="user_id")     // user_id is the fk column pointing to user table
+    @JoinColumn(name="user_id", nullable = false, updatable = false)     // user_id is the fk column pointing to user table
     private User user;
 
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(cascade=CascadeType.ALL)
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name="character_recipe",
-            joinColumns={@JoinColumn(name="char_id", referencedColumnName="id")},
-            inverseJoinColumns={@JoinColumn(name="recipe_id", referencedColumnName="id")})
-    private List<RecipeModel> recipes;
+            joinColumns={@JoinColumn(name="char_id", referencedColumnName="id")},		// column that points to this table
+            inverseJoinColumns={@JoinColumn(name="recipe_id", referencedColumnName="id")})		// column that points to other table
+    private Set<RecipeModel> recipes;
 
-    @OneToMany(mappedBy = "charModel")
-    private List<MapModel> maps;
+    @OneToMany(mappedBy = "charModel", fetch = FetchType.EAGER)
+    private Set<MapModel> maps;
 
     @OneToOne
     @JoinColumn(name="curr_map_id")     // current map this char is in, or null
@@ -45,11 +46,11 @@ public class CharModel {
     @Column(name = "map_y")
     private Integer mapY;
 
-    @OneToMany(mappedBy = "charModel")
-    private List<InventoryMaterialModel> inventoryMaterialModels;
+    @OneToMany(mappedBy = "charModel", fetch = FetchType.EAGER)
+    private Set<InventoryMaterialModel> inventoryMaterialModels;
 
-    @OneToMany(mappedBy = "charModel")
-    private List<EquipmentModel> inventoryEquipment;
+    @OneToMany(mappedBy = "charModel", fetch = FetchType.EAGER)
+    private Set<EquipmentModel> inventoryEquipment;
 
     public Long getId() {
         return id;
@@ -72,10 +73,10 @@ public class CharModel {
         this.name = name;
     }
 
-    public List<RecipeModel> getRecipes() {
+    public Set<RecipeModel> getRecipes() {
         return recipes;
     }
-    public void setRecipes(List<RecipeModel> recipes) {
+    public void setRecipes(Set<RecipeModel> recipes) {
         this.recipes = recipes;
     }
 
@@ -86,10 +87,10 @@ public class CharModel {
         this.currentMap = currentMap;
     }
 
-    public List<MapModel> getMaps() {
+    public Set<MapModel> getMaps() {
         return maps;
     }
-    public void setMaps(List<MapModel> maps) {
+    public void setMaps(Set<MapModel> maps) {
         this.maps = maps;
     }
 
@@ -107,17 +108,17 @@ public class CharModel {
         this.mapY = mapY;
     }
 
-    public List<InventoryMaterialModel> getInventoryMaterialModels() {
+    public Set<InventoryMaterialModel> getInventoryMaterialModels() {
         return inventoryMaterialModels;
     }
-    public void setInventoryMaterialModels(List<InventoryMaterialModel> inventoryMaterialModels) {
+    public void setInventoryMaterialModels(Set<InventoryMaterialModel> inventoryMaterialModels) {
         this.inventoryMaterialModels = inventoryMaterialModels;
     }
 
-    public List<EquipmentModel> getInventoryEquipment() {
+    public Set<EquipmentModel> getInventoryEquipment() {
         return inventoryEquipment;
     }
-    public void setInventoryEquipment(List<EquipmentModel> inventoryEquipment) {
+    public void setInventoryEquipment(Set<EquipmentModel> inventoryEquipment) {
         this.inventoryEquipment = inventoryEquipment;
     }
 }

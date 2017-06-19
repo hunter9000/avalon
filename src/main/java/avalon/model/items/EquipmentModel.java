@@ -1,20 +1,19 @@
 package avalon.model.items;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import avalon.model.CharModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name="equipment_item")
-@JsonIgnoreProperties(value = "charModel")
 public class EquipmentModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private Long id;
 
     @OneToOne
     @JoinColumn(name = "item_id")
@@ -22,6 +21,7 @@ public class EquipmentModel {
 
     @OneToOne
     @JoinColumn(name = "char_id")
+    @JsonIgnore
     private CharModel charModel;        // char this belongs to
 
     @OneToMany(mappedBy = "equipmentModel")
@@ -30,11 +30,10 @@ public class EquipmentModel {
 //            inverseJoinColumns={@JoinColumn(name="item_effect_id", referencedColumnName="id")})
     private List<ItemEffectModel> itemEffects;
 
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

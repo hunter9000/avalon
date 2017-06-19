@@ -1,21 +1,22 @@
 package avalon.model.items;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import avalon.model.CharModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="inventory_material")
-@JsonIgnoreProperties(value = "charModel")
 public class InventoryMaterialModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private Long id;
 
     @OneToOne
     @JoinColumn(name="char_id")
+    @JsonIgnore
     private CharModel charModel;
 
     @ManyToOne

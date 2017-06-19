@@ -11,9 +11,11 @@ import javax.persistence.*;
 @Table(name="cell")
 @JsonIgnoreProperties(value="map")
 public class CellModel implements Travelable {
+
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name="map_id")
@@ -42,18 +44,16 @@ public class CellModel implements Travelable {
         this.groundType = groundType;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
-
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     public MapModel getMap() {
         return map;
     }
-
     public void setMap(MapModel map) {
         this.map = map;
     }
@@ -61,7 +61,6 @@ public class CellModel implements Travelable {
     public int getX() {
         return x;
     }
-
     public void setX(int x) {
         this.x = x;
     }
@@ -69,7 +68,6 @@ public class CellModel implements Travelable {
     public int getY() {
         return y;
     }
-
     public void setY(int y) {
         this.y = y;
     }
@@ -77,7 +75,6 @@ public class CellModel implements Travelable {
     public GroundType getGroundType() {
         return groundType;
     }
-
     public void setGroundType(GroundType groundType) {
         this.groundType = groundType;
     }

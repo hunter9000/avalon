@@ -37,6 +37,11 @@ public class Application extends WebMvcConfigurerAdapter {
     @Bean
     public CharacterSheetOwnerInterceptor CharacterSheetOwnerInterceptor() { return new CharacterSheetOwnerInterceptor(); }
 
+//    @Bean
+//    public SecurityManager SecurityManager() {
+//        return new SecurityManager();
+//    }
+
     /** Creates the password encoder object. This is used to .encode() a raw string. The results of that are a hashed
      *  string that includes a random salt. That is what's stored in the user table. To compare a raw input password
      *  to the stored hash, use .matches(raw, hashed) */

@@ -1,7 +1,7 @@
 package avalon.model.dungeons;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import avalon.model.CharModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
@@ -9,14 +9,16 @@ import java.util.List;
 // container for a single map. linked to cells
 @Entity
 @Table(name="map")
-@JsonIgnoreProperties(value = {"charModel"})
 public class MapModel {
+
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name="char_id")      // owner
+    @JsonIgnore
     private CharModel charModel;
 
     @Column(name="boss_level")
@@ -28,21 +30,20 @@ public class MapModel {
 //            inverseJoinColumns={@JoinColumn(name="exit_map_id", referencedColumnName="id")})
 //    private List<MapModel> linkedMaps;
 
-    @OneToMany(mappedBy = "map", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "map", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<CellModel> cells;
 
-    public long getId() {
+
+    public Long getId() {
         return id;
     }
-
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     public CharModel getCharModel() {
         return charModel;
     }
-
     public void setCharModel(CharModel charModel) {
         this.charModel = charModel;
     }
@@ -50,23 +51,13 @@ public class MapModel {
     public boolean isBoss() {
         return isBoss;
     }
-
-    public void setIsBoss(boolean isBoss) {
-        this.isBoss = isBoss;
+    public void setBoss(boolean boss) {
+        isBoss = boss;
     }
-
-//    public List<MapModel> getLinkedMaps() {
-//        return linkedMaps;
-//    }
-//
-//    public void setLinkedMaps(List<MapModel> linkedMaps) {
-//        this.linkedMaps = linkedMaps;
-//    }
 
     public List<CellModel> getCells() {
         return cells;
     }
-
     public void setCells(List<CellModel> cells) {
         this.cells = cells;
     }

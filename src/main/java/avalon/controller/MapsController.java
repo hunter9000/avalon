@@ -131,7 +131,7 @@ public class MapsController {
         MapModel mapModel = new MapModel();
         CharModel charModel = charRepository.findById(charId);
         mapModel.setCharModel(charModel);
-        mapModel.setIsBoss(false);
+        mapModel.setBoss(false);
 
         List<CellModel> cells = new ArrayList<>();
         for (int j=0; j<5; j++) {

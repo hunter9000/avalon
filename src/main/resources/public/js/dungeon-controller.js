@@ -95,8 +95,6 @@ avalonApp.controller('dungeonController', function(APIService, $scope, $window, 
         $scope.loadImage();
     }
 
-    $scope.init();
-
     // begin preloading assets when page loads
     $scope.loadImage = function() {
         $scope.preload = new createjs.LoadQueue(true, 'img/tiles/');
@@ -305,11 +303,11 @@ avalonApp.controller('dungeonController', function(APIService, $scope, $window, 
         }
     }
 
-
+    $scope.init();
 
     $scope.leaveDungeon = function() {
         APIService.leaveDungeon($routeParams.charId, function(response) {
-            $location.path("/hq/");
+            $location.path("/hq/"+$routeParams.charId);
         });
 
 //        $http({method:'POST',

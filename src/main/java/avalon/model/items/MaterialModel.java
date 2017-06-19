@@ -8,9 +8,9 @@ import java.util.List;
 public class MaterialModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -21,10 +21,10 @@ public class MaterialModel {
     @OneToMany(mappedBy = "materialModel", cascade = CascadeType.ALL)
     private List<MaterialEffectModel> effectList;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

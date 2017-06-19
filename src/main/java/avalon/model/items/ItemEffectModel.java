@@ -8,8 +8,9 @@ import javax.persistence.*;
 public class ItemEffectModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private Long id;
 
     @ManyToOne()
     @JoinColumn(name = "equipment_id")
@@ -19,10 +20,10 @@ public class ItemEffectModel {
     @JoinColumn(name = "material_effect_id")
     private MaterialEffectModel materialEffect;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
