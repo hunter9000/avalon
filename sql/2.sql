@@ -41,8 +41,8 @@ COLLATE='utf8_general_ci' ENGINE=InnoDB;
 INSERT INTO role (role_name) VALUES ('PLAYER');
 INSERT INTO role (role_name) VALUES ('ADMIN');
 
-INSERT INTO user (username, password, email) VALUES ('hunter', '$2a$10$YBd.jCtCn7dh5Ps.n/c80efTzq5jUgepAvNV5DsuXnx.c0NaRnTJa', 'hunter9000@gmail.com');
-
+INSERT INTO user (username, password, email) VALUES ('hunter', '$2a$10$P0ktzauIomz8jEfVnPyvme/HPyP/uFMvAiZnEVDN0XSKQAZAZCttq', 'hunter9000@gmail.com');
+$2a$10$P0ktzauIomz8jEfVnPyvme/HPyP/uFMvAiZnEVDN0XSKQAZAZCttq
 INSERT INTO user_role (user_id, role_id) VALUES (1, 1);
 INSERT INTO user_role (user_id, role_id) VALUES (1, 2);
 

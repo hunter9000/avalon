@@ -70,7 +70,7 @@
 				controller: 'hqController'
 			})
 			// crafting-controller.js
-			.when('/crafting', {
+			.when('/crafting/:charId', {
 				templateUrl: 'pages/crafting.html',
 				controller: 'craftingController'
 			})

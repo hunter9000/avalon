@@ -1,6 +1,6 @@
 
 // create the controller and inject Angular's $scope
-avalonApp.controller('loginController', function($scope, $location, $http, $window) {
+avalonApp.controller('loginController', function(APIService, $scope, $location, $window) {
     // create a message to display in our view
     $scope.message = '';
 
@@ -8,14 +8,20 @@ avalonApp.controller('loginController', function($scope, $location, $http, $wind
 
     // when submitting the add form, send the text to the node API
     $scope.login = function() {
-        $http.post('/api/authenticate/', $scope.formData)
-        .then(function successCallback(response) {
+        APIService.authenticate($scope.formData, function successCallback(response) {
             console.log(response);
             $window.localStorage['jwtToken'] = response.data.response;
             $location.path("/charselect");
-        }, function errorCallback(response) {
-            console.log('Error: ' + response);
-            $scope.message = 'invalid login - error returned';
         });
+
+//        $http.post('/api/authenticate/', $scope.formData)
+//        .then(function successCallback(response) {
+//            console.log(response);
+//            $window.localStorage['jwtToken'] = response.data.response;
+//            $location.path("/charselect");
+//        }, function errorCallback(response) {
+//            console.log('Error: ' + response);
+//            $scope.message = 'invalid login - error returned';
+//        });
     };
 });

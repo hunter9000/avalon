@@ -5,6 +5,7 @@ import avalon.model.CharModel;
 import avalon.model.user.User;
 import avalon.repository.CharRepository;
 import avalon.repository.UserRepository;
+import avalon.request.EditCharRequest;
 import avalon.response.SuccessResponse;
 import avalon.util.AuthUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,20 @@ public class CharsController {
         return r;
     }
 
+    /** get the char w/ equipment, inv, etc. add charId to jwt for reuse throughout angular app */
+    @RequestMapping(value="/api/char/{charId}/", method=RequestMethod.GET)
+    @CharacterSheetOwnerRequired
+    public CharModel getChar(@PathVariable long charId) {
+//        JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
+//        User user = userRepository.findOne(AuthUtils.getUserId(request));
+//        CharModel charModel = (CharModel)request.getAttribute(AuthUtils.CHARACTER_NAME);
+
+        CharModel charModel = AuthUtils.getCharacter(request);
+
+//        CharModel charModel = charRepository.findById(charId);
+        return charModel;
+    }
+
     /** Create a character */
     @RequestMapping(value="/api/char/", method=RequestMethod.POST)
     public SuccessResponse createChar(@RequestBody CharModel character) {
@@ -45,23 +60,17 @@ public class CharsController {
         return new SuccessResponse(true, "created character");
     }
 
-    /** get the char w/ equipment, inv, etc. add charId to jwt for reuse throughout angular app */
-    @RequestMapping(value="/api/char/{charId}/", method=RequestMethod.GET)
-    @CharacterSheetOwnerRequired
-    public CharModel getChar(@PathVariable long charId) {
-//        JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
-//        User user = userRepository.findOne(AuthUtils.getUserId(request));
-        CharModel charModel = (CharModel)request.getAttribute(AuthUtils.CHARACTER_NAME);
-
-//        CharModel charModel = charRepository.findById(charId);
-        return charModel;
+    @RequestMapping(value = "/api/char/{charId}/", method = RequestMethod.PATCH)
+    public CharModel editCharacter(@RequestBody EditCharRequest editCharRequest, @PathVariable Long charId) {
+        return getChar(charId);
     }
 
     /** delete char */
-    @RequestMapping(value="/api/chars/{charId}/", method=RequestMethod.DELETE)
+    @RequestMapping(value="/api/char/{charId}/", method=RequestMethod.DELETE)
     @CharacterSheetOwnerRequired
     public SuccessResponse deleteChar(@PathVariable long charId) {
-        CharModel charModel = (CharModel)request.getAttribute(AuthUtils.CHARACTER_NAME);
+//        CharModel charModel = (CharModel)request.getAttribute(AuthUtils.CHARACTER_NAME);
+        CharModel charModel = AuthUtils.getCharacter(request);
 
         return new SuccessResponse(false, "not implemented");
     }
