@@ -1,20 +1,23 @@
 
     <p>{{ message }}</p>
 
-    <p>HQ: </p>
+    <panel header="HQ">
 
-    <a ng-click="goToInventory()" >Inventory</a>
-    <br/>
-    <a href="#crafting" >Crafting</a>
-    <br/>
-    <a ng-click="goToDungeon()" ng-show="char.currentMap">Dungeon</a>
-    <a ng-click="goToPortals()" ng-hide="char.currentMap">Portals</a>
+        <a class="btn" ng-click="goToInventory()" >Inventory</a>
 
-    <!--<button ng-click="inventory()">Inventory</button>-->
-    <!--<button ng-click="dungeon()">Dungeon</button>-->
-    <!--<button ng-click="crafting()">Crafting</button>-->
+        <br/>
 
-    <br/>
+        <a class="btn" ng-click="goToCrafting()" >Crafting</a>
+
+        <br/>
+
+        <a class="btn" ng-click="goToDungeon()" ng-show="char.currentMap">Dungeon</a>
+        <a class="btn" ng-click="goToPortals()" ng-hide="char.currentMap">Portals</a>
+
+        <br/>
+
+    </panel>
+
 
     {{char}}
 

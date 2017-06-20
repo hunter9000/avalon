@@ -1,33 +1,138 @@
-# java-getting-started
 
-A barebones Java app, which can easily be deployed to Heroku.  
+crafting
 
-This application support the [Getting Started with Java on Heroku](https://devcenter.heroku.com/articles/getting-started-with-java) article - check it out.
+Get recipes,inventory from char
+Api/char/1
+ 
+Show recipe selection and inventory
+Choose recipe to see stats from 
+api/char/recipe/Id
+Show recipe item, base mats, inventory minus base. Inv items only have mat effects relevant to base item type. 
+Remaining capacity
+Add mats from inv Ctrl click
+ 
+Show collection of mat effects, summed up by quantity under each selection
+Grey out inv items that are over remaining capacity
+ 
+Post selected mat Id and quantity and recipe to 
+Api/char/recipe/id
 
-## Running Locally
 
-Make sure you have Java and Maven installed.  Also, install the [Heroku Toolbelt](https://toolbelt.heroku.com/).
 
-```sh
-$ git clone https://github.com/heroku/java-getting-started.git
-$ cd java-getting-started
-$ mvn install
-$ foreman start web
-```
 
-Your app should now be running on [localhost:5000](http://localhost:5000/).
+materials
+- woods:
+-- softwoods
+cedar
+pine
+cypress
+fir
+yew
+hemlock
+spruce
+-- hardwood
+alder
+chestnut
+ash
+aspen
+birch
+blackwood
+walnut
+cherry
+elm
+eucalyptus
+hickory
+ironwood
+kingwood
+locust
+mahogany
+maple
+oak
+poplar
+sandalwood
+teak
+bamboo
 
-## Deploying to Heroku
+- metals:
+iron
+tin
+bronze
+copper
+lead
+gold
+silver
+aluminum
+chromium
+magnesium
+nickel
+titanium
+zinc
+quiksilver
+brass
 
-```sh
-$ heroku create
-$ git push heroku master
-$ heroku open
-```
+- food
+salt
+meats
+roots
+nuts
+fruits
 
-## Documentation
+- papers/cloths
+wool
+fur
+silk
+grass
+hemp
+sisal
+straw
+cotton
+flax
+jute
+rawhide
+leather
+burlap
+canvas
+twill
+fleece
+Gingham
 
-For more information about using Java on Heroku, see these Dev Center articles:
 
-- [Java on Heroku](https://devcenter.heroku.com/categories/java)
+- crystals/gems
+ice
+diamond
+amythest
+aquamarine
+beryl
+emerald
+citrine
+ruby
+sapphire
+feldspar
+moonstone
+sunstone
+garnet
+topaz
+hematite
+jasper
+lapis lazuli
+opal
+quartz
+flint
+agate
+tiger's eye
+tourmaline
+turquoise
+spinel
+jet
+coral
+pearl
+obsidian
 
+amber
+bone
+tar
+gunpowder stuff
+sulfur
+clay
+charcoal
+phosphorus

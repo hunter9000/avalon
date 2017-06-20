@@ -1,103 +1,88 @@
 
-    <div class="text-center">
-        <form ng-submit="login()">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div>Recipes</div>
-                                <list contents="char.recipes" template-contents="recipe-list-item-template.html" click="recipeSelect(recipe)"></list>
-                            </div>
-                        </div>
+<link rel="stylesheet" href="css/crafting.css" />
 
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div>
-                                    <span>Recipe Name: </span>
-                                    <span>{{selectedRecipe.item.name}}</span>
-                                </div>
-                                <div>
-                                    <span>Slot: </span>
-                                    <span>{{selectedRecipe.item.bodySlot}}</span>
-                                </div>
-                                <div>
-                                    <span>Capacity: </span>
-                                    <span>{{selectedRecipe.extraCapacity}}</span>
-                                </div>
-                            </div>
-                        </div>
+<panel header="Crafting">
 
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div>
-                                    <input type="button" ng-click="submitRecipe()" value="Craft!" />
-                                </div>
-                            </div>
-                        </div>
+    <div class="container">
+        <div class="row">
+            <!-- first column -->
+            <div class="col-md-4">
 
+                <panel header="Recipes">
+                    <list contents="recipes" template-contents="recipe-list-item-template.html" click="recipeSelect(recipe)"></list>
+
+                    <div>
+                        <span>Recipe Name: </span>
+                        <span>{{selectedRecipe.item.name}}</span>
                     </div>
-                    <div class="col-md-4">
-
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div>Base</div>
-                                <div>
-                                    <list contents="selectedRecipe.recipeReqs" template-contents="recipe-requirements-template.html" click=""></list>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div>Extra</div>
-                                <div>remaining capacity: {{selectedRecipe.extraCapacity}}</div>
-                                <div>
-                                    <list contents="extraMats" template-contents="recipe-requirements-template.html" click=""></list>
-                                </div>
-                            </div>
-                        </div>
-
+                    <div>
+                        <span>Slot: </span>
+                        <span>{{selectedRecipe.item.bodySlot}}</span>
                     </div>
-                    <div class="col-md-4">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                            <div>Materials</div>
-                                pass the selected mat to the list directive so it can be compared inthe template and highlighted
-                                <list contents="mats" template-contents="inventory-materials-template.html" click="matSelect(recipe)"></list>
-                            <div>
-                                <!--<input type="text" value="1" />-->
-                                <a href="" ng-click="addMatToRecipe()" >Add to Recipe</a>
-                            </div>
-                            <div ng-show="selectedRecipe && selectedMat" >
-                                Effects:
-                                <div ng-repeat="effect in filterEffects(selectedMat.materialModel.effectList)" >
-                                    {{effect.effectType}}
-                                    {{effect.value}}
-                                    {{effect.slot}}
-                                </div>
-                            </div>
-                        </div>
+                    <div>
+                        <span>Capacity: </span>
+                        <span>{{selectedRecipe.extraCapacity}}</span>
                     </div>
-                </div>
-                </div>
+
+                </panel>
+
+
+                <panel header="">
+
+                    <button class="btn btn-primary" ng-click="submitRecipe()" >
+                        Craft!
+                    </button>
+
+                </panel>
+
             </div>
-        </form>
+
+            <!-- second column -->
+            <div class="col-md-4">
+
+                <panel header="Base Materials" ng-show="selectedRecipe">
+
+                    <list contents="selectedRecipe.recipeReqs" template-contents="recipe-requirements-template.html" click=""></list>
+
+                </panel>
+
+                <panel header="Extra Materials" ng-show="selectedRecipe">
+
+                    <div>remaining capacity: {{selectedRecipe.extraCapacity}}</div>
+                    <div>
+                        <list contents="extraMats" template-contents="recipe-requirements-template.html" click=""></list>
+                    </div>
+
+                </panel>
+            </div>
+
+            <!-- third column -->
+            <div class="col-md-4">
+
+                <!--<panel header="Materials">-->
+                    <!--pass the selected mat to the list directive so it can be compared inthe template and highlighted-->
+                    <!--<list contents="inventory" template-contents="inventory-materials-template.html" click="matSelect(recipe)"></list>-->
+
+                    <!--<div>-->
+                        <!--&lt;!&ndash;<input type="text" value="1" />&ndash;&gt;-->
+                        <!--<a href="" ng-click="addMatToRecipe()" >Add to Recipe</a>-->
+                    <!--</div>-->
+
+                    <!--<div ng-show="selectedRecipe && selectedMat" >-->
+                        <!--Effects:-->
+                        <!--<div ng-repeat="effect in filterEffects(selectedMat.materialModel.effectList)" >-->
+                            <!--{{effect.effectType}}-->
+                            <!--{{effect.value}}-->
+                            <!--{{effect.slot}}-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</panel>-->
+
+            </div>
+
+        </div>
     </div>
 
+</panel>
 
-    debug {{selectedRecipe}}
-
-<style>
-    .equipment-list {
-        width:300px;
-        height:300px;
-    }
-    .equipment-item {
-        height:30px;
-        border-color: #ccc !important;
-        background-color: #ddf;
-    }
-</style>
-
-
+debug {{selectedRecipe}}

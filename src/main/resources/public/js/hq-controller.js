@@ -8,23 +8,12 @@ avalonApp.controller('hqController', function(APIService, $scope, $routeParams, 
        $scope.char = response.data;
     });
 
-   //        $http({method:'GET',
-   //               url: 'api/char/' + $routeParams.charId + '/',
-   //               headers: {'x-access-token': $window.localStorage['jwtToken']}
-   //        })
-   //        .success(function (data) {
-   //            $scope.char = data;
-   //            console.log('get api/char/charId');
-   //            console.log(data);
-   //        })
-   //        .error(function(data) {
-   //            console.log('Error:' + data);
-   //        });
-
     $scope.goToInventory = function() {
        $location.path('/inventory/' + $routeParams.charId);
     }
-
+    $scope.goToCrafting = function() {
+       $location.path('/crafting/' + $routeParams.charId);
+    }
     $scope.goToDungeon = function() {
        $location.path('/dungeon/' + $routeParams.charId);
     }

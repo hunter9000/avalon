@@ -1,7 +1,9 @@
 
 avalonApp.controller('craftingController', function(APIService, $scope, $window, $routeParams) {
     $scope.recipes;
-    $scope.char;
+    $scope.inventory;
+
+    $scope.selectedRecipe = null;
 
     $scope.mats;
     $scope.selectedMat = null;
@@ -9,43 +11,16 @@ avalonApp.controller('craftingController', function(APIService, $scope, $window,
     $scope.baseMats = [];
     $scope.extraMats = [];
 
-    $scope.selectedRecipe = null;
 
-//    APIService.getRecipes(function(response) {
-//        $scope.recipes = response.data;
-//    });
-
-//    $http({
-//        method: 'GET',
-//        url: '/api/recipes/',
-//        headers: {'x-access-token': $window.localStorage['jwtToken']}
-//    })
-//    .success(function(data) {
-//        $scope.recipes = data;
-//        console.log(data);
-//    })
-//    .error(function(data) {
-//        console.log('Error: ' + data);
-//    });
 
     APIService.getChar($routeParams.charId, function(response) {
-        $scope.char = response.data;
+        $scope.recipes = response.data.recipes;
+        $scope.inventory = response.data.inventory;
     });
 
-//    $http({
-//        method: 'GET',
-//        url: '/api/char/',
-//        headers: {'x-access-token': $window.localStorage['jwtToken']}
-//    })
-//    .success(function (data) {
-//        $scope.char = data;
-//        $scope.resetMats();
-//    })
-//    .error(function (data) {
-//        console.log(data);
-//    });
-
     $scope.recipeSelect = function(recipe) {
+        // get from recipe info, set base item, base mats, inventory
+
         console.log('controller says this recipe selected ' + recipe);
         $scope.resetMats();      // reset the working list of mats
 
