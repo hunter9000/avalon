@@ -2,14 +2,14 @@ package avalon.controller;
 
 
 import avalon.interceptor.CharacterSheetOwnerRequired;
-import avalon.model.dungeons.CellModel;
+import avalon.model.character.Character;
+import avalon.model.dungeons.DungeonCell;
 import avalon.repository.CellRepository;
 import avalon.repository.CharRepository;
 import avalon.repository.MapRepository;
 import avalon.security.JwtSubject;
-import avalon.model.CharModel;
 import avalon.model.dungeons.GroundType;
-import avalon.model.dungeons.MapModel;
+import avalon.model.dungeons.DungeonMap;
 import avalon.response.SuccessResponse;
 import avalon.util.AuthUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +40,10 @@ public class MapsController {
 
      /** if this map exists, return it or return null. Use the portal method to enter a map if null. */
 //    @RequestMapping(value="/api/char/{charId}/map/", method=RequestMethod.GET)
-//    public MapModel getMap(@PathVariable long charId) {
+//    public DungeonMap getMap(@PathVariable long charId) {
 //        JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
 ////        long charId = token.getCharId();
-//        CharModel charModel = charRepository.findById(charId);
+//        Character charModel = charRepository.findById(charId);
 //        if (charModel.getCurrentMap() != null) {
 //            return charModel.getCurrentMap();
 //        }
@@ -57,21 +57,21 @@ public class MapsController {
      *  tell each cell what entity is on it */
     @RequestMapping(value="/api/char/{charId}/portal/{portalId}/", method=RequestMethod.POST)
     @CharacterSheetOwnerRequired
-    public MapModel enterPortal(@PathVariable long charId, @PathVariable long portalId) {
+    public DungeonMap enterPortal(@PathVariable long charId, @PathVariable long portalId) {
 //        JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
-//        CharModel charModel = (CharModel)request.getAttribute(AuthUtils.CHARACTER_NAME);
-        CharModel charModel = AuthUtils.getCharacter(request);
+//        Character character = (Character)request.getAttribute(AuthUtils.CHARACTER_NAME);
+        Character character = AuthUtils.getCharacter(request);
 //        long charId = token.getCharId();
         // make sure the char is not in a map already
-//        CharModel charModel = charRepository.findById(charId);
-        if (charModel.getCurrentMap() == null) {
-            MapModel newMap = constructMapModelByPortalId(portalId, charId);
+//        Character character = charRepository.findById(charId);
+        if (character.getCurrentMap() == null) {
+            DungeonMap newMap = constructMapModelByPortalId(portalId, charId);
             mapRepository.save(newMap);
-            for (CellModel cell : newMap.getCells()) {
+            for (DungeonCell cell : newMap.getCells()) {
                 cellRepository.save(cell);
             }
-            charModel.setCurrentMap(newMap);
-            charRepository.save(charModel);
+            character.setCurrentMap(newMap);
+            charRepository.save(character);
             return newMap;
         }
 
@@ -85,10 +85,10 @@ public class MapsController {
         JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
 //        long charId = token.getCharId();
 
-        CharModel charModel = charRepository.findById(charId);
-        charModel.setCurrentMap(null);
+        Character character = charRepository.findById(charId);
+        character.setCurrentMap(null);
 
-        charRepository.save(charModel);
+        charRepository.save(character);
 
         return new SuccessResponse(true, "success");
     }
@@ -99,8 +99,8 @@ public class MapsController {
         JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
 //        long charId = token.getCharId();
         // make sure the char is not in a map already
-        CharModel charModel = charRepository.findById(charId);
-        if (charModel.getCurrentMap() != null) {
+        Character character = charRepository.findById(charId);
+        if (character.getCurrentMap() != null) {
             // check if char can move
             return new SuccessResponse(true, "success");
         }
@@ -126,21 +126,21 @@ public class MapsController {
 
     }
 
-    private MapModel constructMapModelByPortalId(long portalId, long charId) {
+    private DungeonMap constructMapModelByPortalId(long portalId, long charId) {
         // figure out the type, difficulty, etc.
-        MapModel mapModel = new MapModel();
-        CharModel charModel = charRepository.findById(charId);
-        mapModel.setCharModel(charModel);
-        mapModel.setBoss(false);
+        DungeonMap dungeonMap = new DungeonMap();
+        Character character = charRepository.findById(charId);
+        dungeonMap.setCharacter(character);
+        dungeonMap.setBoss(false);
 
-        List<CellModel> cells = new ArrayList<>();
+        List<DungeonCell> cells = new ArrayList<>();
         for (int j=0; j<5; j++) {
             for (int i=0; i<5; i++) {
-                cells.add(new CellModel(mapModel, i, j, GroundType.GRASS));
+                cells.add(new DungeonCell(dungeonMap, i, j, GroundType.GRASS));
             }
         }
-        mapModel.setCells(cells);
-        return mapModel;
+        dungeonMap.setCells(cells);
+        return dungeonMap;
     }
 
 //    enterDng() {

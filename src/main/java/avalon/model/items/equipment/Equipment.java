@@ -1,6 +1,7 @@
-package avalon.model.items;
+package avalon.model.items.equipment;
 
-import avalon.model.CharModel;
+import avalon.model.character.Character;
+import avalon.model.items.Item;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -8,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name="equipment_item")
-public class EquipmentModel {
+public class Equipment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,18 +18,18 @@ public class EquipmentModel {
 
     @OneToOne
     @JoinColumn(name = "item_id")
-    private ItemModel itemModel;        // the base item definition
+    private Item item;        // the base item definition
 
     @OneToOne
     @JoinColumn(name = "char_id")
     @JsonIgnore
-    private CharModel charModel;        // char this belongs to
+    private Character character;        // char this belongs to
 
-    @OneToMany(mappedBy = "equipmentModel")
+    @OneToMany(mappedBy = "equipment")
 //    @JoinTable(name="item_effect",
 //            joinColumns={@JoinColumn(name="item_id", referencedColumnName="id")},
 //            inverseJoinColumns={@JoinColumn(name="item_effect_id", referencedColumnName="id")})
-    private List<ItemEffectModel> itemEffects;
+    private List<ItemEffect> itemEffects;
 
     public Long getId() {
         return id;
@@ -37,24 +38,24 @@ public class EquipmentModel {
         this.id = id;
     }
 
-    public ItemModel getItemModel() {
-        return itemModel;
+    public Item getItem() {
+        return item;
     }
-    public void setItemModel(ItemModel itemModel) {
-        this.itemModel = itemModel;
-    }
-
-    public CharModel getCharModel() {
-        return charModel;
-    }
-    public void setCharModel(CharModel charModel) {
-        this.charModel = charModel;
+    public void setItem(Item item) {
+        this.item = item;
     }
 
-    public List<ItemEffectModel> getItemEffects() {
+    public Character getCharacter() {
+        return character;
+    }
+    public void setCharacter(Character character) {
+        this.character = character;
+    }
+
+    public List<ItemEffect> getItemEffects() {
         return itemEffects;
     }
-    public void setItemEffects(List<ItemEffectModel> itemEffects) {
+    public void setItemEffects(List<ItemEffect> itemEffects) {
         this.itemEffects = itemEffects;
     }
 

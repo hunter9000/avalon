@@ -1,7 +1,7 @@
 package avalon.controller;
 
 import avalon.interceptor.CharacterSheetOwnerRequired;
-import avalon.model.CharModel;
+import avalon.model.character.Character;
 import avalon.model.user.User;
 import avalon.repository.CharRepository;
 import avalon.repository.UserRepository;
@@ -28,30 +28,30 @@ public class CharsController {
 
     /** get all chars for the user */
     @RequestMapping(value="/api/char/", method=RequestMethod.GET)
-    public List<CharModel> getChars() {
+    public List<Character> getChars() {
         long userId = AuthUtils.getUserId(request);
 
-        List<CharModel> r = charRepository.findByUserId(userId);
+        List<Character> r = charRepository.findByUserId(userId);
         return r;
     }
 
     /** get the char w/ equipment, inv, etc. add charId to jwt for reuse throughout angular app */
     @RequestMapping(value="/api/char/{charId}/", method=RequestMethod.GET)
     @CharacterSheetOwnerRequired
-    public CharModel getChar(@PathVariable long charId) {
+    public Character getChar(@PathVariable long charId) {
 //        JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
 //        User user = userRepository.findOne(AuthUtils.getUserId(request));
-//        CharModel charModel = (CharModel)request.getAttribute(AuthUtils.CHARACTER_NAME);
+//        Character character = (Character)request.getAttribute(AuthUtils.CHARACTER_NAME);
 
-        CharModel charModel = AuthUtils.getCharacter(request);
+        Character character = AuthUtils.getCharacter(request);
 
-//        CharModel charModel = charRepository.findById(charId);
-        return charModel;
+//        Character character = charRepository.findById(charId);
+        return character;
     }
 
     /** Create a character */
     @RequestMapping(value="/api/char/", method=RequestMethod.POST)
-    public SuccessResponse createChar(@RequestBody CharModel character) {
+    public SuccessResponse createChar(@RequestBody Character character) {
         long userId = AuthUtils.getUserId(request);
 
         User user = userRepository.findOne(userId);
@@ -61,7 +61,7 @@ public class CharsController {
     }
 
     @RequestMapping(value = "/api/char/{charId}/", method = RequestMethod.PATCH)
-    public CharModel editCharacter(@RequestBody EditCharRequest editCharRequest, @PathVariable Long charId) {
+    public Character editCharacter(@RequestBody EditCharRequest editCharRequest, @PathVariable Long charId) {
         return getChar(charId);
     }
 
@@ -69,8 +69,8 @@ public class CharsController {
     @RequestMapping(value="/api/char/{charId}/", method=RequestMethod.DELETE)
     @CharacterSheetOwnerRequired
     public SuccessResponse deleteChar(@PathVariable long charId) {
-//        CharModel charModel = (CharModel)request.getAttribute(AuthUtils.CHARACTER_NAME);
-        CharModel charModel = AuthUtils.getCharacter(request);
+//        Character character = (Character)request.getAttribute(AuthUtils.CHARACTER_NAME);
+        Character character = AuthUtils.getCharacter(request);
 
         return new SuccessResponse(false, "not implemented");
     }

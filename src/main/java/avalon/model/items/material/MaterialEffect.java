@@ -1,13 +1,14 @@
-package avalon.model.items;
+package avalon.model.items.material;
 
+import avalon.model.items.equipment.EquipmentSlot;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "material_effect")
-@JsonIgnoreProperties(value = { "materialModel" })
-public class MaterialEffectModel {
+@JsonIgnoreProperties(value = { "material" })
+public class MaterialEffect {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,7 +17,7 @@ public class MaterialEffectModel {
 
     @ManyToOne      // many mateffects reference one material
     @JoinColumn(name="material_id")     // material_id is the fk column pointing to material table
-    private MaterialModel materialModel;
+    private Material material;
 
     @Column(name = "type")
     @Enumerated(value = EnumType.STRING)
@@ -36,11 +37,11 @@ public class MaterialEffectModel {
         this.id = id;
     }
 
-    public MaterialModel getMaterialModel() {
-        return materialModel;
+    public Material getMaterial() {
+        return material;
     }
-    public void setMaterialModel(MaterialModel materialModel) {
-        this.materialModel = materialModel;
+    public void setMaterial(Material material) {
+        this.material = material;
     }
 
     public EffectType getEffectType() {

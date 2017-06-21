@@ -1,11 +1,13 @@
 package avalon.model.items;
 
+import avalon.model.items.equipment.EquipmentSlot;
+
 import javax.persistence.*;
 
 // the base definition of a craftable item. can be equipment, consumable
 @Entity
 @Table(name="item")
-public class ItemModel {
+public class Item {
 
     //        id, name,
     @Id

@@ -1,6 +1,6 @@
 package avalon.interceptor;
 
-import avalon.model.CharModel;
+import avalon.model.character.Character;
 import avalon.model.user.User;
 import avalon.repository.CharRepository;
 import avalon.repository.UserRepository;
@@ -76,20 +76,20 @@ public class CharacterSheetOwnerInterceptor implements HandlerInterceptor {
         if (charId == null) {
             throw new BadRequestException("No charId parameter provided");
         }
-        CharModel charModel = characterSheetRepository.findOne(charId);
-        if (charModel == null) {
+        Character character = characterSheetRepository.findOne(charId);
+        if (character == null) {
             throw new BadRequestException("charId parameter invalid");
         }
 
 
         User user = AuthUtils.getLoggedInUser(request);
-        if (!charModel.getUser().getId().equals(user.getId())) {
-            logger.error("user doesn't match: " + charModel.getUser() + " " + user);
+        if (!character.getUser().getId().equals(user.getId())) {
+            logger.error("user doesn't match: " + character.getUser() + " " + user);
             throw new ForbiddenAccessException();
         }
 
         // store charsheet in request so controllers can access it without looking up again
-        request.setAttribute(AuthUtils.CHARACTER, charModel);
+        request.setAttribute(AuthUtils.CHARACTER, character);
         return true;
     }
 

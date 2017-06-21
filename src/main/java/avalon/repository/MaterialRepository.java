@@ -1,6 +1,6 @@
 package avalon.repository;
 
-import avalon.model.items.MaterialModel;
+import avalon.model.items.material.Material;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -9,8 +9,8 @@ import java.util.List;
 
 @Repository
 @Qualifier(value="materialRepository")
-public interface MaterialRepository extends CrudRepository<MaterialModel, Long> {
-    public MaterialModel findById(long id);
-    public List<MaterialModel> findAll();
+public interface MaterialRepository extends CrudRepository<Material, Long> {
+    public Material findById(long id);
+    public List<Material> findAll();
 }
 

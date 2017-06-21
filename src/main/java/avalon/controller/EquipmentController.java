@@ -1,7 +1,7 @@
 package avalon.controller;
 
-import avalon.model.items.EquipmentSlot;
-import avalon.model.items.EquipmentModel;
+import avalon.model.items.equipment.EquipmentSlot;
+import avalon.model.items.equipment.Equipment;
 import io.jsonwebtoken.lang.Collections;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,13 +13,13 @@ import java.util.List;
 public class EquipmentController {
 
     @RequestMapping(value="/api/equip", method=RequestMethod.GET)
-    public List<EquipmentModel> getEquipment() {
+    public List<Equipment> getEquipment() {
         // get all the equipment rows this char has
         return null;
     }
 
     @RequestMapping(value="/api/equip", method=RequestMethod.POST)
-    public void equipItem(EquipmentModel item, EquipmentSlot slot) {
+    public void equipItem(Equipment item, EquipmentSlot slot) {
         // validate the item belongs to char
         // check that item slot matches slot
         // if equipped in another slot, remove from there (switching hands?)

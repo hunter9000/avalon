@@ -1,7 +1,7 @@
 package avalon.util;
 
 
-import avalon.model.CharModel;
+import avalon.model.character.Character;
 import avalon.model.user.User;
 
 public class Util {
@@ -16,7 +16,7 @@ public class Util {
         return false;
     }
 
-    public static boolean charBelongsToUser(User user, CharModel character) {
+    public static boolean charBelongsToUser(User user, Character character) {
         // allow admins to access anyone's char? maybe in future
         if (character == null || user == null) {
             return false;

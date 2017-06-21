@@ -1,6 +1,6 @@
 package avalon.util;
 
-import avalon.model.CharModel;
+import avalon.model.character.Character;
 import avalon.model.user.Role;
 import avalon.model.user.RoleType;
 import avalon.security.JwtSubject;
@@ -40,7 +40,7 @@ public class AuthUtils {
     }
 
     /** Populated in CharacterSheetOwnerInterceptor */
-    public static CharModel getCharacter(HttpServletRequest request) {
-        return ((CharModel)request.getAttribute(CHARACTER));
+    public static Character getCharacter(HttpServletRequest request) {
+        return ((Character)request.getAttribute(CHARACTER));
     }
 }

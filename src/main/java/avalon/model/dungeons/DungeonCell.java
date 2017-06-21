@@ -2,7 +2,7 @@ package avalon.model.dungeons;
 
 import avalon.model.pathing.node.Travelable;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import avalon.model.CellEntityModel;
+import avalon.model.CellEntity;
 
 import javax.persistence.*;
 
@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="cell")
 @JsonIgnoreProperties(value="map")
-public class CellModel implements Travelable {
+public class DungeonCell implements Travelable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +19,7 @@ public class CellModel implements Travelable {
 
     @ManyToOne
     @JoinColumn(name="map_id")
-    private MapModel map;
+    private DungeonMap map;
 
     @Column(name="cell_x")
     private int x;
@@ -31,13 +31,13 @@ public class CellModel implements Travelable {
     private GroundType groundType;
 
     @Transient
-    private CellEntityModel cellEntity; // set when building the map by "placing" each entity on it's cell
+    private CellEntity cellEntity; // set when building the map by "placing" each entity on it's cell
 
-    public CellModel() {
+    public DungeonCell() {
 
     }
 
-    public CellModel(MapModel map, int x, int y, GroundType groundType) {
+    public DungeonCell(DungeonMap map, int x, int y, GroundType groundType) {
         this.map = map;
         this.x = x;
         this.y = y;
@@ -51,10 +51,10 @@ public class CellModel implements Travelable {
         this.id = id;
     }
 
-    public MapModel getMap() {
+    public DungeonMap getMap() {
         return map;
     }
-    public void setMap(MapModel map) {
+    public void setMap(DungeonMap map) {
         this.map = map;
     }
 

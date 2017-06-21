@@ -1,11 +1,11 @@
-package avalon.model;
+package avalon.model.character;
 
 import javax.persistence.*;
 
 // join table b/w recipe and char
 @Entity
 @Table(name="character_recipe")
-public class CharRecipesModel {
+public class CharacterRecipe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

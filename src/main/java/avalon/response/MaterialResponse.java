@@ -1,19 +1,19 @@
 package avalon.response;
 
-import avalon.model.items.MaterialModel;
+import avalon.model.items.material.Material;
 
 public class MaterialResponse {
 
-    public MaterialModel mat;
+    public Material mat;
 
-    public MaterialResponse(MaterialModel mat) {
+    public MaterialResponse(Material mat) {
         this.mat = mat;
     }
 
-    public MaterialModel getMat() {
+    public Material getMat() {
         return mat;
     }
-    public void setMat(MaterialModel mat) {
+    public void setMat(Material mat) {
         this.mat = mat;
     }
 }

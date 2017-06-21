@@ -2,10 +2,10 @@ package avalon.model.ability.handlers;
 
 
 import avalon.model.ability.AbilityHandler;
-import avalon.model.CellEntityModel;
+import avalon.model.CellEntity;
 
 public class WunjoAbilityHandler extends AbilityHandler {
-	public void handleSingleTargetAbility(CellEntityModel target) {
+	public void handleSingleTargetAbility(CellEntity target) {
 		// apply crit buff to self
 	}
 }

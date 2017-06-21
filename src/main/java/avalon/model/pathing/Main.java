@@ -1,7 +1,7 @@
 package avalon.model.pathing;
 
 
-import avalon.model.dungeons.CellModel;
+import avalon.model.dungeons.DungeonCell;
 import avalon.model.dungeons.GroundType;
 import avalon.model.pathing.graph.GridGraph;
 import avalon.model.pathing.node.GridNode;
@@ -12,21 +12,21 @@ import java.util.List;
 public class Main {
 
 	public static void main(String/*...*/ args) {
-		GridGraph<CellModel> graph = new GridGraph<>(5, 5);
-		graph.addNode(new GridNode<CellModel>(0, 0, new CellModel(null, 0, 0, GroundType.DIRT)));
-		graph.addNode(new GridNode<CellModel>(0, 1, new CellModel(null, 0, 1, GroundType.DIRT)));
-		graph.addNode(new GridNode<CellModel>(1, 0, new CellModel(null, 1, 0, GroundType.DIRT)));
-		graph.addNode(new GridNode<CellModel>(1, 1, new CellModel(null, 1, 1, GroundType.DIRT)));
-		graph.addNode(new GridNode<CellModel>(2, 1, new CellModel(null, 2, 1, GroundType.DIRT)));
-		graph.addNode(new GridNode<CellModel>(3, 1, new CellModel(null, 3, 1, GroundType.DIRT)));
-		graph.addNode(new GridNode<CellModel>(3, 2, new CellModel(null, 3, 2, GroundType.DIRT)));
-		graph.addNode(new GridNode<CellModel>(3, 3, new CellModel(null, 3, 3, GroundType.DIRT)));
+		GridGraph<DungeonCell> graph = new GridGraph<>(5, 5);
+		graph.addNode(new GridNode<DungeonCell>(0, 0, new DungeonCell(null, 0, 0, GroundType.DIRT)));
+		graph.addNode(new GridNode<DungeonCell>(0, 1, new DungeonCell(null, 0, 1, GroundType.DIRT)));
+		graph.addNode(new GridNode<DungeonCell>(1, 0, new DungeonCell(null, 1, 0, GroundType.DIRT)));
+		graph.addNode(new GridNode<DungeonCell>(1, 1, new DungeonCell(null, 1, 1, GroundType.DIRT)));
+		graph.addNode(new GridNode<DungeonCell>(2, 1, new DungeonCell(null, 2, 1, GroundType.DIRT)));
+		graph.addNode(new GridNode<DungeonCell>(3, 1, new DungeonCell(null, 3, 1, GroundType.DIRT)));
+		graph.addNode(new GridNode<DungeonCell>(3, 2, new DungeonCell(null, 3, 2, GroundType.DIRT)));
+		graph.addNode(new GridNode<DungeonCell>(3, 3, new DungeonCell(null, 3, 3, GroundType.DIRT)));
 
-		List<Node<CellModel>> nodeList = graph.getNodeSet();
+		List<Node<DungeonCell>> nodeList = graph.getNodeSet();
 		//List<Node<String>> neighbors = graph.getNeighbors(nodeList.get(0));
 		//double dist = graph.getDistance(nodeList.get(0), nodeList.get(1));
 
-		AStar<CellModel> as = new AStar<CellModel>(graph, nodeList.get(0), nodeList.get(7), new Traveler());
+		AStar<DungeonCell> as = new AStar<DungeonCell>(graph, nodeList.get(0), nodeList.get(7), new Traveler());
 
 //		DirectedGraph<String> graph = new UndirectedGraph<>();
 //		graph.addNode(new UnweightedNode<String>(0, 0, "a"));
@@ -44,7 +44,7 @@ public class Main {
 //
 //		AStar<String> as = new AStar<String>(graph, nodeList.get(0), nodeList.get(4));
 
-		List<Node<CellModel>> path = as.run();
+		List<Node<DungeonCell>> path = as.run();
 		System.out.println("path found " + (path != null));
 		AStar.printPath(path);
 		System.out.println("distance: " + as.getTotalPathDistance());

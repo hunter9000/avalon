@@ -1,6 +1,6 @@
 package avalon.model;
 
-public class SkillModel {
+public class Skill {
 
     private long id;
     private String name;

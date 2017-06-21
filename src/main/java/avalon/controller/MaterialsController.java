@@ -1,8 +1,8 @@
 package avalon.controller;
 
-import avalon.model.items.MaterialEffectModel;
-import avalon.model.items.EffectType;
-import avalon.model.items.MaterialModel;
+import avalon.model.items.material.Material;
+import avalon.model.items.material.MaterialEffect;
+import avalon.model.items.material.EffectType;
 import avalon.repository.MaterialEffectRepository;
 import avalon.repository.MaterialRepository;
 import avalon.response.SuccessResponse;
@@ -22,18 +22,18 @@ public class MaterialsController {
     private MaterialEffectRepository materialEffectRepository;
 
     @RequestMapping(value = "/api/materials/", method = RequestMethod.GET)
-    public List<MaterialModel>  material() {
-        List<MaterialModel> mats = materialRepository.findAll();
+    public List<Material>  material() {
+        List<Material> mats = materialRepository.findAll();
 
         return mats;
     }
 
     @RequestMapping(value="/api/materials/", method=RequestMethod.POST)
-    public SuccessResponse createMaterial(@RequestBody MaterialModel mat) {
-        for (MaterialEffectModel effect : mat.getEffectList()) {
-            effect.setMaterialModel(mat);
+    public SuccessResponse createMaterial(@RequestBody Material mat) {
+        for (MaterialEffect effect : mat.getEffectList()) {
+            effect.setMaterial(mat);
         }
-        MaterialModel savedMat = materialRepository.save(mat);
+        Material savedMat = materialRepository.save(mat);
 
         return new SuccessResponse(true, "Material created");
     }
@@ -41,8 +41,8 @@ public class MaterialsController {
     @RequestMapping(value="/api/materials/{matId}/", method=RequestMethod.DELETE)
     public SuccessResponse deleteMaterial(@PathVariable long matId) {
         System.out.println("deleteing mat " + matId);
-        MaterialModel mat = materialRepository.findById(matId);
-        for (MaterialEffectModel eff : mat.getEffectList()) {
+        Material mat = materialRepository.findById(matId);
+        for (MaterialEffect eff : mat.getEffectList()) {
             materialEffectRepository.delete(eff);
         }
 
@@ -51,15 +51,15 @@ public class MaterialsController {
     }
 
     @RequestMapping(value="/api/materials/{matId}/effect/", method=RequestMethod.POST)
-    public SuccessResponse createEffect(@PathVariable long matId, @RequestBody MaterialEffectModel effect) {
-        MaterialModel mat = materialRepository.findById(matId);
+    public SuccessResponse createEffect(@PathVariable long matId, @RequestBody MaterialEffect effect) {
+        Material mat = materialRepository.findById(matId);
 //        mat.getEffectList().add(effect);
 
-        effect.setMaterialModel(mat);
+        effect.setMaterial(mat);
 
         materialEffectRepository.save(effect);
 
-        MaterialModel newMat = materialRepository.save(mat);
+        Material newMat = materialRepository.save(mat);
 
         return new SuccessResponse(true, "Effect added");
     }

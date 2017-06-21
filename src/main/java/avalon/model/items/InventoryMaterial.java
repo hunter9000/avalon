@@ -1,13 +1,14 @@
 package avalon.model.items;
 
-import avalon.model.CharModel;
+import avalon.model.character.Character;
+import avalon.model.items.material.Material;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="inventory_material")
-public class InventoryMaterialModel {
+public class InventoryMaterial {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,11 +18,11 @@ public class InventoryMaterialModel {
     @OneToOne
     @JoinColumn(name="char_id")
     @JsonIgnore
-    private CharModel charModel;
+    private Character character;
 
     @ManyToOne
     @JoinColumn(name="material_id")
-    private MaterialModel materialModel;
+    private Material material;
 
     @Column(name = "quantity")
     private int quantity;
@@ -33,18 +34,18 @@ public class InventoryMaterialModel {
         this.id = id;
     }
 
-    public CharModel getCharModel() {
-        return charModel;
+    public Character getCharacter() {
+        return character;
     }
-    public void setCharModel(CharModel charModel) {
-        this.charModel = charModel;
+    public void setCharacter(Character character) {
+        this.character = character;
     }
 
-    public MaterialModel getMaterialModel() {
-        return materialModel;
+    public Material getMaterial() {
+        return material;
     }
-    public void setMaterialModel(MaterialModel materialModel) {
-        this.materialModel = materialModel;
+    public void setMaterial(Material material) {
+        this.material = material;
     }
 
     public int getQuantity() {

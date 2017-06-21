@@ -18,6 +18,29 @@ Post selected mat Id and quantity and recipe to
 Api/char/recipe/id
 
 
+Predefined list of materials and what effects they add
+- Material
+-- MaterialEffects
+
+Recipe that defines the item that it makes, and what materials are required for base
+- Recipe
+-- Item
+-- RecipeRequirement
+--- Material
+
+A crafted, equippable item, and the material effects that it was crafted with
+- Equipment
+-- Item
+-- ItemEffect
+--- MaterialEffect
+
+A material in a character's inventory
+- Inventory Material
+-- Material
+-- quantity
+
+Base definition of an item
+- Item
 
 
 materials
@@ -53,6 +76,7 @@ sandalwood
 teak
 bamboo
 
+
 - metals:
 iron
 tin
@@ -73,6 +97,7 @@ brass
 - food
 salt
 meats
+marrow
 roots
 nuts
 fruits
@@ -95,6 +120,7 @@ canvas
 twill
 fleece
 Gingham
+
 
 
 - crystals/gems
@@ -132,7 +158,13 @@ amber
 bone
 tar
 gunpowder stuff
+saltpeter
 sulfur
 clay
 charcoal
 phosphorus
+
+
+waters:
+aqua vitae
+etc

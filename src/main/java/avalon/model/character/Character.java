@@ -1,9 +1,9 @@
-package avalon.model;
+package avalon.model.character;
 
-import avalon.model.dungeons.MapModel;
-import avalon.model.items.EquipmentModel;
-import avalon.model.items.InventoryMaterialModel;
-import avalon.model.items.RecipeModel;
+import avalon.model.dungeons.DungeonMap;
+import avalon.model.items.equipment.Equipment;
+import avalon.model.items.InventoryMaterial;
+import avalon.model.items.recipe.Recipe;
 import avalon.model.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 @Table(name = "characters")
 @JsonIgnoreProperties(value="user")
-public class CharModel {
+public class Character {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,14 +31,14 @@ public class CharModel {
     @JoinTable(name="character_recipe",
             joinColumns={@JoinColumn(name="char_id", referencedColumnName="id")},		// column that points to this table
             inverseJoinColumns={@JoinColumn(name="recipe_id", referencedColumnName="id")})		// column that points to other table
-    private Set<RecipeModel> recipes;
+    private Set<Recipe> recipes;
 
-    @OneToMany(mappedBy = "charModel", fetch = FetchType.EAGER)
-    private Set<MapModel> maps;
+    @OneToMany(mappedBy = "character", fetch = FetchType.EAGER)
+    private Set<DungeonMap> maps;
 
     @OneToOne
     @JoinColumn(name="curr_map_id")     // current map this char is in, or null
-    private MapModel currentMap;
+    private DungeonMap currentMap;
 
     @Column(name = "map_x")
     private Integer mapX;
@@ -46,11 +46,12 @@ public class CharModel {
     @Column(name = "map_y")
     private Integer mapY;
 
-    @OneToMany(mappedBy = "charModel", fetch = FetchType.EAGER)
-    private Set<InventoryMaterialModel> inventoryMaterialModels;
+    // Inventory mats and equipment
+    @OneToMany(mappedBy = "character", fetch = FetchType.EAGER)
+    private Set<InventoryMaterial> inventoryMaterials;
 
-    @OneToMany(mappedBy = "charModel", fetch = FetchType.EAGER)
-    private Set<EquipmentModel> inventoryEquipment;
+    @OneToMany(mappedBy = "character", fetch = FetchType.EAGER)
+    private Set<Equipment> inventoryEquipment;
 
     public Long getId() {
         return id;
@@ -73,24 +74,24 @@ public class CharModel {
         this.name = name;
     }
 
-    public Set<RecipeModel> getRecipes() {
+    public Set<Recipe> getRecipes() {
         return recipes;
     }
-    public void setRecipes(Set<RecipeModel> recipes) {
+    public void setRecipes(Set<Recipe> recipes) {
         this.recipes = recipes;
     }
 
-    public MapModel getCurrentMap() {
+    public DungeonMap getCurrentMap() {
         return currentMap;
     }
-    public void setCurrentMap(MapModel currentMap) {
+    public void setCurrentMap(DungeonMap currentMap) {
         this.currentMap = currentMap;
     }
 
-    public Set<MapModel> getMaps() {
+    public Set<DungeonMap> getMaps() {
         return maps;
     }
-    public void setMaps(Set<MapModel> maps) {
+    public void setMaps(Set<DungeonMap> maps) {
         this.maps = maps;
     }
 
@@ -108,17 +109,17 @@ public class CharModel {
         this.mapY = mapY;
     }
 
-    public Set<InventoryMaterialModel> getInventoryMaterialModels() {
-        return inventoryMaterialModels;
+    public Set<InventoryMaterial> getInventoryMaterials() {
+        return inventoryMaterials;
     }
-    public void setInventoryMaterialModels(Set<InventoryMaterialModel> inventoryMaterialModels) {
-        this.inventoryMaterialModels = inventoryMaterialModels;
+    public void setInventoryMaterials(Set<InventoryMaterial> inventoryMaterials) {
+        this.inventoryMaterials = inventoryMaterials;
     }
 
-    public Set<EquipmentModel> getInventoryEquipment() {
+    public Set<Equipment> getInventoryEquipment() {
         return inventoryEquipment;
     }
-    public void setInventoryEquipment(Set<EquipmentModel> inventoryEquipment) {
+    public void setInventoryEquipment(Set<Equipment> inventoryEquipment) {
         this.inventoryEquipment = inventoryEquipment;
     }
 }

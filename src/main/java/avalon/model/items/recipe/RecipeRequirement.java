@@ -1,5 +1,6 @@
-package avalon.model.items;
+package avalon.model.items.recipe;
 
+import avalon.model.items.material.Material;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -7,7 +8,7 @@ import javax.persistence.*;
 // links a material to a recipe as a required mat, and gives the quant
 @Entity
 @Table(name="recipe_requirement")
-public class RecipeRequirementModel {
+public class RecipeRequirement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,11 +18,11 @@ public class RecipeRequirementModel {
     @ManyToOne      // many mateffects reference one material
     @JoinColumn(name="recipe_id")     // material_id is the fk column pointing to material table
     @JsonIgnore
-    private RecipeModel recipe;
+    private Recipe recipe;
 
     @OneToOne
     @JoinColumn(name="material_id")
-    private MaterialModel materialModel;
+    private Material material;
 
     @Column(name="quantity")
     private int quantity;
@@ -33,18 +34,18 @@ public class RecipeRequirementModel {
         this.id = id;
     }
 
-    public RecipeModel getRecipe() {
+    public Recipe getRecipe() {
         return recipe;
     }
-    public void setRecipe(RecipeModel recipe) {
+    public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
     }
 
-    public MaterialModel getMaterialModel() {
-        return materialModel;
+    public Material getMaterial() {
+        return material;
     }
-    public void setMaterialModel(MaterialModel mat) {
-        this.materialModel = mat;
+    public void setMaterial(Material mat) {
+        this.material = mat;
     }
 
     public int getQuantity() {

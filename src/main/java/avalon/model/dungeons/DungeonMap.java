@@ -1,6 +1,6 @@
 package avalon.model.dungeons;
 
-import avalon.model.CharModel;
+import avalon.model.character.Character;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -9,7 +9,7 @@ import java.util.List;
 // container for a single map. linked to cells
 @Entity
 @Table(name="map")
-public class MapModel {
+public class DungeonMap {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +19,7 @@ public class MapModel {
     @ManyToOne
     @JoinColumn(name="char_id")      // owner
     @JsonIgnore
-    private CharModel charModel;
+    private Character character;
 
     @Column(name="boss_level")
     private boolean isBoss;
@@ -28,10 +28,10 @@ public class MapModel {
 //    @JoinTable(name="map_edge",
 //            joinColumns={@JoinColumn(name="enter_map_id", referencedColumnName="id")},
 //            inverseJoinColumns={@JoinColumn(name="exit_map_id", referencedColumnName="id")})
-//    private List<MapModel> linkedMaps;
+//    private List<DungeonMap> linkedMaps;
 
     @OneToMany(mappedBy = "map", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<CellModel> cells;
+    private List<DungeonCell> cells;
 
 
     public Long getId() {
@@ -41,11 +41,11 @@ public class MapModel {
         this.id = id;
     }
 
-    public CharModel getCharModel() {
-        return charModel;
+    public Character getCharacter() {
+        return character;
     }
-    public void setCharModel(CharModel charModel) {
-        this.charModel = charModel;
+    public void setCharacter(Character character) {
+        this.character = character;
     }
 
     public boolean isBoss() {
@@ -55,10 +55,10 @@ public class MapModel {
         isBoss = boss;
     }
 
-    public List<CellModel> getCells() {
+    public List<DungeonCell> getCells() {
         return cells;
     }
-    public void setCells(List<CellModel> cells) {
+    public void setCells(List<DungeonCell> cells) {
         this.cells = cells;
     }
 }

@@ -1,4 +1,4 @@
-package avalon.model.items;
+package avalon.model.items.equipment;
 
 public enum EquipmentSlot {
     CONSUMABLE,

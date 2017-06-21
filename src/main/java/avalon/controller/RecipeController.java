@@ -1,7 +1,11 @@
 package avalon.controller;
 
-import avalon.model.CharModel;
-import avalon.model.items.*;
+import avalon.model.character.Character;
+import avalon.model.items.equipment.Equipment;
+import avalon.model.items.equipment.ItemEffect;
+import avalon.model.items.material.Material;
+import avalon.model.items.recipe.Recipe;
+import avalon.model.items.recipe.RecipeRequirement;
 import avalon.repository.CharRepository;
 import avalon.repository.RecipeRepository;
 import avalon.request.RecipeCraftRequest;
@@ -27,15 +31,15 @@ public class RecipeController {
     private HttpServletRequest request;
 
 /*    @RequestMapping(value="/api/char/{charId}/recipes/", method=RequestMethod.GET)
-    public List<RecipeModel> getRecipes(@PathVariable long charId) {
+    public List<Recipe> getRecipes(@PathVariable long charId) {
         // return all recipes this user has unlocked
         JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
 //        long charId = token.getCharId();
         // todo validate that charId belongs to user
 
-        CharModel charModel = charRepository.findById(charId);
+        Character charModel = charRepository.findById(charId);
 
-        List<RecipeModel> recipes = charModel.getRecipes();
+        List<Recipe> recipes = charModel.getRecipes();
 
         return recipes;
     }*/
@@ -45,11 +49,11 @@ public class RecipeController {
         System.out.println(recipeRequest);
         JwtSubject token = (JwtSubject)request.getAttribute("jwtToken");
 //        long charId = token.getCharId();
-        CharModel charModel = charRepository.findById(charId);
+        Character character = charRepository.findById(charId);
 
         // verify that the char has the recipe unlocked
-        RecipeModel selectedRecipe = null;
-        for (RecipeModel recipe : charModel.getRecipes()) {
+        Recipe selectedRecipe = null;
+        for (Recipe recipe : character.getRecipes()) {
             if (recipe.getId() == recipeRequest.getId()) {
                 selectedRecipe = recipe;
                 break;
@@ -60,24 +64,24 @@ public class RecipeController {
         }
 
         // verify that the char has all the req and extra mats in inv
-        List<MaterialModel> requiredMaterials = new ArrayList<>();
+        List<Material> requiredMaterials = new ArrayList<>();
 
-        List<RecipeRequirementModel> requirements = selectedRecipe.getRecipeReqs();
-        for (RecipeRequirementModel req : requirements) {
-            requiredMaterials.add(req.getMaterialModel());
+        List<RecipeRequirement> requirements = selectedRecipe.getRecipeReqs();
+        for (RecipeRequirement req : requirements) {
+            requiredMaterials.add(req.getMaterial());
         }
 
         // check the capacity of the recipe
 
 
         // remove mats from inv, add crafted item w/ attached effects to inv
-        EquipmentModel equipmentModel = new EquipmentModel();
-        equipmentModel.setItemModel(selectedRecipe.getItem());
-        equipmentModel.setCharModel(charModel);
-        equipmentModel.setItemEffects(new ArrayList<ItemEffectModel>());
-        charModel.getInventoryEquipment().add(equipmentModel);
+        Equipment equipment = new Equipment();
+        equipment.setItem(selectedRecipe.getItem());
+        equipment.setCharacter(character);
+        equipment.setItemEffects(new ArrayList<ItemEffect>());
+        character.getInventoryEquipment().add(equipment);
 
-        charRepository.save(charModel);
+        charRepository.save(character);
 
         return new SuccessResponse(true, "");
     }

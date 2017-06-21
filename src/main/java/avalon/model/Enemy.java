@@ -1,6 +1,6 @@
 package avalon.model;
 
-public class EnemyModel extends CellEntityModel {
+public class Enemy extends CellEntity {
 
     private long cellId;        // the cell this is in
     // enemy type

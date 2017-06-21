@@ -1,6 +1,6 @@
 package avalon.request;
 
-import avalon.model.items.InventoryMaterialModel;
+import avalon.model.items.InventoryMaterial;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import java.util.List;
 public class RecipeCraftRequest {
 
     private long id;
-    private List<InventoryMaterialModel> extraMats;
+    private List<InventoryMaterial> extraMats;
 
     public long getId() {
         return id;
@@ -17,10 +17,10 @@ public class RecipeCraftRequest {
         this.id = id;
     }
 
-    public List<InventoryMaterialModel> getExtraMats() {
+    public List<InventoryMaterial> getExtraMats() {
         return extraMats;
     }
-    public void setExtraMats(List<InventoryMaterialModel> extraMats) {
+    public void setExtraMats(List<InventoryMaterial> extraMats) {
         this.extraMats = extraMats;
     }
 }

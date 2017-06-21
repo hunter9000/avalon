@@ -1,11 +1,13 @@
-package avalon.model.items;
+package avalon.model.items.equipment;
+
+import avalon.model.items.material.MaterialEffect;
 
 import javax.persistence.*;
 
 // join table linking effects to an item
 @Entity
 @Table(name="item_effect")
-public class ItemEffectModel {
+public class ItemEffect {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,11 +16,11 @@ public class ItemEffectModel {
 
     @ManyToOne()
     @JoinColumn(name = "equipment_id")
-    private EquipmentModel equipmentModel;
+    private Equipment equipment;
 
     @OneToOne()
     @JoinColumn(name = "material_effect_id")
-    private MaterialEffectModel materialEffect;
+    private MaterialEffect materialEffect;
 
     public Long getId() {
         return id;
@@ -27,17 +29,17 @@ public class ItemEffectModel {
         this.id = id;
     }
 
-    public EquipmentModel getEquipmentModel() {
-        return equipmentModel;
+    public Equipment getEquipment() {
+        return equipment;
     }
-    public void setEquipmentModel(EquipmentModel equipmentModel) {
-        this.equipmentModel = equipmentModel;
+    public void setEquipment(Equipment equipment) {
+        this.equipment = equipment;
     }
 
-    public MaterialEffectModel getMaterialEffect() {
+    public MaterialEffect getMaterialEffect() {
         return materialEffect;
     }
-    public void setMaterialEffect(MaterialEffectModel materialEffect) {
+    public void setMaterialEffect(MaterialEffect materialEffect) {
         this.materialEffect = materialEffect;
     }
 

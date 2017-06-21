@@ -1,11 +1,13 @@
-package avalon.model.items;
+package avalon.model.items.recipe;
+
+import avalon.model.items.Item;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name="recipe")
-public class RecipeModel {
+public class Recipe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,12 +19,12 @@ public class RecipeModel {
 
     @OneToMany(mappedBy = "recipe")
     // the required mats and quantities
-    private List<RecipeRequirementModel> recipeReqs;
+    private List<RecipeRequirement> recipeReqs;
 
     // the resulting object
     @OneToOne
     @JoinColumn(name="item_id")
-    private ItemModel item;
+    private Item item;
 
 
     public Long getId() {
@@ -32,10 +34,10 @@ public class RecipeModel {
         this.id = id;
     }
 
-    public List<RecipeRequirementModel> getRecipeReqs() {
+    public List<RecipeRequirement> getRecipeReqs() {
         return recipeReqs;
     }
-    public void setRecipeReqs(List<RecipeRequirementModel> recipeReqs) {
+    public void setRecipeReqs(List<RecipeRequirement> recipeReqs) {
         this.recipeReqs = recipeReqs;
     }
 
@@ -46,10 +48,10 @@ public class RecipeModel {
         this.extraCapacity = extraCapacity;
     }
 
-    public ItemModel getItem() {
+    public Item getItem() {
         return item;
     }
-    public void setItem(ItemModel item) {
+    public void setItem(Item item) {
         this.item = item;
     }
 }
