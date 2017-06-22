@@ -1,6 +1,6 @@
 
 
-savageRiftsApp.directive('panel', function() {
+avalonApp.directive('panel', function() {
     return {
         templateUrl: 'pages/templates/panel-directive-template.html',
         restrict: 'E',

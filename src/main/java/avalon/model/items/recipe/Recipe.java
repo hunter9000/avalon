@@ -3,7 +3,7 @@ package avalon.model.items.recipe;
 import avalon.model.items.Item;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="recipe")
@@ -17,9 +17,9 @@ public class Recipe {
     @Column(name="extra_capacity")
     private int extraCapacity;
 
-    @OneToMany(mappedBy = "recipe")
+    @OneToMany(mappedBy = "recipe", fetch = FetchType.EAGER)
     // the required mats and quantities
-    private List<RecipeRequirement> recipeReqs;
+    private Set<RecipeRequirement> recipeReqs;
 
     // the resulting object
     @OneToOne
@@ -34,10 +34,10 @@ public class Recipe {
         this.id = id;
     }
 
-    public List<RecipeRequirement> getRecipeReqs() {
+    public Set<RecipeRequirement> getRecipeReqs() {
         return recipeReqs;
     }
-    public void setRecipeReqs(List<RecipeRequirement> recipeReqs) {
+    public void setRecipeReqs(Set<RecipeRequirement> recipeReqs) {
         this.recipeReqs = recipeReqs;
     }
 

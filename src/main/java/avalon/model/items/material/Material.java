@@ -22,7 +22,7 @@ public class Material {
     @Enumerated(EnumType.STRING)
     private MaterialType materialType;
 
-    @OneToMany(mappedBy = "material", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "material", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<MaterialEffect> effectList;
 
     public Long getId() {

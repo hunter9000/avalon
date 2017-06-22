@@ -8,6 +8,7 @@
             <!-- first column -->
             <div class="col-md-4">
 
+                <!-- Recipe list -->
                 <panel header="Recipes">
                     <list contents="recipes" template-contents="recipe-list-item-template.html" click="recipeSelect(recipe)"></list>
 
@@ -26,7 +27,7 @@
 
                 </panel>
 
-
+                <!-- Craft button -->
                 <panel header="">
 
                     <button class="btn btn-primary" ng-click="submitRecipe()" >
@@ -40,12 +41,14 @@
             <!-- second column -->
             <div class="col-md-4">
 
+                <!-- Base Materials -->
                 <panel header="Base Materials" ng-show="selectedRecipe">
 
                     <list contents="selectedRecipe.recipeReqs" template-contents="recipe-requirements-template.html" click=""></list>
 
                 </panel>
 
+                <!-- Extra Materials -->
                 <panel header="Extra Materials" ng-show="selectedRecipe">
 
                     <div>remaining capacity: {{selectedRecipe.extraCapacity}}</div>
@@ -59,24 +62,25 @@
             <!-- third column -->
             <div class="col-md-4">
 
-                <!--<panel header="Materials">-->
-                    <!--pass the selected mat to the list directive so it can be compared inthe template and highlighted-->
-                    <!--<list contents="inventory" template-contents="inventory-materials-template.html" click="matSelect(recipe)"></list>-->
+                <!-- Inventory Materials -->
+                <panel header="Materials">
+                    pass the selected mat to the list directive so it can be compared inthe template and highlighted
+                    <list contents="mats" template-contents="inventory-materials-template.html" click="matSelect(recipe)"></list>
 
-                    <!--<div>-->
-                        <!--&lt;!&ndash;<input type="text" value="1" />&ndash;&gt;-->
-                        <!--<a href="" ng-click="addMatToRecipe()" >Add to Recipe</a>-->
-                    <!--</div>-->
+                    <div>
+                        <!--<input type="text" value="1" />-->
+                        <a href="" ng-click="addMatToRecipe()" >Add to Recipe</a>
+                    </div>
 
-                    <!--<div ng-show="selectedRecipe && selectedMat" >-->
-                        <!--Effects:-->
-                        <!--<div ng-repeat="effect in filterEffects(selectedMat.materialModel.effectList)" >-->
-                            <!--{{effect.effectType}}-->
-                            <!--{{effect.value}}-->
-                            <!--{{effect.slot}}-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</panel>-->
+                    <div ng-show="selectedRecipe && selectedMat" >
+                        Effects:
+                        <div ng-repeat="effect in filterEffects(selectedMat.materialModel.effectList)" >
+                            {{effect.effectType}}
+                            {{effect.value}}
+                            {{effect.slot}}
+                        </div>
+                    </div>
+                </panel>
 
             </div>
 
@@ -85,4 +89,6 @@
 
 </panel>
 
-debug {{selectedRecipe}}
+debug
+<div>selectedRecipe {{selectedRecipe}}</div>
+<div>inventoryMaterials {{inventoryMaterials}}</div>

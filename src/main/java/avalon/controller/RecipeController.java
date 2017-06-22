@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class RecipeController {
@@ -66,7 +67,7 @@ public class RecipeController {
         // verify that the char has all the req and extra mats in inv
         List<Material> requiredMaterials = new ArrayList<>();
 
-        List<RecipeRequirement> requirements = selectedRecipe.getRecipeReqs();
+        Set<RecipeRequirement> requirements = selectedRecipe.getRecipeReqs();
         for (RecipeRequirement req : requirements) {
             requiredMaterials.add(req.getMaterial());
         }

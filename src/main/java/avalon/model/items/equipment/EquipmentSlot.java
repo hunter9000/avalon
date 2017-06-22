@@ -8,6 +8,7 @@ public enum EquipmentSlot {
     FEET,
     HANDS,
     RING,
+    NECK,
     LEFT_HAND,
     RIGHT_HAND
 }
