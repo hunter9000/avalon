@@ -52,6 +52,10 @@ avalonApp.controller('craftingController', function(APIService, $scope, $window,
     }
 
     $scope.matSelect = function(element) {
+//        if (event.ctrlKey) {
+//
+//        }
+
         $log.debug(element);
         $scope.selectedMat = element;
     }
@@ -80,17 +84,17 @@ avalonApp.controller('craftingController', function(APIService, $scope, $window,
 
     // utility methods
 
-    $scope.filterEffects = function(effectList) {
-        var array = [];
-        if ($scope.selectedRecipe != null && effectList) {
-            for (i=0; i<effectList.length; i++) {
-                if (effectList[i].slot == $scope.selectedRecipe.item.bodySlot) {
-                    array.push(effectList[i]);
-                }
-            }
-        }
-        return array;
-    }
+//    $scope.filterEffects = function(effectList) {
+//        var array = [];
+//        if ($scope.selectedRecipe != null && effectList) {
+//            for (i=0; i<effectList.length; i++) {
+//                if (effectList[i].slot == $scope.selectedRecipe.item.bodySlot) {
+//                    array.push(effectList[i]);
+//                }
+//            }
+//        }
+//        return array;
+//    }
 
     $scope.listContains = function(list, name, quantity) {
         for (var i = 0; i < list.length; i++) {

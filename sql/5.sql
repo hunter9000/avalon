@@ -75,6 +75,7 @@ INSERT INTO `material` (name, material_type) VALUES ('Sulfur', 'MISC');
 INSERT INTO `material` (name, material_type) VALUES ('Clay', 'MISC');
 INSERT INTO `material` (name, material_type) VALUES ('Charcoal', 'MISC');
 INSERT INTO `material` (name, material_type) VALUES ('Phosphorus', 'MISC');
+INSERT INTO `material` (name, material_type) VALUES ('Paper', 'MISC');
 
 
 
@@ -100,6 +101,9 @@ INSERT INTO `item` (name, body_slot) VALUES ('Gold Amulet', 'NECK');
 
 INSERT INTO `item` (name, body_slot) VALUES ('Hide Armor', 'BODY');
 
+INSERT INTO `item` (name, body_slot) VALUES ('Grimoire', 'LEFT_HAND');
+
+
 -- RECIPES
 INSERT INTO `recipe` (item_id, extra_capacity) VALUES ( (SELECT id FROM item WHERE name = 'Copper Sword'), '10');
 INSERT INTO `recipe` (item_id, extra_capacity) VALUES ( (SELECT id FROM item WHERE name = 'Bronze Sword'), '15');
@@ -113,6 +117,9 @@ INSERT INTO `recipe` (item_id, extra_capacity) VALUES ( (SELECT id FROM item WHE
 INSERT INTO `recipe` (item_id, extra_capacity) VALUES ( (SELECT id FROM item WHERE name = 'Gold Amulet'), '10');
 
 INSERT INTO `recipe` (item_id, extra_capacity) VALUES ( (SELECT id FROM item WHERE name = 'Hide Armor'), '15');
+
+INSERT INTO `recipe` (item_id, extra_capacity) VALUES ( (SELECT id FROM item WHERE name = 'Grimoire'), '7');
+
 
 -- RECIPE REQUIREMENTS
 INSERT INTO `recipe_requirement` (`material_id`, `recipe_id`, `quantity`) VALUES ( (SELECT id FROM `material` WHERE name = 'Copper'), (SELECT r.id FROM `recipe` r JOIN `item` i ON r.item_id = i.id WHERE i.name = 'Copper Sword'), '3');
@@ -128,6 +135,8 @@ INSERT INTO `recipe_requirement` (`material_id`, `recipe_id`, `quantity`) VALUES
 INSERT INTO `recipe_requirement` (`material_id`, `recipe_id`, `quantity`) VALUES ( (SELECT id FROM `material` WHERE name = 'Gold'), (SELECT r.id FROM `recipe` r JOIN `item` i ON r.item_id = i.id WHERE i.name = 'Gold Amulet'), '3');
 
 INSERT INTO `recipe_requirement` (`material_id`, `recipe_id`, `quantity`) VALUES ( (SELECT id FROM `material` WHERE name = 'Rawhide'), (SELECT r.id FROM `recipe` r JOIN `item` i ON r.item_id = i.id WHERE i.name = 'Hide Armor'), '5');
+
+INSERT INTO `recipe_requirement` (`material_id`, `recipe_id`, `quantity`) VALUES ( (SELECT id FROM `material` WHERE name = 'Paper'), (SELECT r.id FROM `recipe` r JOIN `item` i ON r.item_id = i.id WHERE i.name = 'Grimoire'), '10');
 
 
 INSERT INTO `sql_files` (`sql_file_name`, `run_date`) VALUES ('5.sql', NOW());

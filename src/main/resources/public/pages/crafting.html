@@ -64,22 +64,23 @@
 
                 <!-- Inventory Materials -->
                 <panel header="Materials">
-                    pass the selected mat to the list directive so it can be compared inthe template and highlighted
+                    <!--pass the selected mat to the list directive so it can be compared inthe template and highlighted-->
                     <list contents="mats" template-contents="inventory-materials-template.html" click="matSelect(recipe)"></list>
 
-                    <div>
-                        <!--<input type="text" value="1" />-->
-                        <a href="" ng-click="addMatToRecipe()" >Add to Recipe</a>
-                    </div>
+                    <!--<div>-->
+                        <!--&lt;!&ndash;<input type="text" value="1" />&ndash;&gt;-->
+                        <!--<a href="" ng-click="addMatToRecipe()" >Add to Recipe</a>-->
+                    <!--</div>-->
 
-                    <div ng-show="selectedRecipe && selectedMat" >
-                        Effects:
-                        <div ng-repeat="effect in filterEffects(selectedMat.materialModel.effectList)" >
-                            {{effect.effectType}}
-                            {{effect.value}}
-                            {{effect.slot}}
-                        </div>
-                    </div>
+                </panel>
+
+                <panel header="Effects" >
+                    <dl class="dl-horizontal"
+                            ng-repeat="effect in selectedMat.material.effectList | filter: {'slot': selectedRecipe.item.bodySlot}"
+                            ng-show="selectedRecipe && selectedMat">
+                        <dt>{{effect.effectType}}</dt>
+                        <dd>{{effect.value}}</dd>
+                    </dl>
                 </panel>
 
             </div>
