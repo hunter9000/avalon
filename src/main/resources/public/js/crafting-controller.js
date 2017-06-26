@@ -51,17 +51,18 @@ avalonApp.controller('craftingController', function(APIService, $scope, $window,
 //        }
     }
 
-    $scope.matSelect = function(element) {
+    $scope.matSelect = function(element, event) {
 //        if (event.ctrlKey) {
 //
 //        }
 
+        console.log('clicked material!');
         $log.debug(element);
         $scope.selectedMat = element;
     }
-    $scope.matDblclick = function() {
-        $log.debug($scope.item);
-        $scope.extraMats.push($scope.item);
+    $scope.matAdd = function(element, event) {
+        $log.debug(element);
+        $scope.extraMats.push(element);
     }
 
     $scope.addMatToRecipe = function() {
