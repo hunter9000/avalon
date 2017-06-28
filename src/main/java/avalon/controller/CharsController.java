@@ -1,11 +1,13 @@
 package avalon.controller;
 
 import avalon.interceptor.CharacterSheetOwnerRequired;
+import avalon.manager.CharacterManager;
 import avalon.model.character.Character;
 import avalon.model.user.User;
 import avalon.repository.CharRepository;
 import avalon.repository.UserRepository;
 import avalon.request.EditCharRequest;
+import avalon.request.NewCharacterRequest;
 import avalon.response.SuccessResponse;
 import avalon.util.AuthUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class CharsController {
 
     @Autowired
     private HttpServletRequest request;
+
+    @Autowired
+    private CharacterManager characterManager;
 
     /** get all chars for the user */
     @RequestMapping(value="/api/char/", method=RequestMethod.GET)
@@ -51,11 +56,16 @@ public class CharsController {
 
     /** Create a character */
     @RequestMapping(value="/api/char/", method=RequestMethod.POST)
-    public SuccessResponse createChar(@RequestBody Character character) {
-        long userId = AuthUtils.getUserId(request);
+    public SuccessResponse createChar(@RequestBody NewCharacterRequest newCharacterRequest) {
+        User user = AuthUtils.getLoggedInUser(request);
 
-        User user = userRepository.findOne(userId);
-        character.setUser(user);
+//        long userId = AuthUtils.getUserId(request);
+//
+//        User user = userRepository.findOne(userId);
+
+        Character character = characterManager.createCharacter(user, newCharacterRequest);
+
+//
         charRepository.save(character);
         return new SuccessResponse(true, "created character");
     }

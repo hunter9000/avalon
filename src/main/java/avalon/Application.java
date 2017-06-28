@@ -3,6 +3,7 @@ package avalon;
 import avalon.interceptor.CharacterSheetOwnerInterceptor;
 import avalon.interceptor.JWTInterceptor;
 import avalon.interceptor.RolePermissionInterceptor;
+import avalon.manager.CharacterManager;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -41,6 +42,11 @@ public class Application extends WebMvcConfigurerAdapter {
 //    public SecurityManager SecurityManager() {
 //        return new SecurityManager();
 //    }
+
+    @Bean
+    public CharacterManager CharacterManager() {
+        return new CharacterManager();
+    }
 
     /** Creates the password encoder object. This is used to .encode() a raw string. The results of that are a hashed
      *  string that includes a random salt. That is what's stored in the user table. To compare a raw input password
