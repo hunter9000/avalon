@@ -65,7 +65,6 @@
                 <!-- Inventory Materials -->
                 <panel header="Materials">
                     <!--pass the selected mat to the list directive so it can be compared inthe template and highlighted-->
-                    <!--<list contents="mats" template-contents="inventory-materials-template.html" click="matSelect(recipe)"></list>-->
 
                     <!--<md-list-item class="secondary-button-padding">-->
                         <!--<p>Clicking the button to the right will fire the secondary action</p>-->
@@ -76,37 +75,17 @@
                         <!--<md-button class="md-secondary" ng-click="doSecondaryAction($event)">More Info</md-button>-->
                     <!--</md-list-item>-->
 
-
-                    <!--<md-content flex style="border: 1px solid firebrick;" layout="column">-->
-                    <!--<md-content flex layout="row" layout-align="center">-->
-                        <!--<md-content flex="100">-->
-
-                    <md-list style="height: 300px; overflow-y: scroll;">
+                    <md-list class="scroll-container medium-height">
                         <md-list-item class="md-2-line secondary-button-padding" ng-repeat="invMaterial in mats" ng-click="matSelect(invMaterial, $event)">
-                            <!--<md-checkbox ng-model="item.done"></md-checkbox>-->
-                            <!--<div class="md-list-item-text">-->
-                                <!--<h3>{{item.title}}</h3>-->
-                                <!--<p>{{item.description}}</p>-->
-                            <!--</div>-->
-
                             <div class="md-list-item-text">
                                 {{invMaterial.material.name}}
                                 {{invMaterial.quantity}}
                                 {{invMaterial.material.icon}}
-                                <!--hello inner template {{ele}}-->
                             </div>
 
-                            <md-button class="md-secondary" ng-click="matAdd(invMaterial, $event)">More Info</md-button>
+                            <md-button class="md-secondary" ng-click="matAdd(invMaterial, $event)">Add</md-button>
                         </md-list-item>
                     </md-list>
-
-                        <!--</md-content>-->
-                    <!--</md-content>-->
-                    <!--</md-content>-->
-                    <!--<div>-->
-                        <!--&lt;!&ndash;<input type="text" value="1" />&ndash;&gt;-->
-                        <!--<a href="" ng-click="addMatToRecipe()" >Add to Recipe</a>-->
-                    <!--</div>-->
 
                 </panel>
 

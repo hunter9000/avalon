@@ -10,3 +10,10 @@ div.scroll-item {
     width:100%;
     border-bottom: 1px solid #333;
 }
+
+.scroll-container {
+    overflow-y: scroll;
+}
+.medium-height {
+    height: 300px;
+}
