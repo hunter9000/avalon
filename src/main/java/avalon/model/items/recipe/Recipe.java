@@ -26,6 +26,10 @@ public class Recipe {
     @JoinColumn(name="item_id")
     private Item item;
 
+    // if this recipe is currently craftable given the character's inventory
+    @Transient
+    private boolean isCraftable;
+
 
     public Long getId() {
         return id;
@@ -53,5 +57,12 @@ public class Recipe {
     }
     public void setItem(Item item) {
         this.item = item;
+    }
+
+    public boolean isCraftable() {
+        return isCraftable;
+    }
+    public void setCraftable(boolean craftable) {
+        isCraftable = craftable;
     }
 }

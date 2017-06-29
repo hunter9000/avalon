@@ -1,13 +1,15 @@
 package avalon.model.character;
 
 import avalon.model.dungeons.DungeonMap;
-import avalon.model.items.equipment.Equipment;
 import avalon.model.items.InventoryMaterial;
+import avalon.model.items.equipment.Equipment;
 import avalon.model.items.recipe.Recipe;
 import avalon.model.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -47,11 +49,16 @@ public class Character {
     private Integer mapY;
 
     // Inventory mats and equipment
-    @OneToMany(mappedBy = "character", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "character", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<InventoryMaterial> inventoryMaterials;
 
-    @OneToMany(mappedBy = "character", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "character", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Equipment> inventoryEquipment;
+
+    // map of material name to inventory material object
+    @Transient
+    private Map<String, InventoryMaterial> inventoryMaterialMap;
+
 
     public Long getId() {
         return id;
@@ -122,4 +129,15 @@ public class Character {
     public void setInventoryEquipment(Set<Equipment> inventoryEquipment) {
         this.inventoryEquipment = inventoryEquipment;
     }
+
+    public Map<String, InventoryMaterial> getInventoryMaterialMap() {
+        if (inventoryMaterialMap == null) {
+            inventoryMaterialMap = new HashMap<>();
+            for (InventoryMaterial mat : inventoryMaterials) {
+                inventoryMaterialMap.put(mat.getMaterial().getName(), mat);
+            }
+        }
+        return inventoryMaterialMap;
+    }
+
 }

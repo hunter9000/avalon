@@ -22,8 +22,8 @@ public class MaterialsController {
     private MaterialEffectRepository materialEffectRepository;
 
     @RequestMapping(value = "/api/materials/", method = RequestMethod.GET)
-    public List<Material>  material() {
-        List<Material> mats = materialRepository.findAll();
+    public Iterable<Material>  material() {
+        Iterable<Material> mats = materialRepository.findAll();
 
         return mats;
     }
@@ -41,7 +41,7 @@ public class MaterialsController {
     @RequestMapping(value="/api/materials/{matId}/", method=RequestMethod.DELETE)
     public SuccessResponse deleteMaterial(@PathVariable long matId) {
         System.out.println("deleteing mat " + matId);
-        Material mat = materialRepository.findById(matId);
+        Material mat = materialRepository.findOne(matId);
         for (MaterialEffect eff : mat.getEffectList()) {
             materialEffectRepository.delete(eff);
         }
@@ -52,7 +52,7 @@ public class MaterialsController {
 
     @RequestMapping(value="/api/materials/{matId}/effect/", method=RequestMethod.POST)
     public SuccessResponse createEffect(@PathVariable long matId, @RequestBody MaterialEffect effect) {
-        Material mat = materialRepository.findById(matId);
+        Material mat = materialRepository.findOne(matId);
 //        mat.getEffectList().add(effect);
 
         effect.setMaterial(mat);
