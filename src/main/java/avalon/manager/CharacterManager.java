@@ -59,19 +59,11 @@ public class CharacterManager {
         for (RecipeRequirement req : recipe.getRecipeReqs()) {
             // get inventory material by name
             InventoryMaterial mat = character.getInventoryMaterialMap().get(req.getMaterial().getName());
-            if (mat != null || mat.getQuantity() < req.getQuantity()) {
+            if (mat != null && mat.getQuantity() < req.getQuantity()) {
                 return false;       // if character doesn't have enough of mat, can't craft
             }
         }
         return true;
-//
-//        for (i=0; i<recipe.recipeReqs.length; i++) {
-//            var req = recipe.recipeReqs[i];
-//            if (!$scope.listContains($scope.inventoryMaterials, req.material.name, req.quantity) ) {
-//                return false;
-//            }
-//        }
-//        return true;
     }
 
 }

@@ -34,12 +34,10 @@ avalonApp.controller('craftingController', function(APIService, InventoryService
         $log.debug('controller says this recipe selected ', recipe);
         $scope.resetMats();      // reset the working list of mats
 
-//        $scope.selectedRecipeCraftable = $scope.recipeCraftable(recipe);
-
-        $log.debug('recipe craftable ', $scope.selectedRecipe.isCraftable);
+        $log.debug('recipe craftable ', $scope.selectedRecipe.craftable);
 
 
-        if ($scope.selectedRecipe.isCraftable) {
+        if ($scope.selectedRecipe.craftable) {
             // remove all the reqs from the working list of mats
             for (var i = 0; i < recipe.recipeReqs.length; i++) {
                 var mat = recipe.recipeReqs[i];
@@ -53,10 +51,6 @@ avalonApp.controller('craftingController', function(APIService, InventoryService
         $log.debug(element);
         $scope.selectedMat = element;
     }
-//    $scope.matAdd = function(element, event) {
-//        $log.debug(element);
-//        $scope.extraMats.push(element);
-//    }
 
     $scope.addMatToRecipe = function(element, event) {
         $log.debug('add to recipe');
@@ -70,9 +64,6 @@ avalonApp.controller('craftingController', function(APIService, InventoryService
 
         // if quantity is now 0, remove from mats list
 
-
-//        $scope.addToList($scope.extraMats, $scope.selectedMat, 1);
-//        $scope.removeFromList($scope.mats, $scope.selectedMat.material.name, 1);
     }
 
     $scope.submitRecipe = function() {

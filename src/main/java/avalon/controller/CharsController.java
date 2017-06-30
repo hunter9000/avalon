@@ -49,6 +49,7 @@ public class CharsController {
 //        Character character = (Character)request.getAttribute(AuthUtils.CHARACTER_NAME);
 
         Character character = AuthUtils.getCharacter(request);
+        characterManager.processRecipes(character);
 
 //        Character character = charRepository.findById(charId);
         return character;
@@ -65,7 +66,6 @@ public class CharsController {
 
         Character character = characterManager.createCharacter(user, newCharacterRequest);
 
-//
         charRepository.save(character);
         return new SuccessResponse(true, "created character");
     }

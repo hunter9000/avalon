@@ -34,7 +34,7 @@ avalonApp.factory('InventoryService', function($window, $location, $http, $log) 
 
         // adds the item to the list. if it already exists in the list (by material.name), increase quantity of existing, otherwise push to list
         addToList: function(list, item) {
-            var existingItem = findInList(list, item.name);
+            var existingItem = findInList(list, item.material.name);
             if (existingItem == null) {
                 list.push(item);
             }

@@ -28,7 +28,7 @@ public class Recipe {
 
     // if this recipe is currently craftable given the character's inventory
     @Transient
-    private boolean isCraftable;
+    private boolean craftable;
 
 
     public Long getId() {
@@ -60,9 +60,14 @@ public class Recipe {
     }
 
     public boolean isCraftable() {
-        return isCraftable;
+        return craftable;
     }
     public void setCraftable(boolean craftable) {
-        isCraftable = craftable;
+        this.craftable = craftable;
+    }
+
+    @Override
+    public String toString() {
+        return item.getName();
     }
 }
