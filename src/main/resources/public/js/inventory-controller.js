@@ -1,9 +1,9 @@
 
-avalonApp.controller('inventoryController', function(APIService, $scope, $routeParams, $location, $window) {
+avalonApp.controller('inventoryController', function(APIService, $scope, $routeParams) {
 
     $scope.char;
 
-    APIService.getChar(function(response) {
+    APIService.getChar($routeParams.charId, function(response) {
         $scope.char = response.data;
     });
 

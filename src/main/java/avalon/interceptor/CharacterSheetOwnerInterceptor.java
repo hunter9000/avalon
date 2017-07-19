@@ -30,34 +30,6 @@ public class CharacterSheetOwnerInterceptor implements HandlerInterceptor {
 
     private Logger logger = Logger.getLogger(CharacterSheetOwnerInterceptor.class);
 
-//    @Override
-//    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-//
-//        Map<String, String> pathVariables = (Map<String, String>)request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-//
-//        Long sheetId = Long.valueOf(pathVariables.get("sheetId"));
-//        if (sheetId == null) {
-//            throw new BadRequestException("No sheetId parameter provided");
-//        }
-//        Sheet sheet = sheetRepository.findOne(sheetId);
-//        if (sheet == null) {
-//            throw new BadRequestException("sheetId parameter invalid");
-//        }
-//
-//        User user = AuthUtils.getLoggedInUser(request);
-//        if (!sheet.getOwner().equals(user)) {
-//            throw new ForbiddenAccessException();
-//        }
-//
-//        // check if the sheet is in the required steps, if any
-//        if (sheetOwnerAnnotation.requiredSteps().length > 0 && !ArrayUtils.contains(sheetOwnerAnnotation.requiredSteps(), sheet.getCreationStep())) {
-//            throw new BadRequestException("Sheet is not in the required creation step to make this call. Required: " + ArrayUtils.toString(sheetOwnerAnnotation.requiredSteps()) + ", currently: " + sheet.getCreationStep());
-//        }
-//
-//        request.setAttribute(AuthUtils.SHEET, sheet);
-//        return true;
-//    }
-
     /** Validates that the character being requested is owned by the logged in user. Only applies if the @CharacterSheetOwnerRequired annotation is on the method */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

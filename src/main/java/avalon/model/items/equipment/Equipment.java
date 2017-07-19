@@ -25,7 +25,7 @@ public class Equipment {
     @JsonIgnore
     private Character character;        // char this belongs to
 
-    @OneToMany(mappedBy = "equipment")
+    @OneToMany(mappedBy = "equipment", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 //    @JoinTable(name="item_effect",
 //            joinColumns={@JoinColumn(name="item_id", referencedColumnName="id")},
 //            inverseJoinColumns={@JoinColumn(name="item_effect_id", referencedColumnName="id")})

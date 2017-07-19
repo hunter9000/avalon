@@ -55,9 +55,9 @@ public class Character {
     @OneToMany(mappedBy = "character", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Equipment> inventoryEquipment;
 
-    // map of material name to inventory material object
+    // map of material id to inventory material object
     @Transient
-    private Map<String, InventoryMaterial> inventoryMaterialMap;
+    private Map<Long, InventoryMaterial> inventoryMaterialMap;
 
 
     public Long getId() {
@@ -130,11 +130,11 @@ public class Character {
         this.inventoryEquipment = inventoryEquipment;
     }
 
-    public Map<String, InventoryMaterial> getInventoryMaterialMap() {
+    public Map<Long, InventoryMaterial> getInventoryMaterialMap() {
         if (inventoryMaterialMap == null) {
             inventoryMaterialMap = new HashMap<>();
             for (InventoryMaterial mat : inventoryMaterials) {
-                inventoryMaterialMap.put(mat.getMaterial().getName(), mat);
+                inventoryMaterialMap.put(mat.getMaterial().getId(), mat);
             }
         }
         return inventoryMaterialMap;

@@ -13,7 +13,7 @@ public class MaterialEffect {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @ManyToOne      // many mateffects reference one material
     @JoinColumn(name="material_id")     // material_id is the fk column pointing to material table
@@ -30,10 +30,10 @@ public class MaterialEffect {
     @Enumerated(value = EnumType.STRING)
     private EquipmentSlot slot;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

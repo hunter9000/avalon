@@ -9,22 +9,22 @@ import javax.persistence.*;
 @Table(name="item")
 public class Item {
 
-    //        id, name,
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private Long id;
 
-    @Column(name="name")
+    @Column(name="name", nullable = false, updatable = false)
     private String name;
 
-    @Column(name="body_slot")
+    @Column(name="body_slot", nullable = false, updatable = false)
     @Enumerated(value = EnumType.STRING)
     private EquipmentSlot bodySlot;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
