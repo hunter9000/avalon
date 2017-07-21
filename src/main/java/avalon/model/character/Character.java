@@ -3,6 +3,8 @@ package avalon.model.character;
 import avalon.model.dungeons.DungeonMap;
 import avalon.model.items.InventoryMaterial;
 import avalon.model.items.equipment.Equipment;
+import avalon.model.items.equipment.EquipmentSlot;
+import avalon.model.items.equipment.EquippedItem;
 import avalon.model.items.recipe.Recipe;
 import avalon.model.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -54,6 +56,10 @@ public class Character {
 
     @OneToMany(mappedBy = "character", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Equipment> inventoryEquipment;
+
+    @OneToMany(mappedBy = "character", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @MapKey(name = "equipmentSlot")
+    private Map<EquipmentSlot, EquippedItem> equippedItems;
 
     // map of material id to inventory material object
     @Transient

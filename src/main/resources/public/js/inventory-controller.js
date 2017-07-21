@@ -7,21 +7,18 @@ avalonApp.controller('inventoryController', function(APIService, $scope, $routeP
         $scope.char = response.data;
     });
 
-//    $http({
-//        method: 'GET',
-//        url: '/api/char/' + $routeParams.charId + '/',
-//        headers: {'x-access-token': $window.localStorage['jwtToken']}
-//    })
-//    .success(function (data) {
-//        $scope.char = data;
-//    })
-//    .error(function (data) {
-//        console.log('Error: ');
-//        console.log(data);
-//    });
+    $scope.inventoryMaterialSelect = function(invMaterial, event) {
+        console.log(invMaterial);
+    }
 
-    $scope.inventoryMaterialSelect = function(element) {
-        console.log(element);
+    $scope.inventoryEquipmentSelect = function(invEquipment, event) {
+        console.log(invEquipment);
+        // show difference between this and equipped item
+    }
+
+    $scope.equipItem = function(invEquipment, event) {
+        console.log('equiping item');
+        console.log(invEquipment);
     }
 
 });

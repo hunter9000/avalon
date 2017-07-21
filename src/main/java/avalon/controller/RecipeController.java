@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @RestController
@@ -111,7 +112,7 @@ public class RecipeController {
         Equipment equipment = new Equipment();
         equipment.setCharacter(character);
         equipment.setItem(selectedRecipe.getItem());
-        equipment.setItemEffects(craftingManager.getItemEffects());
+        equipment.setItemEffects(new HashSet<>(craftingManager.getItemEffects()));
 
         character.getInventoryEquipment().add(equipment);
         for (ItemEffect itemEffect : craftingManager.getItemEffects()) {

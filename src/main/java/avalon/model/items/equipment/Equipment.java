@@ -5,7 +5,7 @@ import avalon.model.items.Item;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="equipment_item")
@@ -29,7 +29,7 @@ public class Equipment {
 //    @JoinTable(name="item_effect",
 //            joinColumns={@JoinColumn(name="item_id", referencedColumnName="id")},
 //            inverseJoinColumns={@JoinColumn(name="item_effect_id", referencedColumnName="id")})
-    private List<ItemEffect> itemEffects;
+    private Set<ItemEffect> itemEffects;
 
     public Long getId() {
         return id;
@@ -52,10 +52,10 @@ public class Equipment {
         this.character = character;
     }
 
-    public List<ItemEffect> getItemEffects() {
+    public Set<ItemEffect> getItemEffects() {
         return itemEffects;
     }
-    public void setItemEffects(List<ItemEffect> itemEffects) {
+    public void setItemEffects(Set<ItemEffect> itemEffects) {
         this.itemEffects = itemEffects;
     }
 
