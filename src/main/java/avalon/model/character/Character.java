@@ -136,6 +136,13 @@ public class Character {
         this.inventoryEquipment = inventoryEquipment;
     }
 
+    public Map<EquipmentSlot, EquippedItem> getEquippedItems() {
+        return equippedItems;
+    }
+    public void setEquippedItems(Map<EquipmentSlot, EquippedItem> equippedItems) {
+        this.equippedItems = equippedItems;
+    }
+
     public Map<Long, InventoryMaterial> getInventoryMaterialMap() {
         if (inventoryMaterialMap == null) {
             inventoryMaterialMap = new HashMap<>();

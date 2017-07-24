@@ -15,7 +15,7 @@ public class EquippedItem {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "character", nullable = false, updatable = false)
+    @JoinColumn(name = "character_id", nullable = false, updatable = false)
     @JsonIgnore
     private Character character;
 

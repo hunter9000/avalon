@@ -113,6 +113,10 @@ avalonApp.factory('APIService', function($window, $location, $http, $log) {
             post('/api/char/'+charId+'/recipes', data, successCallback);
         },
 
+        // Inventory
+        equipItem: function(charId, data, successCallback) {
+            post('/api/char/'+charId+'/equipment/', data, successCallback);
+        },
 
         // Dungeon
         leaveDungeon: function(charId, successCallback) {

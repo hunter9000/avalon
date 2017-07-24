@@ -1,5 +1,5 @@
 
-avalonApp.controller('inventoryController', function(APIService, $scope, $routeParams) {
+avalonApp.controller('inventoryController', function(APIService, InventoryService, $scope, $routeParams) {
 
     $scope.char;
 
@@ -19,6 +19,11 @@ avalonApp.controller('inventoryController', function(APIService, $scope, $routeP
     $scope.equipItem = function(invEquipment, event) {
         console.log('equiping item');
         console.log(invEquipment);
-    }
 
+        var equipRequest = InventoryService.getEquipmentRequest(invEquipment.id, invEquipment.item.bodySlot);
+
+        APIService.equipItem($routeParams.charId, equipRequest, function(response) {
+            $scope.char = response.data;
+        })
+    }
 });
