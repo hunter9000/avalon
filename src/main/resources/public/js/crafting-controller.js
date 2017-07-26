@@ -27,7 +27,7 @@ avalonApp.controller('craftingController', function(APIService, InventoryService
         $scope.baseMats = [];
     }
 
-    $scope.recipeSelect = function(recipe) {
+    $scope.recipeSelect = function(recipe, event) {
         // get from recipe info, set base item, base mats, inventory
         $scope.selectedRecipe = recipe;
 

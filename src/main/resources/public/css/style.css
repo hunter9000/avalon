@@ -1,5 +1,5 @@
 /** list box directive */
-div.scroll-list {
+/*div.scroll-list {
     overflow-y:scroll;
     border: 1px solid #333
 }
@@ -9,11 +9,19 @@ div.scroll-list-inner {
 div.scroll-item {
     width:100%;
     border-bottom: 1px solid #333;
-}
+}*/
 
 .scroll-container {
     overflow-y: scroll;
 }
 .medium-height {
     height: 300px;
+}
+/*.small-height {
+    min-height: 48px !important;
+}*/
+
+.panel-body md-list {
+    margin: -15px;
+    padding: 0px;
 }
