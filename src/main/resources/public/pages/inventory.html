@@ -36,7 +36,8 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-6">
+
+        <div class="col-md-4">
             <panel header="Paper doll">
                 <div class="paper-doll">
                     <div class="paper-doll-wrapper">
@@ -54,7 +55,8 @@
                 </div>
             </panel>
         </div>
-        <div class="col-md-3">
+
+        <div class="col-md-4">
             <panel header="Comparison">
                 <div class="comparison">
                     compare
@@ -71,13 +73,20 @@
                 </div>
             </panel>
         </div>
-        <div class="col-md-3">
+
+        <div class="col-md-4">
             <panel header="Equipment">
+
+                <list-filter options="equipmentFilterOptions" filter="equipmentFilter" />
+                <br />
+                <!--{{equipmentFilter}}-->
+                <br />
+
                 <md-list class="scroll-container medium-height">
-                    <md-list-item class="md-2-line secondary-button-padding" ng-repeat="invEquipment in char.inventoryEquipment" ng-click="inventoryEquipmentSelect(invEquipment, $event)">
+                    <md-list-item class="md-2-line secondary-button-padding" ng-repeat="invEquipment in char.inventoryEquipment | filter:filterEquipmentFunction" ng-click="inventoryEquipmentSelect(invEquipment, $event)">
                         <div class="md-list-item-text">
-                            {{invEquipment.item.name}}
-                            body slot icon
+                            <img src="{{getItemIcon(invEquipment)}}" class="icon-md" />
+                            <span>{{invEquipment.item.name}}</span>
                         </div>
 
                         <md-button class="md-secondary" ng-click="equipItem(invEquipment, $event)">Equip</md-button>

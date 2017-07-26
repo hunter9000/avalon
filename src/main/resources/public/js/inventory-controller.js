@@ -1,7 +1,64 @@
 
-avalonApp.controller('inventoryController', function(APIService, InventoryService, $scope, $routeParams) {
+avalonApp.controller('inventoryController', function(APIService, InventoryService, ImageService, $scope, $routeParams) {
 
     $scope.char;
+
+    $scope.equipmentFilterOptions = ImageService.getEquipmentSlots().map(function(currentValue, index, array) {
+        return {'label': currentValue, 'image': ImageService.getEquipmentSlotIcon(currentValue), 'filter': currentValue}
+    });
+
+
+    $scope.equipmentFilter = ['BODY'];
+
+    $scope.filterEquipmentFunction = function(hash) {
+        return ($scope.equipmentFilter.indexOf(hash.item.bodySlot) !== -1);
+    };
+
+//    CONSUMABLE,
+//    HEAD,
+//    BODY,
+//    LEGS,
+//    FEET,
+//    HANDS,
+//    RING,
+//    NECK,
+//    LEFT_HAND,
+//    RIGHT_HAND
+
+// pants
+//game-icons.net.png\icons\irongamer\originals\png\000000\transparent\armored-pants.png
+// hand
+//game-icons.net.png\icons\john-redman\hands\png\000000\transparent\paper.png
+// chest
+//game-icons.net.png\icons\lorc\originals\png\000000\transparent\armor-vest.png
+// head
+//game-icons.net.png\icons\lorc\originals\png\000000\transparent\barbute.png
+// bare foot
+//game-icons.net.png\icons\lorc\originals\png\000000\transparent\barefoot.png
+// boots
+//game-icons.net.png\icons\lorc\originals\png\000000\transparent\boots.png
+// chest
+//game-icons.net.png\icons\lorc\originals\png\000000\transparent\breastplate.png
+// ring
+//game-icons.net.png\icons\lorc\originals\png\000000\transparent\engagement-ring.png
+// necklace
+//game-icons.net.png\icons\lorc\originals\png\000000\transparent\gem-chain.png
+
+//anvil
+//game-icons.net.png\icons\lorc\originals\png\000000\transparent\anvil.png
+// chopping wood
+//game-icons.net.png\icons\lorc\originals\png\000000\transparent\axe-in-stump.png
+// equipment
+//game-icons.net.png\icons\lorc\originals\png\000000\transparent\battle-gear.png
+// flask
+//game-icons.net.png\icons\lorc\originals\png\000000\transparent\bubbling-flask.png
+// caludron
+//game-icons.net.png\icons\lorc\originals\png\000000\transparent\cauldron.png
+// mining diamon
+//game-icons.net.png\icons\lorc\originals\png\000000\transparent\diamond-hard.png
+// footprint
+//game-icons.net.png\icons\lorc\originals\png\000000\transparent\footprint.png
+
 
     APIService.getChar($routeParams.charId, function(response) {
         $scope.char = response.data;
@@ -25,5 +82,11 @@ avalonApp.controller('inventoryController', function(APIService, InventoryServic
         APIService.equipItem($routeParams.charId, equipRequest, function(response) {
             $scope.char = response.data;
         })
+    }
+
+
+    $scope.getItemIcon = function(invEquipment) {
+        // just return the body slot icon for now
+        return ImageService.getEquipmentSlotIcon(invEquipment.item.bodySlot);
     }
 });

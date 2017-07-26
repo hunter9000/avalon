@@ -3,7 +3,7 @@
 avalonApp.controller('hqController', function(APIService, $scope, $routeParams, $window, $location) {
     $scope.char;
 
-    $scope.scopeOptions = [{'selected': true, 'label': 'hello', 'filter': 'BODY'}, {'selected': true, 'label': 'world', 'filter': 'LEFT_HAND'}];
+    $scope.scopeOptions = [{'label': 'hello', 'filter': 'BODY'}, {'label': 'world', 'filter': 'LEFT_HAND'}];
 
     $scope.scopeFilter = [];
 

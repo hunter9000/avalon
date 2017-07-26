@@ -26,6 +26,24 @@ div.scroll-item {
     padding: 0px;
 }
 
-.toggle-button-selected:active, .toggle-button-selected {
-    color:red;
+.toggle-button {
+    color: gray;
+    padding: 0px;
+    margin: 0px;
+}
+
+.toggle-button-selected {
+    color: green;
+    background-color: lightgreen;
+}
+
+.toggle-button-icon {
+    width: 20px;
+    height: 20px;
+}
+
+
+.icon-md {
+    width: 30px;
+    height: 30px;
 }
