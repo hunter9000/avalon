@@ -168,3 +168,24 @@ phosphorus
 waters:
 aqua vitae
 etc
+
+
+mandrake
+mushrooms
+molds and lichens
+wolfsbane
+salts
+pyrite
+
+vinegar
+limestone
+
+
+fangs/teeth
+feathers
+blood
+eyes
+spores
+tendons
+venom
+heart

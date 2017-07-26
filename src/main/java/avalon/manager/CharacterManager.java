@@ -58,7 +58,7 @@ public class CharacterManager {
     private boolean isRecipeCraftable(Character character, Recipe recipe) {
         for (RecipeRequirement req : recipe.getRecipeReqs()) {
             // get inventory material by name
-            InventoryMaterial mat = character.getInventoryMaterialMap().get(req.getMaterial().getName());
+            InventoryMaterial mat = character.getInventoryMaterialMap().get(req.getMaterial().getId());
             if (mat != null && mat.getQuantity() < req.getQuantity()) {
                 return false;       // if character doesn't have enough of mat, can't craft
             }

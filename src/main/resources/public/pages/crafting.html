@@ -10,7 +10,15 @@
 
                 <!-- Recipe list -->
                 <panel header="Recipes">
-                    <list contents="recipes" template-contents="recipe-list-item-template.html" click="recipeSelect(recipe)"></list>
+                    <!--<list contents="recipes" template-contents="recipe-list-item-template.html" click="recipeSelect(recipe)"></list>-->
+
+                    <md-list class="scroll-container medium-height ">
+                        <md-list-item class="secondary-button-padding recipe-item" ng-repeat="recipe in recipes" ng-click="recipeSelect(recipe, $event)">
+                            <div class="md-list-item-text">
+                                {{recipe.item.name}}
+                            </div>
+                        </md-list-item>
+                    </md-list>
 
                     <div>
                         <span>Recipe Name: </span>
@@ -44,7 +52,17 @@
                 <!-- Base Materials -->
                 <panel header="Base Materials" ng-show="selectedRecipe">
 
-                    <list contents="selectedRecipe.recipeReqs" template-contents="recipe-requirements-template.html" click=""></list>
+                    <!--<list contents="selectedRecipe.recipeReqs" template-contents="recipe-requirements-template.html" click=""></list>-->
+
+                    <md-list class="scroll-container medium-height ">
+                        <md-list-item class="secondary-button-padding recipe-item" ng-repeat="req in selectedRecipe.recipeReqs" ng-click="">
+                            <div class="md-list-item-text">
+                                {{req.material.name}}
+                                {{req.quantity}}
+                                {{req.material.icon}}
+                            </div>
+                        </md-list-item>
+                    </md-list>
 
                 </panel>
 
@@ -53,7 +71,16 @@
 
                     <div>remaining capacity: {{selectedRecipe.extraCapacity}}</div>
                     <div>
-                        <list contents="extraMats" template-contents="recipe-requirements-template.html" click=""></list>
+                        <!--<list contents="extraMats" template-contents="recipe-requirements-template.html" click=""></list>-->
+                        <md-list class="scroll-container medium-height ">
+                            <md-list-item class="secondary-button-padding recipe-item" ng-repeat="mat in extraMats" ng-click="">
+                                <div class="md-list-item-text">
+                                    {{mat.material.name}}
+                                    {{mat.quantity}}
+                                    {{mat.material.icon}}
+                                </div>
+                            </md-list-item>
+                        </md-list>
                     </div>
 
                 </panel>
@@ -75,8 +102,8 @@
                         <!--<md-button class="md-secondary" ng-click="doSecondaryAction($event)">More Info</md-button>-->
                     <!--</md-list-item>-->
 
-                    <md-list class="scroll-container medium-height">
-                        <md-list-item class="md-2-line secondary-button-padding" ng-repeat="invMaterial in mats" ng-click="matSelect(invMaterial, $event)">
+                    <md-list class="scroll-container medium-height ">
+                        <md-list-item class="secondary-button-padding inv-material-item" ng-repeat="invMaterial in mats" ng-click="matSelect(invMaterial, $event)">
                             <div class="md-list-item-text">
                                 {{invMaterial.material.name}}
                                 {{invMaterial.quantity}}

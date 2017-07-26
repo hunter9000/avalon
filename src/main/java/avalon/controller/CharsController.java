@@ -71,6 +71,7 @@ public class CharsController {
     }
 
     @RequestMapping(value = "/api/char/{charId}/", method = RequestMethod.PATCH)
+    @CharacterSheetOwnerRequired
     public Character editCharacter(@RequestBody EditCharRequest editCharRequest, @PathVariable Long charId) {
         return getChar(charId);
     }

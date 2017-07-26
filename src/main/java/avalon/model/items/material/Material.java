@@ -12,11 +12,8 @@ public class Material {
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, updatable = false)
     private String name;
-
-//    @Column(name = "icon")
-//    private String icon;
 
     @Column(name = "material_type", nullable = false, updatable = false)
     @Enumerated(EnumType.STRING)
@@ -24,6 +21,9 @@ public class Material {
 
     @OneToMany(mappedBy = "material", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<MaterialEffect> effectList;
+
+    @Column(name = "capacity_requirement", nullable = false, updatable = false)
+    private Integer capacityRequirement;
 
     public Long getId() {
         return id;
@@ -39,17 +39,24 @@ public class Material {
         this.name = name;
     }
 
-//    public String getIcon() {
-//        return icon;
-//    }
-//    public void setIcon(String icon) {
-//        this.icon = icon;
-//    }
+    public MaterialType getMaterialType() {
+        return materialType;
+    }
+    public void setMaterialType(MaterialType materialType) {
+        this.materialType = materialType;
+    }
 
     public List<MaterialEffect> getEffectList() {
         return effectList;
     }
     public void setEffectList(List<MaterialEffect> effectList) {
         this.effectList = effectList;
+    }
+
+    public Integer getCapacityRequirement() {
+        return capacityRequirement;
+    }
+    public void setCapacityRequirement(Integer capacityRequirement) {
+        this.capacityRequirement = capacityRequirement;
     }
 }

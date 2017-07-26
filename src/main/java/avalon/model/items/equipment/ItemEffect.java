@@ -1,6 +1,7 @@
 package avalon.model.items.equipment;
 
 import avalon.model.items.material.MaterialEffect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -16,6 +17,7 @@ public class ItemEffect {
 
     @ManyToOne()
     @JoinColumn(name = "equipment_id")
+    @JsonIgnore
     private Equipment equipment;
 
     @OneToOne()
