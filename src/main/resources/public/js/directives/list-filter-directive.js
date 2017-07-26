@@ -6,19 +6,54 @@ avalonApp.directive('listFilter', function($compile, $interpolate) {
             options: '=',       // array of icons and filter names
             filter: '=',        // exposed array of filter options
         },
-        template: '<toggle-button ng-repeat="option in options track by $index" initially-selected="false" data="option" on-change="notify()" />',
+        template: '<toggle-button data="allOption" on-change="selectAll()" /> \
+                    <toggle-button ng-repeat="option in options track by $index" data="option" on-change="notify(option)" /> \
+                    <toggle-button data="noneOption" on-change="selectNone()" /> ',
         controller:  function($scope) {
-            $scope.notify = function() {
-                console.log('a thing happened!');
+            $scope.allOption = {'selected': true, 'label': 'All', 'filter': ''};
+            $scope.noneOption = {'selected': false, 'label': 'None', 'filter': ''};
 
+            $scope.setFilter = function() {
                 // for each options, check if it's selected, add to array
-                // filter isn't right function, need to only include those selected
-                $scope.filter = $scope.options.filter(function(s) {
-                    if (s.selected) {
-                        return s.filter;
+                $scope.filter = [];
+                for (i=0; i<$scope.options.length; i++) {
+                    if ($scope.options[i].selected) {
+                        $scope.filter.push($scope.options[i].filter);
                     }
-                });
+                }
             }
+
+            $scope.selectAll = function() {
+                console.log('select all!');
+                $scope.options.forEach(function(currentValue, index, array) {
+                    currentValue.selected = true;
+                });
+
+                $scope.setFilter();
+            }
+
+            // select all by default
+            $scope.selectAll();
+
+            $scope.selectNone = function() {
+                console.log('select none!');
+                $scope.options.forEach(function(currentValue, index, array) {
+                    currentValue.selected = false;
+                });
+
+                $scope.setFilter();
+            }
+
+            $scope.notify = function(option) {
+                console.log('a thing happened!');
+                console.log(option);
+
+                $scope.allOption.selected = false;
+                $scope.noneOption.selected = false;
+
+                $scope.setFilter();
+            }
+
         },
     }
 });

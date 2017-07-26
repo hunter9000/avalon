@@ -25,3 +25,7 @@ div.scroll-item {
     margin: -15px;
     padding: 0px;
 }
+
+.toggle-button-selected {
+    color:red;
+}
