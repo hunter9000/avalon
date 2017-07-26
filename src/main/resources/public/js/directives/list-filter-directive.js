@@ -25,6 +25,12 @@ avalonApp.directive('listFilter', function($compile, $interpolate) {
 
             $scope.selectAll = function() {
                 console.log('select all!');
+
+                // don't deselect this button if it's already selected
+                if ($scope.allOption.selected) {
+                    return;
+                }
+
                 $scope.options.forEach(function(currentValue, index, array) {
                     currentValue.selected = true;
                 });
@@ -37,6 +43,12 @@ avalonApp.directive('listFilter', function($compile, $interpolate) {
 
             $scope.selectNone = function() {
                 console.log('select none!');
+
+                // don't deselect this button if it's already selected
+                if ($scope.noneOption.selected) {
+                    return;
+                }
+
                 $scope.options.forEach(function(currentValue, index, array) {
                     currentValue.selected = false;
                 });

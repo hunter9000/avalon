@@ -26,6 +26,6 @@ div.scroll-item {
     padding: 0px;
 }
 
-.toggle-button-selected {
+.toggle-button-selected:active, .toggle-button-selected {
     color:red;
 }
