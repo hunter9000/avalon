@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="inventory_material")
-public class InventoryMaterial {
+public class InventoryMaterial implements CountableMaterial {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +25,7 @@ public class InventoryMaterial {
     private Material material;
 
     @Column(name = "quantity")
-    private int quantity;
+    private Integer quantity;
 
     public long getId() {
         return id;
@@ -48,10 +48,10 @@ public class InventoryMaterial {
         this.material = material;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 }

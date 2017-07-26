@@ -57,6 +57,13 @@ avalonApp.factory('InventoryService', function($window, $location, $http, $log) 
                 }
             }
             return false;
+        },
+
+        getEquipmentRequest: function(equipmentId, slot) {
+            return {
+                'equipmentId': equipmentId,
+                'slot': slot
+            };
         }
     }
 });

@@ -1,33 +1,75 @@
 package avalon.controller;
 
-import avalon.model.items.equipment.EquipmentSlot;
+import avalon.interceptor.CharacterSheetOwnerRequired;
+import avalon.model.character.Character;
 import avalon.model.items.equipment.Equipment;
-import io.jsonwebtoken.lang.Collections;
+import avalon.model.items.equipment.EquipmentSlot;
+import avalon.model.items.equipment.EquippedItem;
+import avalon.repository.CharRepository;
+import avalon.request.EquipmentRequest;
+import avalon.security.BadRequestException;
+import avalon.util.AuthUtils;
+import org.apache.commons.collections4.IterableUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
+import java.util.Set;
 
 @RestController
 public class EquipmentController {
 
-    @RequestMapping(value="/api/equip", method=RequestMethod.GET)
-    public List<Equipment> getEquipment() {
-        // get all the equipment rows this char has
-        return null;
-    }
+    @Autowired
+    private CharRepository charRepository;
 
-    @RequestMapping(value="/api/equip", method=RequestMethod.POST)
-    public void equipItem(Equipment item, EquipmentSlot slot) {
+    @Autowired
+    private HttpServletRequest request;
+
+    @RequestMapping(value="/api/char/{charId}/equipment/", method=RequestMethod.POST)
+    @CharacterSheetOwnerRequired
+    public Character equipItem(@RequestBody EquipmentRequest equipmentRequest) {
+        Character character = AuthUtils.getCharacter(request);
+
+        if (!equipmentRequest.validate()) {
+            throw new BadRequestException("");
+        }
+
         // validate the item belongs to char
+        // find the equipment item from the character
+        Set<Equipment> equipment = character.getInventoryEquipment();
+        Equipment item = IterableUtils.find(equipment, (Equipment e) -> e.getId().equals(equipmentRequest.equipmentId));
+        if (item == null) {
+            throw new BadRequestException("Bad item id requested");
+        }
         // check that item slot matches slot
-        // if equipped in another slot, remove from there (switching hands?)
-        // add equipment row
+        if (item.getItem().getBodySlot() != equipmentRequest.slot) {
+            throw new BadRequestException("Item cannot be equipped to requested slot");
+        }
+
+        // find if it's already equipped
+        Map<EquipmentSlot, EquippedItem> equippedItems = character.getEquippedItems();
+        Map.Entry<EquipmentSlot, EquippedItem> alreadyEquipped = IterableUtils.find(equippedItems.entrySet(),
+                                                                                    (Map.Entry<EquipmentSlot, EquippedItem> entry) -> entry.getValue().getId().equals(item.getId()));
+        if (alreadyEquipped != null) {
+            // clear the old equipment slot
+            equippedItems.put(alreadyEquipped.getKey(), null);
+        }
+        // set item to the new slot
+        EquippedItem newEquipment = new EquippedItem();
+        newEquipment.setCharacter(character);
+        newEquipment.setEquipment(item);
+        newEquipment.setEquipmentSlot(equipmentRequest.slot);
+        equippedItems.put(equipmentRequest.slot, newEquipment);
+
+
+
+        charRepository.save(character);
+
+        return character;
     }
 
-    @RequestMapping(value="/api/equipmentSlots", method=RequestMethod.GET)
-    public List<EquipmentSlot> getEquipmentSlots() {
-        return Collections.arrayToList(EquipmentSlot.values());
-    }
 }
