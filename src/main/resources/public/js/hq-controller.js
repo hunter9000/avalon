@@ -3,6 +3,10 @@
 avalonApp.controller('hqController', function(APIService, $scope, $routeParams, $window, $location) {
     $scope.char;
 
+    $scope.scopeOptions = [{'selected': false, 'label': 'hello', 'filter': 'BODY'}, {'selected': true, 'label': 'world', 'filter': 'LEFT_HAND'}];
+
+    $scope.scopeFilter = [];
+
     // get the character from the provided id
     APIService.getChar($routeParams.charId, function(response) {
        $scope.char = response.data;

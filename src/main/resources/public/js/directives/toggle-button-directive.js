@@ -4,20 +4,18 @@ avalonApp.directive('toggleButton', function() {
         restrict: 'E',
         scope: {
             initiallySelected: '=',
-            label: '=',
+            data: '=',
             onChange: '&',
-
         },
-        template: '<button ng-click="toggle()" ng-class="{selected-toggle-button:selected}">{{label}}</button>',
+        template: '<button ng-click="toggle()" class="btn btn-secondary" ng-class="{\'active\':data.selected}">{{data.label}}</button>',
         controller: function($scope) {
-            $scope.selected = false;
+
 
             $scope.toggle = function() {
-                $scope.selected = !$scope.selected;
+                console.log('toggling ' + $scope.data.label);
+                $scope.data.selected = !$scope.data.selected;
                 $scope.onChange();
             }
-
-
         },
     }
-)};
+});
