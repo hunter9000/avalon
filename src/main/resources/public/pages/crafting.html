@@ -10,12 +10,13 @@
 
                 <!-- Recipe list -->
                 <panel header="Recipes">
-                    <!--<list contents="recipes" template-contents="recipe-list-item-template.html" click="recipeSelect(recipe)"></list>-->
+
 
                     <md-list class="scroll-container medium-height ">
                         <md-list-item class="secondary-button-padding recipe-item" ng-repeat="recipe in recipes" ng-click="recipeSelect(recipe, $event)">
                             <div class="md-list-item-text">
-                                {{recipe.item.name}}
+                                <img src="{{getRecipeIcon(recipe)}}" class="icon-md" />
+                                <span>{{recipe.item.name}}</span>
                             </div>
                         </md-list-item>
                     </md-list>
@@ -52,8 +53,6 @@
                 <!-- Base Materials -->
                 <panel header="Base Materials" ng-show="selectedRecipe">
 
-                    <!--<list contents="selectedRecipe.recipeReqs" template-contents="recipe-requirements-template.html" click=""></list>-->
-
                     <md-list class="scroll-container medium-height ">
                         <md-list-item class="secondary-button-padding recipe-item" ng-repeat="req in selectedRecipe.recipeReqs" ng-click="">
                             <div class="md-list-item-text">
@@ -69,7 +68,7 @@
                 <!-- Extra Materials -->
                 <panel header="Extra Materials" ng-show="selectedRecipe">
 
-                    <div>remaining capacity: {{selectedRecipe.extraCapacity}}</div>
+                    <div>Remaining Capacity: {{remainingCapacity}}</div>
                     <div>
                         <!--<list contents="extraMats" template-contents="recipe-requirements-template.html" click=""></list>-->
                         <md-list class="scroll-container medium-height ">
@@ -93,21 +92,15 @@
                 <panel header="Materials">
                     <!--pass the selected mat to the list directive so it can be compared inthe template and highlighted-->
 
-                    <!--<md-list-item class="secondary-button-padding">-->
-                        <!--<p>Clicking the button to the right will fire the secondary action</p>-->
-                        <!--<md-button class="md-secondary" ng-click="doSecondaryAction($event)">More Info</md-button>-->
-                    <!--</md-list-item>-->
-                    <!--<md-list-item class="secondary-button-padding" ng-click="doPrimaryAction($event)">-->
-                        <!--<p>Click anywhere to fire the primary action, or the button to fire the secondary</p>-->
-                        <!--<md-button class="md-secondary" ng-click="doSecondaryAction($event)">More Info</md-button>-->
-                    <!--</md-list-item>-->
+                    <list-filter options="materialFilterOptions" filter="materialFilter" />
 
                     <md-list class="scroll-container medium-height ">
-                        <md-list-item class="secondary-button-padding inv-material-item" ng-repeat="invMaterial in mats" ng-click="matSelect(invMaterial, $event)">
+                        <md-list-item class="secondary-button-padding inv-material-item" ng-repeat="invMaterial in mats | filter:filterMaterialsFunction" ng-click="matSelect(invMaterial, $event)">
                             <div class="md-list-item-text">
-                                {{invMaterial.material.name}}
-                                {{invMaterial.quantity}}
-                                {{invMaterial.material.icon}}
+                                <img src="{{getMaterialIcon(invMaterial)}}" class="icon-md" />
+                                <span>{{invMaterial.quantity}}</span>
+                                <span>{{invMaterial.material.name}}</span>
+                                <span>{{invMaterial.material.capacityRequirement}} Cap</span>
                             </div>
 
                             <md-button class="md-secondary" ng-click="addMatToRecipe(invMaterial, $event)">Add</md-button>

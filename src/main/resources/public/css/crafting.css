@@ -10,6 +10,6 @@
 }
 
 .inv-material-item, .recipe-item {
-    background-color: indianred;
+    /*background-color: indianred;*/
     border: 1px solid darkgray;
 }

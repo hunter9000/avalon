@@ -1,14 +1,13 @@
 
-avalonApp.controller('inventoryController', function(APIService, InventoryService, ImageService, $scope, $routeParams) {
+avalonApp.controller('inventoryController', function(APIService, InventoryService, ImageService, ItemService, $scope, $routeParams) {
 
     $scope.char;
 
-    $scope.equipmentFilterOptions = ImageService.getEquipmentSlots().map(function(currentValue, index, array) {
+    $scope.equipmentFilterOptions = ItemService.getEquipmentSlots().map(function(currentValue, index, array) {
         return {'label': currentValue, 'image': ImageService.getEquipmentSlotIcon(currentValue), 'filter': currentValue}
     });
 
-
-    $scope.equipmentFilter = ['BODY'];
+    $scope.equipmentFilter = [];
 
     $scope.filterEquipmentFunction = function(hash) {
         return ($scope.equipmentFilter.indexOf(hash.item.bodySlot) !== -1);

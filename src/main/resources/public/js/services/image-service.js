@@ -1,7 +1,5 @@
 
-avalonApp.factory('ImageService', function($window, $location, $http, $log) {
-
-    var equipmentSlots = ['CONSUMABLE','HEAD','BODY','LEGS','FEET','HANDS','RING','NECK','LEFT_HAND','RIGHT_HAND'];
+avalonApp.factory('ImageService', function() {
 
     var equipmentSlotIconsSmall = {
         'BODY': '/img/equipment_slot_icons/armor-vest.png',
@@ -17,13 +15,22 @@ avalonApp.factory('ImageService', function($window, $location, $http, $log) {
         'RIGHT_HAND': '/img/equipment_slot_icons/armor-vest.png',
     };
 
-    return {
-        getEquipmentSlots: function() {
-            return equipmentSlots.slice();      // return copy of array
-        },
+    var materialTypeIconsSmall = {
+        'CLOTH': '/img/equipment_slot_icons/armor-vest.png',
+        'HIDE': '/img/equipment_slot_icons/armor-vest.png',
+        'WOOD': '/img/equipment_slot_icons/armor-vest.png',
+        'METAL': '/img/equipment_slot_icons/armor-vest.png',
+        'GEM': '/img/equipment_slot_icons/armor-vest.png',
+        'FOOD': '/img/equipment_slot_icons/armor-vest.png',
+        'MISC': '/img/equipment_slot_icons/armor-vest.png',
+    };
 
+    return {
         getEquipmentSlotIcon: function(equipmentSlot) {
             return equipmentSlotIconsSmall[equipmentSlot];
-        }
+        },
+        getMaterialTypeIcon: function(materialType) {
+            return materialTypeIconsSmall[materialType];
+        },
     }
 });

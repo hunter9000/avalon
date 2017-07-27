@@ -78,9 +78,6 @@
             <panel header="Equipment">
 
                 <list-filter options="equipmentFilterOptions" filter="equipmentFilter" />
-                <br />
-                <!--{{equipmentFilter}}-->
-                <br />
 
                 <md-list class="scroll-container medium-height">
                     <md-list-item class="md-2-line secondary-button-padding" ng-repeat="invEquipment in char.inventoryEquipment | filter:filterEquipmentFunction" ng-click="inventoryEquipmentSelect(invEquipment, $event)">

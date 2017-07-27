@@ -1,9 +1,10 @@
 
-avalonApp.controller('craftingController', function(APIService, InventoryService, $scope, $window, $routeParams, $log) {
+avalonApp.controller('craftingController', function(APIService, InventoryService, ImageService, ItemService, $scope, $window, $routeParams, $log) {
     $scope.recipes;
     $scope.inventoryMaterials;
 
     $scope.selectedRecipe = null;
+    $scope.remainingCapacity = null;
 //    $scope.selectedRecipeCraftable = false;
 
     $scope.mats;
@@ -12,6 +13,16 @@ avalonApp.controller('craftingController', function(APIService, InventoryService
     $scope.baseMats = [];
     $scope.extraMats = [];
 
+
+    $scope.materialFilterOptions = ItemService.getMaterialTypes().map(function(currentValue, index, array) {
+        return {'label': currentValue, 'image': ImageService.getMaterialTypeIcon(currentValue), 'filter': currentValue}
+    });
+
+    $scope.materialFilter = [];
+
+    $scope.filterMaterialsFunction = function(hash) {
+        return ($scope.materialFilter.indexOf(hash.material.materialType) !== -1);
+    };
 
 
     APIService.getChar($routeParams.charId, function(response) {
@@ -30,6 +41,7 @@ avalonApp.controller('craftingController', function(APIService, InventoryService
     $scope.recipeSelect = function(recipe, event) {
         // get from recipe info, set base item, base mats, inventory
         $scope.selectedRecipe = recipe;
+        $scope.remainingCapacity = recipe.extraCapacity;
 
         $log.debug('controller says this recipe selected ', recipe);
         $scope.resetMats();      // reset the working list of mats
@@ -52,11 +64,18 @@ avalonApp.controller('craftingController', function(APIService, InventoryService
         $scope.selectedMat = element;
     }
 
-    $scope.addMatToRecipe = function(element, event) {
+    $scope.addMatToRecipe = function(invMaterial, event) {
         $log.debug('add to recipe');
 
+        // check the capacity of the recipe first
+        var capacityReq = invMaterial.material.capacityRequirement;
+        if ($scope.remainingCapacity < capacityReq) {
+            return;     // can't add material to recipe's extra mats
+        }
+        $scope.remainingCapacity -= capacityReq;
+
         // split 1 off the item
-        var newItem = InventoryService.splitItem(element, 1);
+        var newItem = InventoryService.splitItem(invMaterial, 1);
 
         // add to extramats
         // find in the list
@@ -82,6 +101,15 @@ avalonApp.controller('craftingController', function(APIService, InventoryService
         APIService.craftRecipe($routeParams.charId, payload, function(response) {
             $log.debug(response.data);
         });
+    }
+
+    $scope.getMaterialIcon = function(invMaterial) {
+        // just return the material type icon for now
+        return ImageService.getMaterialTypeIcon(invMaterial.material.materialType);
+    }
+
+    $scope.getRecipeIcon = function(recipe) {
+        return ImageService.getEquipmentSlotIcon(recipe.item.bodySlot);
     }
 
 });
