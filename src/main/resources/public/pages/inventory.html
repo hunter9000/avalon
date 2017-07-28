@@ -3,7 +3,7 @@
         /*div {
             border: 1px solid #ccc
         }*/
-        .paper-doll {height:400px;}
+
         .stats-pane {height:400px;}
 
         .comparison {height:375px;}
@@ -13,10 +13,7 @@
         .equip {height:400px;}
         .mats {height:400px;}
 
-        .paper-doll-wrapper {
-            position:relative;
-        }
-        .paper-doll-img {}
+
         /*.floated {
             position:absolute;
             top:20px;
@@ -28,9 +25,9 @@
             left:60px;
         }*/
 
-        button.selected-toggle-button {
-            color: red;
-        }
+        <!--button.selected-toggle-button {-->
+            <!--color: red;-->
+        <!--}-->
     </style>
 
 
@@ -39,15 +36,18 @@
 
         <div class="col-md-4">
             <panel header="Paper doll">
-                <div class="paper-doll">
-                    <div class="paper-doll-wrapper">
-                        <!--<img src="Untitled.png" class="paper-doll-img" />-->
-                        <!--<span class="floated">f</span>-->
-                        <!--<span class="floated-2">f2</span>-->
-                        <div>Body: {{char.equippedItems.BODY.equipment.item.name}}</div>
-                        <div>Left Hand: {{char.equippedItems.LEFT_HAND.equipment.item.name}}</div>
-                    </div>
-                </div>
+
+                <paper-doll equipped-items="char.equippedItems" />
+
+                <!--<div class="paper-doll">-->
+                    <!--<div class="paper-doll-wrapper">-->
+                        <!--&lt;!&ndash;<img src="Untitled.png" class="paper-doll-img" />&ndash;&gt;-->
+                        <!--&lt;!&ndash;<span class="floated">f</span>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<span class="floated-2">f2</span>&ndash;&gt;-->
+                        <!--<div>Body: {{char.equippedItems.BODY.equipment.item.name}}</div>-->
+                        <!--<div>Left Hand: {{char.equippedItems.LEFT_HAND.equipment.item.name}}</div>-->
+                    <!--</div>-->
+                <!--</div>-->
             </panel>
             <panel header="Stats">
                 <div class="stats-pane">
@@ -96,9 +96,10 @@
                 <md-list class="scroll-container medium-height">
                     <md-list-item class="md-2-line secondary-button-padding" ng-repeat="invMaterial in char.inventoryMaterials" ng-click="inventoryMaterialSelect(invMaterial, $event)">
                         <div class="md-list-item-text">
-                            {{invMaterial.material.name}}
-                            {{invMaterial.quantity}}
-                            {{invMaterial.material.icon}}
+                            <inventory-material inventory-material="invMaterial" />
+                            <!--{{invMaterial.material.name}}-->
+                            <!--{{invMaterial.quantity}}-->
+                            <!--{{invMaterial.material.icon}}-->
                         </div>
                     </md-list-item>
                 </md-list>

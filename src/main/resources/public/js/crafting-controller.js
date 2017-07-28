@@ -103,11 +103,6 @@ avalonApp.controller('craftingController', function(APIService, InventoryService
         });
     }
 
-    $scope.getMaterialIcon = function(invMaterial) {
-        // just return the material type icon for now
-        return ImageService.getMaterialTypeIcon(invMaterial.material.materialType);
-    }
-
     $scope.getRecipeIcon = function(recipe) {
         return ImageService.getEquipmentSlotIcon(recipe.item.bodySlot);
     }

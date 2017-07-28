@@ -47,3 +47,45 @@ div.scroll-item {
     width: 30px;
     height: 30px;
 }
+
+/** Paper doll */
+.paper-doll {
+    height:400px;
+    width: 320px;
+    margin:auto;
+}
+
+.paper-doll-wrapper {
+    position:relative;
+
+}
+
+.paper-doll-img {
+
+}
+
+.paper-doll-slot {
+    position: absolute;
+    border: 1px solid black;
+}
+
+.paper-doll-body {
+    top: 60px;
+    left: 120px;
+    width: 80px;
+    height: 120px;
+}
+
+.paper-doll-left-hand{
+    top: 60px;
+    left: 20px;
+    width: 80px;
+    height: 120px;
+}
+
+.paper-doll-right-hand{
+    top: 60px;
+    left: 200px;
+    width: 80px;
+    height: 120px;
+}

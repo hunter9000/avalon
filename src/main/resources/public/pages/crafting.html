@@ -56,9 +56,10 @@
                     <md-list class="scroll-container medium-height ">
                         <md-list-item class="secondary-button-padding recipe-item" ng-repeat="req in selectedRecipe.recipeReqs" ng-click="">
                             <div class="md-list-item-text">
-                                {{req.material.name}}
-                                {{req.quantity}}
-                                {{req.material.icon}}
+                                <inventory-material inventory-material="req" />
+                                <!--{{req.material.name}}-->
+                                <!--{{req.quantity}}-->
+                                <!--{{req.material.icon}}-->
                             </div>
                         </md-list-item>
                     </md-list>
@@ -74,9 +75,10 @@
                         <md-list class="scroll-container medium-height ">
                             <md-list-item class="secondary-button-padding recipe-item" ng-repeat="mat in extraMats" ng-click="">
                                 <div class="md-list-item-text">
-                                    {{mat.material.name}}
-                                    {{mat.quantity}}
-                                    {{mat.material.icon}}
+                                    <inventory-material inventory-material="mat" />
+                                    <!--{{mat.material.name}}-->
+                                    <!--{{mat.quantity}}-->
+                                    <!--{{mat.material.icon}}-->
                                 </div>
                             </md-list-item>
                         </md-list>
@@ -97,10 +99,7 @@
                     <md-list class="scroll-container medium-height ">
                         <md-list-item class="secondary-button-padding inv-material-item" ng-repeat="invMaterial in mats | filter:filterMaterialsFunction" ng-click="matSelect(invMaterial, $event)">
                             <div class="md-list-item-text">
-                                <img src="{{getMaterialIcon(invMaterial)}}" class="icon-md" />
-                                <span>{{invMaterial.quantity}}</span>
-                                <span>{{invMaterial.material.name}}</span>
-                                <span>{{invMaterial.material.capacityRequirement}} Cap</span>
+                                <inventory-material inventory-material="invMaterial" />
                             </div>
 
                             <md-button class="md-secondary" ng-click="addMatToRecipe(invMaterial, $event)">Add</md-button>
@@ -110,12 +109,15 @@
                 </panel>
 
                 <panel header="Effects" >
-                    <dl class="dl-horizontal"
-                            ng-repeat="effect in selectedMat.material.effectList | filter: {'slot': selectedRecipe.item.bodySlot}"
-                            ng-show="selectedRecipe && selectedMat">
-                        <dt>{{effect.effectType}}</dt>
-                        <dd>{{effect.value}}</dd>
-                    </dl>
+                    <div ng-show="selectedRecipe && selectedMat" >
+                        <dl class="dl-horizontal" ng-repeat="effect in effectList = (selectedMat.material.effectList | filter: {'slot': selectedRecipe.item.bodySlot})">
+                            <dt>{{effect.effectType}}</dt>
+                            <dd>{{effect.value}}</dd>
+                        </dl>
+                        <div ng-hide="effectList.length">
+                            Nothing to show
+                        </div>
+                    </div>
                 </panel>
 
             </div>
