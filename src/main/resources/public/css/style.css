@@ -53,6 +53,7 @@ div.scroll-item {
     height:400px;
     width: 320px;
     margin:auto;
+    border: 1px solid black;
 }
 
 .paper-doll-wrapper {
@@ -70,22 +71,67 @@ div.scroll-item {
 }
 
 .paper-doll-body {
-    top: 60px;
-    left: 120px;
-    width: 80px;
-    height: 120px;
+    top: 100px;
+    left: 130px;
+    width: 60px;
+    height: 100px;
 }
 
-.paper-doll-left-hand{
-    top: 60px;
-    left: 20px;
-    width: 80px;
-    height: 120px;
+.paper-doll-left-hand {
+    top: 100px;
+    left: 30px;
+    width: 60px;
+    height: 100px;
 }
 
-.paper-doll-right-hand{
-    top: 60px;
-    left: 200px;
-    width: 80px;
-    height: 120px;
+.paper-doll-right-hand {
+    top: 100px;
+    left: 230px;
+    width: 60px;
+    height: 100px;
+}
+
+.paper-doll-head {
+    top: 20px;
+    left: 130px;
+    width: 60px;
+    height: 60px;
+}
+
+.paper-doll-legs {
+    top: 220px;
+    left: 130px;
+    width: 60px;
+    height: 60px;
+}
+
+.paper-doll-feet {
+    top: 300px;
+    left: 130px;
+    width: 60px;
+    height: 60px;
+}
+.paper-doll-gloves {
+    top: 220px;
+    left: 30px;
+    width: 60px;
+    height: 60px;
+}
+.paper-doll-ring {
+    top: 300px;
+    left: 60px;
+    width: 30px;
+    height: 30px;
+}
+.paper-doll-neck {
+    top: 50px;
+    left: 230px;
+    width: 30px;
+    height: 30px;
+}
+.paper-doll-consumable {
+    top: 220px;
+    left: 230px;
+    width: 60px;
+    height: 60px;
 }

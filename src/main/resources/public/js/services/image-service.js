@@ -1,18 +1,20 @@
 
 avalonApp.factory('ImageService', function() {
 
+    /** All icons are prefixed with this */
+    var iconPrefix = '/img/game-icons-net-png/icons/';
+
     var equipmentSlotIconsSmall = {
-        'BODY': '/img/equipment_slot_icons/armor-vest.png',
-        'CONSUMABLE': '/img/equipment_slot_icons/armor-vest.png',
-        'HEAD': '/img/equipment_slot_icons/armor-vest.png',
-        'BODY': '/img/equipment_slot_icons/armor-vest.png',
-        'LEGS': '/img/equipment_slot_icons/armor-vest.png',
-        'FEET': '/img/equipment_slot_icons/armor-vest.png',
-        'HANDS': '/img/equipment_slot_icons/armor-vest.png',
-        'RING': '/img/equipment_slot_icons/armor-vest.png',
-        'NECK': '/img/equipment_slot_icons/armor-vest.png',
-        'LEFT_HAND': '/img/equipment_slot_icons/armor-vest.png',
-        'RIGHT_HAND': '/img/equipment_slot_icons/armor-vest.png',
+        'BODY': 'lorc/originals/breastplate.png',
+        'CONSUMABLE': '',
+        'HEAD': 'lorc/originals/barbute.png',
+        'LEGS': 'irongamer/originals/armored-pants.png',
+        'FEET': 'lorc/originals/boots.png',
+        'HANDS': 'john-redman/hands/paper.png',
+        'RING': 'lorc/originals/engagement-ring.png',
+        'NECK': 'lorc/originals/gem-chain.png',
+        'LEFT_HAND': '',
+        'RIGHT_HAND': '',
     };
 
     var materialTypeIconsSmall = {
@@ -27,7 +29,7 @@ avalonApp.factory('ImageService', function() {
 
     return {
         getEquipmentSlotIcon: function(equipmentSlot) {
-            return equipmentSlotIconsSmall[equipmentSlot];
+            return iconPrefix + equipmentSlotIconsSmall[equipmentSlot];
         },
         getMaterialTypeIcon: function(materialType) {
             return materialTypeIconsSmall[materialType];

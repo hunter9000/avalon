@@ -51,13 +51,16 @@ avalonApp.controller('inventoryController', function(APIService, InventoryServic
 //game-icons.net.png\icons\lorc\originals\png\000000\transparent\battle-gear.png
 // flask
 //game-icons.net.png\icons\lorc\originals\png\000000\transparent\bubbling-flask.png
-// caludron
+// cauldron
 //game-icons.net.png\icons\lorc\originals\png\000000\transparent\cauldron.png
-// mining diamon
+// mining diamond
 //game-icons.net.png\icons\lorc\originals\png\000000\transparent\diamond-hard.png
 // footprint
 //game-icons.net.png\icons\lorc\originals\png\000000\transparent\footprint.png
 
+// all willdabeast\deviations are good
+
+// \viscious-speed\abstract for abstract shapes
 
     APIService.getChar($routeParams.charId, function(response) {
         $scope.char = response.data;
