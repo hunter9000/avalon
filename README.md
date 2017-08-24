@@ -189,3 +189,60 @@ spores
 tendons
 venom
 heart
+
+
+-- classes
+
+Villager
+
+- Fighter
+-- Pugilist
+--- Martial Artist
+---- Monk
+-- Duelist
+--- Gladiator
+-- Warrior
+--- Samuari
+-- Knight
+--- Paladin
+-- Barbarian
+--- Berzerker
+
+- Thief
+-- Rogue
+-- Assassin
+--- Ninja
+-- Swashbuckler
+--- Pirate
+-- Bard
+
+
+- Healer
+-- Sage
+-- Alchemist    (apothecary/transmuter)
+--- Artificer
+--- Mage
+---- Wizard
+--- Sorcerer
+-- Cleric
+--- Priest
+---- Necromancer
+---- Summoner
+-- Illusionist
+--- Mystic
+---- Oracle
+
+- Hunter
+-- Archer
+--- Ranger
+-- Scout
+-- Shaman
+-- Druid
+--- Beastmaster
+-- Scavenger
+
+enchanter
+conjurer
+
+
+

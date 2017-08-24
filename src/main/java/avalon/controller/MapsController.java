@@ -4,13 +4,13 @@ package avalon.controller;
 import avalon.interceptor.CharacterSheetOwnerRequired;
 import avalon.model.character.Character;
 import avalon.model.dungeons.DungeonCell;
+import avalon.model.dungeons.DungeonMap;
+import avalon.model.dungeons.GroundType;
 import avalon.repository.CellRepository;
 import avalon.repository.CharRepository;
 import avalon.repository.MapRepository;
-import avalon.security.JwtSubject;
-import avalon.model.dungeons.GroundType;
-import avalon.model.dungeons.DungeonMap;
 import avalon.response.SuccessResponse;
+import avalon.security.JwtSubject;
 import avalon.util.AuthUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @RestController
 public class MapsController {
@@ -133,7 +133,7 @@ public class MapsController {
         dungeonMap.setCharacter(character);
         dungeonMap.setBoss(false);
 
-        List<DungeonCell> cells = new ArrayList<>();
+        Set<DungeonCell> cells = new HashSet<>();
         for (int j=0; j<5; j++) {
             for (int i=0; i<5; i++) {
                 cells.add(new DungeonCell(dungeonMap, i, j, GroundType.GRASS));

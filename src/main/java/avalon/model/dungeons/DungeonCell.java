@@ -1,15 +1,16 @@
 package avalon.model.dungeons;
 
-import avalon.model.pathing.node.Travelable;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import avalon.model.CellEntity;
+import avalon.model.pathing.node.Travelable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 
 // has fk to the map it's in
 @Entity
 @Table(name="cell")
-@JsonIgnoreProperties(value="map")
 public class DungeonCell implements Travelable {
 
     @Id
@@ -19,6 +20,7 @@ public class DungeonCell implements Travelable {
 
     @ManyToOne
     @JoinColumn(name="map_id")
+    @JsonIgnore
     private DungeonMap map;
 
     @Column(name="cell_x")
@@ -90,4 +92,30 @@ public class DungeonCell implements Travelable {
 		return true;
 	}
 
+    @Override
+    public boolean equals(Object obj) {
+	    if (!(obj instanceof DungeonCell)) {
+	        return false;
+        }
+	    DungeonCell other = (DungeonCell)obj ;
+	    if (id != null && id.equals(other.id)) {
+	        return true;
+        }
+        return new EqualsBuilder()
+                .append(map, other.map)
+                .append(x, other.x)
+                .append(y, other.y)
+                .append(groundType, other.groundType)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(id)
+                .append(map.getId())
+                .append(x)
+                .append(y)
+                .toHashCode();
+    }
 }

@@ -1,4 +1,6 @@
 
+<div class="container">
+
     <p>{{ message }}</p>
 
     <panel header="HQ">
@@ -16,13 +18,13 @@
 
         <br/>
 
+        Current Map:
+        {{char.currentMap}}
+
+
     </panel>
 
-    <list-filter options="scopeOptions" filter="scopeFilter"></list-filter>
-    <br/>
-    {{scopeFilter}}
-
-    <hr/>
 
     {{char}}
 
+</div>

@@ -4,7 +4,7 @@ import avalon.model.character.Character;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 // container for a single map. linked to cells
 @Entity
@@ -31,7 +31,7 @@ public class DungeonMap {
 //    private List<DungeonMap> linkedMaps;
 
     @OneToMany(mappedBy = "map", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<DungeonCell> cells;
+    private Set<DungeonCell> cells;
 
 
     public Long getId() {
@@ -55,10 +55,10 @@ public class DungeonMap {
         isBoss = boss;
     }
 
-    public List<DungeonCell> getCells() {
+    public Set<DungeonCell> getCells() {
         return cells;
     }
-    public void setCells(List<DungeonCell> cells) {
+    public void setCells(Set<DungeonCell> cells) {
         this.cells = cells;
     }
 }
